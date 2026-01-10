@@ -1,8 +1,14 @@
 <resources>
-    <string name="app_name">Practica_Con_junie</string>
-    <string name="Añadirnuevaruta">Añadir nueva ruta</string>
-    <string name="Vermisrutas">Ver mis rutas</string>
-    <string name="Ayuda">Ayuda</string>
-    <string name="Acercade">Acerca de</string>
+    <string name="app_name">AppCaminaLibre</string>
+    <string name="ActivadadPrincipalAñadirnuevaruta">Añadir nueva ruta</string>
+    <string name="ActivadadPrincipalVermisrutas">Ver mis rutas</string>
+    <string name="ActivadadPrincipalAyuda">Ayuda</string>
+    <string name="ActivadadPrincipalbtnAcercade">Acerca de</string>
+    <string name="ActivadadPrincipalSalir">Salir</string>
+    <string name="ActivadadAcercaDeDescripcionAcercade">Una aplicación diseñada para explorar y compartir rutas naturales con total libertad.</string>
+    <string name="ActidadeAcercaDeTextoAutor">Santiago y Mayko</string>
+    <string name="ActividadAcercaDeFecha">Fecha: 2026</string>
+    <string name="ActidadeAcercaDeTextoVersion">Versión: 1.0.0</string>
+    <string name="ActidadeAcercaDeBtnContactarConSoporte">Contactar con soporte</string>
 
 </resources>

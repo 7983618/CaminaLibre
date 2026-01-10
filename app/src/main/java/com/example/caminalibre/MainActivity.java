@@ -1,6 +1,8 @@
 package com.example.caminalibre;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -10,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    Button salir;
+    Button salir,acercade;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +22,23 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        salir = findViewById(R.id.ActivadadPrincipalbtnSalir);
+        salir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.exit(0);
+            }
+        });
+        acercade = findViewById(R.id.ActivadadPrincipalbtnAcercaDe);
+
+        acercade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AcercaDeActivity.class);
+                startActivity(intent);
+            }
         });
 
     }

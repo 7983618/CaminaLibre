@@ -36,18 +36,18 @@
             android:layout_marginBottom="16dp">
 
             <Button
-                android:id="@+id/btnAñadirRuta"
+                android:id="@+id/ActivadadPrincipalbtnAñadirRuta"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/Añadirnuevaruta" />
+                android:text="@string/ActivadadPrincipalAñadirnuevaruta" />
 
             <Button
-                android:id="@+id/btnVerMisRutas"
+                android:id="@+id/ActivadadPrincipalbtnVerMisRutas"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/Vermisrutas" />
+                android:text="@string/ActivadadPrincipalVermisrutas" />
         </TableRow>
 
         <TableRow
@@ -57,19 +57,32 @@
 
 
         <Button
-                android:id="@+id/btnAyuda"
+                android:id="@+id/ActivadadPrincipalbtnAyuda"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/Ayuda" />
+                android:text="@string/ActivadadPrincipalAyuda" />
 
             <Button
-                android:id="@+id/btnAcercaDe"
+                android:id="@+id/ActivadadPrincipalbtnAcercaDe"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/Acercade" />
+                android:text="@string/ActivadadPrincipalbtnAcercade" />
         </TableRow>
+
+        <TableRow
+            android:gravity="center"
+            >
+            <Button
+                android:id="@+id/ActivadadPrincipalbtnSalir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ActivadadPrincipalSalir"
+                />
+
+        </TableRow>
+
 
     </TableLayout>
 
