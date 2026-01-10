@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">CaminaLibre</string>
+    <string name="app_name">Practica_Con_junie</string>
+    <string name="Añadirnuevaruta">Añadir nueva ruta</string>
+    <string name="Vermisrutas">Ver mis rutas</string>
+    <string name="Ayuda">Ayuda</string>
+    <string name="Acercade">Acerca de</string>
+
 </resources>
