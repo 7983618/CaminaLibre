@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CaminaLibre</string>
+    <string name="AltaRutasNombre">Nombre de la Ruta:</string>
+    <string name="AltaRutasLocalizacion">Localización:</string>
+    <string name="AltaRutasTipoRuta">Tipo:</string>
+    <string name="AltaRutasTipoCircular">Circular</string>
+    <string name="AltaRutasTipoLineal">Lineal</string>
+    <string name="AltaRutasDificultad">Dificultad:</string>
+    <string name="AltaRutasDistancia">Distancia (km):</string>
+    <string name="AltaRutasDescripcion">Descripción:</string>
+    <string name="AltaRutasNotas">Notas:</string>
+    <string name="AltaRutasFavorita">Favorita:</string>
 </resources>

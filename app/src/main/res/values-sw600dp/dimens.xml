@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margen_estandar">32dp</dimen>
+    <dimen name="cuerpo_de_titulo">32sp</dimen>
+    <dimen name="cuerpo_de_texto">18sp</dimen>
+    <dimen name="altura_de_boton">64dp</dimen>
+</resources>

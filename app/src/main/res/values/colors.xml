@@ -2,4 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="blue">#2A3D5A</color>
+    <color name="orange">#B6462F</color>
+
+
+    <color name="skin">#D8D1D2</color>
+    <color name="background">#4C2A3A</color>
+    <color name="red">#792C41</color>
+    <color name="skinIntense">#A69697</color>
+
+    <color name="grey1">#bfbfbf</color>
+    <color name="grey2">#7f7f7f</color>
+    <color name="grey3">#404040</color>
+
 </resources>
