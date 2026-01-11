@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 System.exit(0);
             }
         });
+
         acercade = findViewById(R.id.ActivadadPrincipalbtnAcercaDe);
 
         acercade.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        añadirnuevaruta = findViewById(R.id.ActivadadPrincipalbtnAñadirRuta);
         añadirnuevaruta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
         vermisrutas = findViewById(R.id.ActivadadPrincipalbtnVerMisRutas);
         vermisrutas.setOnClickListener(new View.OnClickListener() {
             @Override
