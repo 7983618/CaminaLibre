@@ -13,9 +13,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/fotoapp"
+        android:icon="@drawable/ico"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/fotoapp"
+        android:roundIcon="@drawable/ico"
         android:supportsRtl="true"
         android:theme="@style/Theme.CaminaLibre">
         <activity
