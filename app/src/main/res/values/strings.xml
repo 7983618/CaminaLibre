@@ -10,4 +10,5 @@
     <string name="AltaRutasDescripcion">Descripción:</string>
     <string name="AltaRutasNotas">Notas:</string>
     <string name="AltaRutasFavorita">Favorita:</string>
+    <string name="AstaRutasTextoBoton">Guardar</string>
 </resources>
