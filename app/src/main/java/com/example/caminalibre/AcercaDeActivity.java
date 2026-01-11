@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AcercaDeActivity extends AppCompatActivity {
 
+    // comentario ma
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
