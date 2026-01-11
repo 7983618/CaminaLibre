@@ -18,8 +18,10 @@ public class AltaDeRutas extends AppCompatActivity {
             String nombreRuta = ((EditText) findViewById(R.id.AltaRutasNombreEditText)).getText().toString();
             if (nombreRuta.isEmpty()) {
                 Toast.makeText(AltaDeRutas.this, "No hay nombre de ruta", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(AltaDeRutas.this, "Ruta correctamente validada", Toast.LENGTH_LONG).show();
+                AltaDeRutas.this.finish();
             }
-            AltaDeRutas.this.finish();
         }
     };
 

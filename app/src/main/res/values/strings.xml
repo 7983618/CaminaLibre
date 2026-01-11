@@ -1,26 +1,26 @@
 <resources>
-    <string name="ActivadadPrincipalAñadirnuevaruta">Añadir nueva ruta</string>
-    <string name="ActivadadPrincipalVermisrutas">Ver mis rutas</string>
-    <string name="ActivadadPrincipalAyuda">Ayuda</string>
-    <string name="ActivadadPrincipalbtnAcercade">Acerca de</string>
-    <string name="ActivadadPrincipalSalir">Salir</string>
-    <string name="ActivadadAcercaDeDescripcionAcercade">Una aplicación diseñada para explorar y compartir rutas naturales con total libertad.</string>
-    <string name="ActidadeAcercaDeTextoAutor">Santiago y Mayko</string>
-    <string name="ActividadAcercaDeFecha">Fecha: 2026</string>
-    <string name="ActidadeAcercaDeTextoVersion">Versión: 1.0.0</string>
-    <string name="ActidadeAcercaDeBtnContactarConSoporte">Contactar con soporte</string>
+    <string name="ActivadadPrincipalAñadirnuevaruta">Add new route</string>
+    <string name="ActivadadPrincipalVermisrutas">View my routes</string>
+    <string name="ActivadadPrincipalAyuda">Help</string>
+    <string name="ActivadadPrincipalbtnAcercade">About</string>
+    <string name="ActivadadPrincipalSalir">Exit</string>
+    <string name="ActivadadAcercaDeDescripcionAcercade">An application designed to explore and share natural routes with complete freedom.</string>
+    <string name="ActidadeAcercaDeTextoAutor">Santiago and Mayko</string>
+    <string name="ActividadAcercaDeFecha">Date: 2026</string>
+    <string name="ActidadeAcercaDeTextoVersion">Version: 1.0.0</string>
+    <string name="ActidadeAcercaDeBtnContactarConSoporte">Contact support</string>
     <string name="ActivadadAcercaDeTitulo">CaminaLibre</string>
 
     <string name="app_name">CaminaLibre</string>
-    <string name="AltaRutasNombre">Nombre de la Ruta:</string>
-    <string name="AltaRutasLocalizacion">Localización:</string>
-    <string name="AltaRutasTipoRuta">Tipo:</string>
+    <string name="AltaRutasNombre">Route name:</string>
+    <string name="AltaRutasLocalizacion">Location:</string>
+    <string name="AltaRutasTipoRuta">Type:</string>
     <string name="AltaRutasTipoCircular">Circular</string>
-    <string name="AltaRutasTipoLineal">Lineal</string>
-    <string name="AltaRutasDificultad">Dificultad:</string>
-    <string name="AltaRutasDistancia">Distancia (km):</string>
-    <string name="AltaRutasDescripcion">Descripción:</string>
-    <string name="AltaRutasNotas">Notas:</string>
-    <string name="AltaRutasFavorita">Favorita:</string>
-    <string name="AstaRutasTextoBoton">Guardar</string>
+    <string name="AltaRutasTipoLineal">Linear</string>
+    <string name="AltaRutasDificultad">Difficulty:</string>
+    <string name="AltaRutasDistancia">Distance (km):</string>
+    <string name="AltaRutasDescripcion">Description:</string>
+    <string name="AltaRutasNotas">Notes:</string>
+    <string name="AltaRutasFavorita">Favorite:</string>
+    <string name="AstaRutasTextoBoton">Save</string>
 </resources>
