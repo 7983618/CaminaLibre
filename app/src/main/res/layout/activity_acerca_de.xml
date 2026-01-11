@@ -5,52 +5,49 @@
     android:orientation="vertical"
     android:padding="24dp"
     android:gravity="center_horizontal"
-    android:background="#F5F5F5">
-<!--
-Cometnarioa
--->
+    android:background="@color/black">
     <TextView
+        style="@style/AppTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ActivadadAcercaDeTitulo"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:textSize="@dimen/cuerpo_de_titulo"
         android:layout_marginBottom="16dp" />
 
     <TextView
-        android:layout_width="match_parent"
+        style="@style/AppTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ActivadadAcercaDeDescripcionAcercade"
-        android:textSize="16sp"
-        android:textAlignment="center"
         android:layout_marginBottom="32dp" />
 
     <TextView
+        style="@style/AppTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ActidadeAcercaDeTextoAutor"
-        android:textSize="14sp" />
+        />
 
     <TextView
+        style="@style/AppTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ActividadAcercaDeFecha"
-        android:textSize="14sp" />
+        />
 
     <TextView
+        style="@style/AppTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ActidadeAcercaDeTextoVersion"
-        android:textSize="14sp"
         android:layout_marginBottom="40dp" />
 
     <Button
+        style="@style/AppButton"
         android:id="@+id/btnSoporte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ActidadeAcercaDeBtnContactarConSoporte"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp" />
+        />
 
 </LinearLayout>

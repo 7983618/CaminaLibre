@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -14,8 +18,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    // comentario
-    Button salir,acercade,añadirnuevaruta,vermisrutas,ayuda;
+    private ActivityResultLauncher<Intent> altaRutasLauncher;
+    Button salir,acercade,altaRutasButton,vermisrutas,ayuda;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +48,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        añadirnuevaruta = findViewById(R.id.ActivadadPrincipalbtnAñadirRuta);
-        añadirnuevaruta.setOnClickListener(new View.OnClickListener() {
+        altaRutasLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+
+                    }
+                }
+        );
+        altaRutasButton = findViewById(R.id.ActivadadPrincipalbtnAñadirRuta);
+        altaRutasButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                altaRutasLauncher.launch(new Intent(MainActivity.this, AltaDeRutas.class));
             }
 
         });
