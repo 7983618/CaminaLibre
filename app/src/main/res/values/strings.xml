@@ -16,7 +16,7 @@
     <string name="AltaRutasLocalizacion">Location:</string>
     <string name="AltaRutasTipoRuta">Type:</string>
     <string name="AltaRutasTipoCircular">Circular</string>
-    <string name="AltaRutasTipoLineal">Linear</string>
+    <string name="AltaRutasTipoLineal">Lineal</string>
     <string name="AltaRutasDificultad">Difficulty:</string>
     <string name="AltaRutasDistancia">Distance (km):</string>
     <string name="AltaRutasDescripcion">Description:</string>

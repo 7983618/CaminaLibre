@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         vermisrutas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityMostrarTareas.class);
+                startActivity(intent);
             }
         });
         ayuda = findViewById(R.id.ActivadadPrincipalbtnAyuda);
