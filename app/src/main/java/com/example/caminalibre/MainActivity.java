@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -16,8 +18,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.caminalibre.modelo.Ruta;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
+    private ArrayList<Ruta> rutas = new ArrayList<>();
     private ActivityResultLauncher<Intent> altaRutasLauncher;
     Button salir,acercade,altaRutasButton,vermisrutas,ayuda;
     @Override
@@ -53,7 +60,14 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            Intent intent = result.getData();
+                            if (intent != null) {
+                                Ruta ruta = (Ruta) intent.getSerializableExtra("ruta");
+                                rutas.add(ruta);
 
+                            }
+                        }
                     }
                 }
         );
