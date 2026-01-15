@@ -15,4 +15,10 @@
     <color name="grey2">#7f7f7f</color>
     <color name="grey3">#404040</color>
 
+    <color name="standar_info">#EAE4D5</color>
+    <color name="standar_interact">#B6B09F</color>
+    <color name="standar_background">#000000</color>
+    <color name="standar_text">#F2F2F2</color>
+
+
 </resources>

@@ -23,5 +23,8 @@
     <string name="AltaRutasDescripcion">Descripción:</string>
     <string name="AltaRutasNotas">Notas:</string>
     <string name="AltaRutasFavorita">Favorita:</string>
-    <string name="AstaRutasTextoBoton">Guardar</string>
+    <string name="AltaRutasTextoBoton">Guardar</string>
+    <string name="FichaTecnicaTiempoEstimado">Tiempo estimado:</string>
+    <string name="AltaRutasLatitud">Latitud:</string>
+    <string name="AltaRutasLongitud">Longitud:</string>
 </resources>

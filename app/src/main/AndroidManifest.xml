@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CaminaLibre">
         <activity
+            android:name=".FichaTecnica"
+            android:exported="false" />
+        <activity
             android:name=".ActivityMostrarTareas"
             android:exported="false" />
         <activity
