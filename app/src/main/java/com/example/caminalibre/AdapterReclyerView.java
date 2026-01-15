@@ -1,5 +1,6 @@
 package com.example.caminalibre;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,12 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Haz pulsado sobre la ruta: " + rutas.get(position).getNombreRuta(), Toast.LENGTH_SHORT).show();
+                Ruta ruta = rutas.get(position);
+                // intent a la nueva actividad detalle
+                Intent intent = new Intent();
+
+                intent.putExtra("ruta", rutas.get(position));
+
             }
         });
     }

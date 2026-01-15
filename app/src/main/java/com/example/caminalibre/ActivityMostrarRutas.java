@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +21,7 @@ import com.example.caminalibre.modelo.Tipo;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class ActivityMostrarTareas extends AppCompatActivity {
+public class ActivityMostrarRutas extends AppCompatActivity {
     Spinner spinner;
     RecyclerView recyclerView;
     ArrayList<Ruta> rutas;

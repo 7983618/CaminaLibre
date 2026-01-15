@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CaminaLibre">
         <activity
-            android:name=".ActivityMostrarTareas"
+            android:name=".ActivityMostrarRutas"
             android:exported="false" />
         <activity
             android:name=".AltaDeRutas"

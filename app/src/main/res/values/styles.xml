@@ -38,4 +38,19 @@
         <item name="android:layout_marginBottom">25dp</item>
 <!--        <item name="android:gravity">center_vertical</item>-->
     </style>
+
+
+    <style name="item_ruta_xml_wrantcontent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+
+
+
+
+
+
+
 </resources>
