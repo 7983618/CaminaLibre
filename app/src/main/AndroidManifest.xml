@@ -23,7 +23,7 @@
             android:name=".FichaTecnica"
             android:exported="false" />
         <activity
-            android:name=".ActivityMostrarTareas"
+            android:name=".ActivityMostrarRutas"
             android:exported="false" />
         <activity
             android:name=".AltaDeRutas"
