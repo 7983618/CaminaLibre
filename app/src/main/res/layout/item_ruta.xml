@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/itemRutaTipo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:layout_marginEnd="16dp"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/item_ruta_xml_wrantcontent"
+            android:id="@+id/itemRutaNombre"
+            android:text="Nombre de la ruta"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            style="@style/item_ruta_xml_wrantcontent"
+            android:id="@+id/itemRutaDistancia"
+            android:text="0 km"
+            android:textSize="14sp"/>
+
+        <TextView
+            style="@style/item_ruta_xml_wrantcontent"
+            android:id="@+id/itemRutaLocalizacion"
+            android:text="Localización"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/itemRutaEstrellas"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\u2605\u2605\u2605\u2605\u2606"
+        android:rating="0"
+        android:isIndicator="true"/>
+
+</LinearLayout>
