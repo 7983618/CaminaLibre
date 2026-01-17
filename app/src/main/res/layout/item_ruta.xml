@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@color/standar_background">
 
     <ImageView
         android:id="@+id/itemRutaTipo"
@@ -20,22 +21,28 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/item_ruta_xml_wrantcontent"
+            style="@style/AppTextViewTitle"
+            android:textAlignment="viewStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/itemRutaNombre"
-            android:text="Nombre de la ruta"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"/>
+            android:text="Nombre de la ruta"/>
 
         <TextView
-            style="@style/item_ruta_xml_wrantcontent"
+            style="@style/AppTextView"
             android:id="@+id/itemRutaDistancia"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="0 km"
+            android:textColor="@color/standar_info"
             android:textSize="14sp"/>
 
         <TextView
-            style="@style/item_ruta_xml_wrantcontent"
+            style="@style/AppTextView"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:id="@+id/itemRutaLocalizacion"
+            android:textColor="@color/standar_info"
             android:text="Localización"
             android:textSize="14sp"/>
     </LinearLayout>
@@ -46,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="\u2605\u2605\u2605\u2605\u2606"
+        android:textColor="@color/standar_info"
         android:rating="0"
         android:isIndicator="true"/>
 

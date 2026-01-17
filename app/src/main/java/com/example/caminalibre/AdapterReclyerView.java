@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,12 +21,15 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
 
     ArrayList<Ruta> rutas;
     Context context;
+
+    ActivityResultLauncher<Intent> launcher;
     private static final String codigoestrellellena = "\u2605";
     private static final String codigostrellanula = "\u2606";
 
-    public AdapterReclyerView(ArrayList<Ruta> rutas, Context context) {
+    public AdapterReclyerView(ArrayList<Ruta> rutas, Context context, ActivityResultLauncher<Intent> launcher) {
         this.rutas = rutas;
         this.context = context;
+        this.launcher = launcher;
     }
     @NonNull
     @Override
@@ -51,7 +55,8 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
                 // intent a la nueva actividad detalle
                 Intent intent = new Intent(context, FichaTecnica.class);
                 intent.putExtra("ruta", rutas.get(position));
-                context.startActivity(intent);
+                intent.putExtra("posicion", Integer.valueOf(position));
+                launcher.launch(intent);
             }
         });
     }

@@ -1,10 +1,15 @@
 package com.example.caminalibre;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -13,7 +18,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.caminalibre.modelo.Ruta;
 
 public class FichaTecnica extends AppCompatActivity {
-
+    Ruta ruta;
+    Integer posicion;
+    boolean modificada = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Toast.makeText(this, "antes", Toast.LENGTH_SHORT);
@@ -25,7 +32,10 @@ public class FichaTecnica extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Ruta ruta = (Ruta) getIntent().getSerializableExtra("ruta");
+
+        ruta = (Ruta) getIntent().getSerializableExtra("ruta");
+        posicion = (Integer) getIntent().getSerializableExtra("posicion");
+
         Toast.makeText(this, "despues", Toast.LENGTH_SHORT);
         TextView titulo = (TextView) findViewById(R.id.FichaTecnicaTitulo);
         TextView distancia = (TextView) findViewById(R.id.FichaTecnicaDistancia);
@@ -63,6 +73,32 @@ public class FichaTecnica extends AppCompatActivity {
             longitud.setText(String.valueOf(ruta.getLongitud()));
         }
 
+        CheckBox favorite = (CheckBox) findViewById(R.id.FichaTecnicaFavoriaCheckBox);
+        Toast.makeText(FichaTecnica.this, String.valueOf(ruta.isFavorita()), Toast.LENGTH_SHORT).show();
+        favorite.setChecked(ruta.isFavorita());
+        favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ruta.setFavorita(true);
+                } else {
+                    ruta.setFavorita(false);
+                }
+                Toast.makeText(FichaTecnica.this, String.valueOf(ruta.isFavorita()), Toast.LENGTH_SHORT).show();
+                modificada = true;
+            }
+        });
+    }
+
+    @Override
+    public void finish() {
+        if (modificada) {
+            Intent intent = new Intent();
+            intent.putExtra("ruta_devuelta", ruta);
+            intent.putExtra("posicion", posicion);
+            setResult(RESULT_OK, intent);
+        }
+        super.finish();
     }
 }
 

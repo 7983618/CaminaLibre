@@ -8,6 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -25,6 +29,13 @@ public class ActivityMostrarRutas extends AppCompatActivity {
     Spinner spinner;
     RecyclerView recyclerView;
     ArrayList<Ruta> rutas;
+
+    AdapterReclyerView adapter;
+
+
+    public ActivityResultLauncher<Intent> launcher;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +47,30 @@ public class ActivityMostrarRutas extends AppCompatActivity {
             return insets;
         });
 
+        launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            Intent intent = result.getData();
+                            if (intent != null) {
+                                Ruta ruta = (Ruta) intent.getSerializableExtra("ruta_devuelta");
+                                Integer posicion = (Integer) intent.getSerializableExtra("posicion");
+                                adapter.rutas.set(posicion.intValue(), ruta);
+                                adapter.notifyItemChanged(posicion);
+
+                                for (int i = 0; i < rutas.size(); i++) {
+                                    if (rutas.get(i).getNombreRuta().equals(ruta.getNombreRuta())) {
+                                        rutas.set(i, ruta);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+        );
 
 
         Intent intent = getIntent();
@@ -47,7 +82,7 @@ public class ActivityMostrarRutas extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewRutas);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AdapterReclyerView adapter = new AdapterReclyerView(rutas, this);
+        adapter = new AdapterReclyerView(rutas, this, launcher);
         recyclerView.setAdapter(adapter);
         spinner = findViewById(R.id.spinnerFiltroDificultad);
         ArrayList<String> opciones = new ArrayList<>();
