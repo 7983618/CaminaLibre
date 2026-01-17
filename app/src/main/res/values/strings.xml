@@ -27,4 +27,7 @@
     <string name="FichaTecnicaTiempoEstimado">Estimated time:</string>
     <string name="AltaRutasLatitud">Latitude:</string>
     <string name="AltaRutasLongitud">Longitude:</string>
+    <string name="FichaTecnica0" translatable="false">0</string>
+    <string name="FichaTecnicaMinutos">minutes</string>
+    <string name="FichaTecnica0Minutos">0 minutes</string>
 </resources>

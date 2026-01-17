@@ -1,5 +1,6 @@
 package com.example.caminalibre;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,13 @@ import java.util.ArrayList;
 public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.ViewHolder> {
 
     ArrayList<Ruta> rutas;
+    Context context;
     private static final String codigoestrellellena = "\u2605";
     private static final String codigostrellanula = "\u2606";
 
-    public AdapterReclyerView(ArrayList<Ruta> rutas) {
+    public AdapterReclyerView(ArrayList<Ruta> rutas, Context context) {
         this.rutas = rutas;
+        this.context = context;
     }
     @NonNull
     @Override
@@ -46,10 +49,9 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
                 Toast.makeText(v.getContext(), "Haz pulsado sobre la ruta: " + rutas.get(position).getNombreRuta(), Toast.LENGTH_SHORT).show();
                 Ruta ruta = rutas.get(position);
                 // intent a la nueva actividad detalle
-                Intent intent = new Intent();
-
+                Intent intent = new Intent(context, FichaTecnica.class);
                 intent.putExtra("ruta", rutas.get(position));
-
+                context.startActivity(intent);
             }
         });
     }

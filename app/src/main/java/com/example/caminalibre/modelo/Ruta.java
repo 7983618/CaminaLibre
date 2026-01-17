@@ -9,8 +9,27 @@ public class Ruta implements Serializable {
     private float dificultad;
     private double distancia;
     private String descripcion;
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
     private String notas;
     private boolean favorita;
+    private double latitud;
+    private double longitud;
 
     public Ruta(String nombreRuta, String localizacion, Tipo tipo, float dificultad, double distancia, String descripcion, String notas, boolean favorita){
         this.nombreRuta = nombreRuta;
@@ -21,6 +40,19 @@ public class Ruta implements Serializable {
         this.descripcion = descripcion;
         this.notas = notas;
         this.favorita = favorita;
+    }
+
+    public Ruta(String nombreRuta, String localizacion, Tipo tipo, float dificultad, double distancia, String descripcion, String notas, boolean favorita, double latitud, double longitud) {
+        this.nombreRuta = nombreRuta;
+        this.localizacion = localizacion;
+        this.tipo = tipo;
+        this.dificultad = dificultad;
+        this.distancia = distancia;
+        this.descripcion = descripcion;
+        this.notas = notas;
+        this.favorita = favorita;
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 
     public boolean isFavorita() {

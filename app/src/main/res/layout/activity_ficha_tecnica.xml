@@ -46,10 +46,11 @@
 
                     <TextView
                         style="@style/AppTextViewTitle"
+                        android:id="@+id/FichaTecnicaTitulo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="6"
-                        android:text="Prueba" />
+                        android:text="-" />
 
                     <CheckBox
                         android:id="@+id/checkBox"
@@ -94,10 +95,11 @@
                         android:layout_weight="0.2" />
                     <TextView
                         style="@style/FichaTecnicaTextView"
+                        android:id="@+id/FichaTecnicaDistancia"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:text="No se dificil supongo" />
+                        android:text="@string/FichaTecnica0" />
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -136,10 +138,11 @@
                         android:layout_weight="0.2" />
                     <TextView
                         style="@style/FichaTecnicaTextView"
+                        android:id="@+id/FichaTecnicaDificultad"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:text="No se dificil supongo" />
+                        android:text="@string/FichaTecnica0" />
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -180,10 +183,11 @@
 
                     <TextView
                         style="@style/FichaTecnicaTextView"
+                        android:id="@+id/FichaTecnicaTiempoEstimado"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:text="Calculado" />
+                        android:text="@string/FichaTecnica0Minutos" />
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -222,10 +226,11 @@
                         android:layout_weight="0.2" />
                     <TextView
                         style="@style/FichaTecnicaTextView"
+                        android:id="@+id/FichaTecnicaLatitud"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:text="Calculauroeuntoerutnroetunroeruonterunoesontusoneudo" />
+                        android:text="@string/FichaTecnica0" />
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -264,10 +269,11 @@
                         android:layout_weight="0.2" />
                     <TextView
                         style="@style/FichaTecnicaTextView"
+                        android:id="@+id/FichaTecnicaLongitud"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
-                        android:text="Calculado" />
+                        android:text="@string/FichaTecnica0" />
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

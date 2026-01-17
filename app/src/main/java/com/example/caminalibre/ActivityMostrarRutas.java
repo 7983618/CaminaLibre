@@ -47,7 +47,7 @@ public class ActivityMostrarRutas extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewRutas);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AdapterReclyerView adapter = new AdapterReclyerView(rutas);
+        AdapterReclyerView adapter = new AdapterReclyerView(rutas, this);
         recyclerView.setAdapter(adapter);
         spinner = findViewById(R.id.spinnerFiltroDificultad);
         ArrayList<String> opciones = new ArrayList<>();
@@ -80,10 +80,10 @@ public class ActivityMostrarRutas extends AppCompatActivity {
     }
     private void inicializarDatos() {
         rutas = new ArrayList<>();
-        // --- RUTAS CIRCULARES ---
-        rutas.add(new Ruta("Anillo de Picos", "Asturias", Tipo.Circular, 5.0f, 115.0, "Travesía mítica por los Picos de Europa.", "Requiere equipo de alta montaña.", false));
-        rutas.add(new Ruta("Laguna Negra", "Soria", Tipo.Circular, 2.0f, 4.5, "Paseo sencillo rodeando la laguna glacial.", "Muy concurrido en festivos.", true));
-        rutas.add(new Ruta("Cañón del Río Lobos", "Burgos", Tipo.Circular, 3.0f, 12.0, "Ruta entre buitres y acantilados calizos.", "Llevar linterna para las cuevas.", true));
+        // --- RUTAS CIRCULARES --- y longitud y latitud
+        rutas.add(new Ruta("Anillo de Picos + Latitud y Longitud", "Asturias", Tipo.Circular, 5.0f, 115.0, "Travesía mítica por los Picos de Europa.", "Requiere equipo de alta montaña.", false, 86.34, 13.67));
+        rutas.add(new Ruta("Laguna Negra", "Soria", Tipo.Circular, 2.0f, 4.5, "Paseo sencillo rodeando la laguna glacial.", "Muy concurrido en festivos.", true, 86.34, 13.67));
+        rutas.add(new Ruta("Cañón del Río Lobos", "Burgos", Tipo.Circular, 3.0f, 12.0, "Ruta entre buitres y acantilados calizos.", "Llevar linterna para las cuevas.", true, 86.34, 13.67));
 
         // --- RUTAS LINEALES ---
         rutas.add(new Ruta("Vía Verde de la Jara", "Toledo", Tipo.Lineal, 1.0f, 52.0, "Antiguo trazado ferroviario ideal para bicis.", "Muchos túneles.", false));
