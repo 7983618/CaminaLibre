@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caminalibre.modelo.Ruta;
@@ -50,13 +51,16 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Haz pulsado sobre la ruta: " + rutas.get(position).getNombreRuta(), Toast.LENGTH_SHORT).show();
-                Ruta ruta = rutas.get(position);
-                // intent a la nueva actividad detalle
-                Intent intent = new Intent(context, FichaTecnica.class);
-                intent.putExtra("ruta", rutas.get(position));
-                intent.putExtra("posicion", Integer.valueOf(position));
-                launcher.launch(intent);
+                int posicion = holder.getBindingAdapterPosition();
+                if (posicion != RecyclerView.NO_POSITION) {
+                    Toast.makeText(v.getContext(), "Haz pulsado sobre la ruta: " + rutas.get(posicion).getNombreRuta(), Toast.LENGTH_SHORT).show();
+                    Ruta ruta = rutas.get(posicion);
+                    // intent a la nueva actividad detalle
+                    Intent intent = new Intent(context, FichaTecnica.class);
+                    intent.putExtra("ruta", rutas.get(posicion));
+                    intent.putExtra("posicion", Integer.valueOf(posicion));
+                    launcher.launch(intent);
+                }
             }
         });
     }
@@ -94,8 +98,17 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
             estrellas = itemView.findViewById(R.id.itemRutaEstrellas);
         }
     }
-    public void setRutas(ArrayList<Ruta> rutas){
-        this.rutas = rutas;
-        notifyDataSetChanged();
+    public void setRutas(ArrayList<Ruta> nuevasRutas){
+        // 1. Calculamos la diferencia entre la lista que ya tiene el adaptador y la nueva
+        DiffUtil.DiffResult resultado = DiffUtil.calculateDiff(new ComparadorRutas(this.rutas, nuevasRutas));
+
+        // 2. Reemplazamos la lista vieja por la nueva
+        this.rutas = nuevasRutas;
+
+        // 3. El adaptador se encarga de animar solo lo que ha cambiado
+        resultado.dispatchUpdatesTo(this);
+
+        //this.rutas = rutas;
+        //notifyDataSetChanged();
     }
 }
