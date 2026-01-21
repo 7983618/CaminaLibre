@@ -16,7 +16,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.modelo.Ruta;
+import com.example.caminalibre.modelo.Tipo;
 
 import java.util.ArrayList;
 
@@ -40,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         salir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.exit(0);
+                //System.exit(0); // mata el proceso de golpe
+                finishAffinity(); // cierra la app correctamente
             }
         });
 

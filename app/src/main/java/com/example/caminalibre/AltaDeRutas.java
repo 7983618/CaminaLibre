@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.modelo.Tipo;
 
@@ -68,6 +69,10 @@ public class AltaDeRutas extends AppCompatActivity {
 
 
             Ruta ruta = new Ruta(nombreRuta, localizacion, tipo, dificultad, distancia, descripcion, notas, favorita);
+            //CreadorDB db = CreadorDB.getDatabase(AltaDeRutas.this);
+            // añadir una ruta o muchas rutas
+            //db.getDAO().inserall(ruta);
+            //Toast.makeText(AltaDeRutas.this, "Ruta guardada en al base de datos", Toast.LENGTH_LONG).show();
             Intent intent = new Intent();
             intent.putExtra("ruta", ruta);
             setResult(RESULT_OK, intent);
