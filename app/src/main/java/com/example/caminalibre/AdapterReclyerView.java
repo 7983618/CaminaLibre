@@ -31,11 +31,30 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
         this.context = context;
         this.launcher = launcher;
     }
+
+
+
     @NonNull
     @Override
-    public AdapterReclyerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ruta, parent, false);
         return new ViewHolder(view);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView nombreRuta;
+        TextView distancia;
+        TextView localizacion;
+        TextView estrellas;
+        ImageView tipo;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            nombreRuta = itemView.findViewById(R.id.itemRutaNombre);
+            distancia = itemView.findViewById(R.id.itemRutaDistancia);
+            localizacion = itemView.findViewById(R.id.itemRutaLocalizacion);
+            tipo = itemView.findViewById(R.id.itemRutaTipo);
+            estrellas = itemView.findViewById(R.id.itemRutaEstrellas);
+        }
     }
 
     @Override
@@ -50,12 +69,13 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Haz pulsado sobre la ruta: " + rutas.get(position).getNombreRuta(), Toast.LENGTH_SHORT).show();
-                Ruta ruta = rutas.get(position);
+                int valor = holder.getBindingAdapterPosition();
+                Toast.makeText(v.getContext(), "Haz pulsado sobre la ruta: " + rutas.get(valor).getNombreRuta(), Toast.LENGTH_SHORT).show();
+                Ruta ruta = rutas.get(valor);
                 // intent a la nueva actividad detalle
                 Intent intent = new Intent(context, FichaTecnica.class);
-                intent.putExtra("ruta", rutas.get(position));
-                intent.putExtra("posicion", Integer.valueOf(position));
+                intent.putExtra("ruta", rutas.get(valor));
+                intent.putExtra("posicion", Integer.valueOf(valor));
                 launcher.launch(intent);
             }
         });
@@ -77,22 +97,6 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
     @Override
     public int getItemCount() {
         return rutas.size();
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nombreRuta;
-        TextView distancia;
-        TextView localizacion;
-        TextView estrellas;
-        ImageView tipo;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            nombreRuta = itemView.findViewById(R.id.itemRutaNombre);
-            distancia = itemView.findViewById(R.id.itemRutaDistancia);
-            localizacion = itemView.findViewById(R.id.itemRutaLocalizacion);
-            tipo = itemView.findViewById(R.id.itemRutaTipo);
-            estrellas = itemView.findViewById(R.id.itemRutaEstrellas);
-        }
     }
     public void setRutas(ArrayList<Ruta> rutas){
         this.rutas = rutas;

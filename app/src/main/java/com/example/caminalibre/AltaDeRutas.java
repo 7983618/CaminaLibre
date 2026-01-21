@@ -45,10 +45,10 @@ public class AltaDeRutas extends AppCompatActivity {
             RatingBar ratingBar = findViewById(R.id.ratingBar3);
             float dificultad = ratingBar.getRating();
 
-            EditText editText = findViewById(R.id.AltaRutasDistanciaEditText);
+            EditText editTextDistancia = findViewById(R.id.AltaRutasDistanciaEditText);
             float distancia = 0.0f;
             try {
-                distancia = Float.parseFloat(editText.getText().toString());
+                distancia = Float.parseFloat(editTextDistancia.getText().toString());
             }catch (NumberFormatException e){
                 Toast.makeText(AltaDeRutas.this, "Error en la distancia", Toast.LENGTH_LONG).show();
                 return;
@@ -66,8 +66,34 @@ public class AltaDeRutas extends AppCompatActivity {
             Switch aSwitch = findViewById(R.id.switch1);
             boolean favorita = aSwitch.isChecked();
 
+            double latitud = 0;
+            String editTextLatitud = ((EditText) findViewById(R.id.AltaRutasLatitudEditText)).getText().toString();
+            try {
+                latitud = Double.parseDouble(editTextLatitud);
+                if (latitud > 90 || latitud < -90) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException e) {
+                Toast.makeText(AltaDeRutas.this, "El formato de latitud es incorrecto", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            Ruta ruta = new Ruta(nombreRuta, localizacion, tipo, dificultad, distancia, descripcion, notas, favorita);
+            double longitud = 0;
+            String editTextLongitud = ((EditText) findViewById(R.id.AltaRutasLongitudEditText)).getText().toString();
+            try {
+                longitud = Double.parseDouble(editTextLongitud);
+                if (longitud > 180 || longitud < -180) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException e) {
+                Toast.makeText(AltaDeRutas.this, "El formato de longitud es incorrecto", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+
+
+            Ruta ruta = new Ruta(nombreRuta, localizacion, tipo, dificultad, distancia, descripcion, notas, favorita, latitud, longitud);
             Intent intent = new Intent();
             intent.putExtra("ruta", ruta);
             setResult(RESULT_OK, intent);

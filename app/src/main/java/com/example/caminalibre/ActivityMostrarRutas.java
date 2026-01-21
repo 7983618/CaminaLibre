@@ -80,9 +80,10 @@ public class ActivityMostrarRutas extends AppCompatActivity {
         }
 
         recyclerView = findViewById(R.id.recyclerViewRutas);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         adapter = new AdapterReclyerView(rutas, this, launcher);
+
         recyclerView.setAdapter(adapter);
         spinner = findViewById(R.id.spinnerFiltroDificultad);
         ArrayList<String> opciones = new ArrayList<>();
