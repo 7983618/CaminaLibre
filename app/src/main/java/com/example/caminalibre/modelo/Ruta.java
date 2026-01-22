@@ -1,15 +1,47 @@
 package com.example.caminalibre.modelo;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity(tableName = "rutas")
 public class Ruta implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+    @ColumnInfo(name = "nombreRuta")
     private String nombreRuta;
+
+    @ColumnInfo(name = "localizacion")
     private String localizacion;
     private Tipo tipo;
+
+    @ColumnInfo(name = "dificultad")
     private float dificultad;
+    @ColumnInfo(name = "distancia")
     private double distancia;
+    @ColumnInfo(name = "descripcion")
     private String descripcion;
 
+    @ColumnInfo(name = "notas")
+    private String notas;
+
+    @ColumnInfo(name = "favorita")
+    private boolean favorita;
+    @ColumnInfo(name = "latitud")
+    private double latitud;
+    @ColumnInfo(name = "longitud")
+    private double longitud;
+
+
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
     public double getLatitud() {
         return latitud;
     }
@@ -26,10 +58,7 @@ public class Ruta implements Serializable {
         this.longitud = longitud;
     }
 
-    private String notas;
-    private boolean favorita;
-    private double latitud;
-    private double longitud;
+
 
     public Ruta(String nombreRuta, String localizacion, Tipo tipo, float dificultad, double distancia, String descripcion, String notas, boolean favorita){
         this.nombreRuta = nombreRuta;
@@ -42,6 +71,9 @@ public class Ruta implements Serializable {
         this.favorita = favorita;
     }
 
+    public Ruta() {
+    }
+    @Ignore
     public Ruta(String nombreRuta, String localizacion, Tipo tipo, float dificultad, double distancia, String descripcion, String notas, boolean favorita, double latitud, double longitud) {
         this.nombreRuta = nombreRuta;
         this.localizacion = localizacion;

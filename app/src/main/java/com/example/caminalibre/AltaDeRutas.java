@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.modelo.Tipo;
 
@@ -92,12 +93,33 @@ public class AltaDeRutas extends AppCompatActivity {
 
 
 
+            Ruta ruta = new Ruta(nombreRuta, localizacion, tipo, dificultad, distancia, descripcion, notas, favorita);
 
-            Ruta ruta = new Ruta(nombreRuta, localizacion, tipo, dificultad, distancia, descripcion, notas, favorita, latitud, longitud);
-            Intent intent = new Intent();
-            intent.putExtra("ruta", ruta);
-            setResult(RESULT_OK, intent);
-            AltaDeRutas.this.finish();
+            // Requisito entrega: Usar hilos para llamadas al DAORUTA
+            CreadorDB.ejecutarhilo.execute(()->{
+                CreadorDB db = CreadorDB.getDatabase(AltaDeRutas.this);
+                // Guardamos en la base de datos
+                db.getDAO().inserall(ruta);
+                // Volvemos al hilo principal para el Toast y cerrar la pantalla
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(AltaDeRutas.this, "Ruta guardada en la base de datos", Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent();
+                        intent.putExtra("ruta", ruta);
+                        setResult(RESULT_OK, intent);
+                        AltaDeRutas.this.finish();
+                    }
+                });
+            });
+
+
+
+
+
+
+
         }
     };
 
