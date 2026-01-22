@@ -69,14 +69,32 @@ public class AltaDeRutas extends AppCompatActivity {
 
 
             Ruta ruta = new Ruta(nombreRuta, localizacion, tipo, dificultad, distancia, descripcion, notas, favorita);
-            //CreadorDB db = CreadorDB.getDatabase(AltaDeRutas.this);
-            // añadir una ruta o muchas rutas
-            //db.getDAO().inserall(ruta);
-            //Toast.makeText(AltaDeRutas.this, "Ruta guardada en al base de datos", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent();
-            intent.putExtra("ruta", ruta);
-            setResult(RESULT_OK, intent);
-            AltaDeRutas.this.finish();
+            
+            // Requisito entrega: Usar hilos para llamadas al DAORUTA
+            CreadorDB.ejecutarhilo.execute(()->{
+                CreadorDB db = CreadorDB.getDatabase(AltaDeRutas.this);
+                // Guardamos en la base de datos
+                db.getDAO().inserall(ruta);
+                // Volvemos al hilo principal para el Toast y cerrar la pantalla
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(AltaDeRutas.this, "Ruta guardada en la base de datos", Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent();
+                        intent.putExtra("ruta", ruta);
+                        setResult(RESULT_OK, intent);
+                        AltaDeRutas.this.finish();
+                    }
+                });
+            });
+
+
+
+
+
+
+
         }
     };
 

@@ -8,16 +8,20 @@ import androidx.room.Update;
 
 import com.example.caminalibre.modelo.Ruta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
-public interface DAO {
+public interface DAORUTA {
 
     @Insert
-    void inserall(Ruta... ruta);
+    void inserall(ArrayList<Ruta> rutas);
 
     @Update
     void updateRuta(Ruta ruta);
+
+    @Insert
+    void inserall(Ruta... ruta);
 
     @Delete
     void deleteRuta(Ruta ruta);

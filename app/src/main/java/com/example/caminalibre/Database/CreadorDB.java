@@ -4,22 +4,22 @@ package com.example.caminalibre.Database;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
-import com.example.caminalibre.Database.DAO.DAO;
+import com.example.caminalibre.Database.DAO.DAORUTA;
 import com.example.caminalibre.modelo.Ruta;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Database(entities = {Ruta.class}, version = 1)
 public abstract class CreadorDB extends RoomDatabase {
-    public abstract DAO getDAO();
+    public abstract DAORUTA getDAO();
     private static CreadorDB INSTANCE;
 
+    public static final ExecutorService ejecutarhilo =  Executors.newFixedThreadPool(4);
    public static CreadorDB getDatabase(Context context){
     if (INSTANCE == null){
         synchronized (CreadorDB.class) {
