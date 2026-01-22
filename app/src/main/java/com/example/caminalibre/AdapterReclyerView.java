@@ -16,10 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.caminalibre.modelo.Ruta;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.ViewHolder> {
 
-    ArrayList<Ruta> rutas;
+    List<Ruta> rutas;
     Context context;
 
     ActivityResultLauncher<Intent> launcher;
@@ -98,7 +99,7 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
     public int getItemCount() {
         return rutas.size();
     }
-    public void setRutas(ArrayList<Ruta> rutas){
+    public void setRutas(List<Ruta> rutas){
         this.rutas = rutas;
         notifyDataSetChanged();
     }

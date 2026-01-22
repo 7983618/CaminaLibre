@@ -4,7 +4,9 @@ package com.example.caminalibre.Database;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.Toast;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -12,6 +14,7 @@ import androidx.room.RoomDatabase;
 import com.example.caminalibre.Database.DAO.DAORUTA;
 import com.example.caminalibre.modelo.Ruta;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,9 +30,7 @@ public abstract class CreadorDB extends RoomDatabase {
     if (INSTANCE == null){
         synchronized (CreadorDB.class) {
             if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder
-                                (context.getApplicationContext(), CreadorDB.class, "rutas.db")
-                        .allowMainThreadQueries() // permite realizar operaciones en el hilo principal
+                INSTANCE = Room.databaseBuilder(context.getApplicationContext(), CreadorDB.class, "rutas.db")
                         .fallbackToDestructiveMigration() // si modificas clase borra y crea
                         .build();
             }
@@ -40,17 +41,24 @@ public abstract class CreadorDB extends RoomDatabase {
 
    public void insertarRuta(Ruta ruta, Activity activity) {
        CreadorDB.ejecutarhilo.execute(()->{
-           getDAO().inserall(ruta);
+           getDAO().create(ruta);
            if (activity != null){
                activity.finish();
+
            }
        });
-
    }
-   public List<Ruta> selectRutas(){
-       CreadorDB.ejecutarhilo.execute(()->{
-           return getDAO().getAllRutas();
+
+   public void insertarLista(List<Ruta> rutas) {
+       CreadorDB.ejecutarhilo.execute(new Runnable() {
+           @Override
+           public void run() {
+               getDAO().createAll((ArrayList<Ruta>) rutas);
+           }
        });
-
    }
+
+    public LiveData<List<Ruta>> getRutas() {
+        return getDAO().readAll();
+    }
 }

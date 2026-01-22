@@ -16,23 +16,23 @@ import java.util.List;
 public interface DAORUTA {
 
     @Insert
-    void inserall(ArrayList<Ruta> rutas);
+    void createAll(ArrayList<Ruta> rutas);
 
     @Update
-    void updateRuta(Ruta ruta);
+    void update(Ruta ruta);
 
     @Insert
-    void inserall(Ruta... ruta);
+    void create(Ruta... ruta);
 
     @Delete
-    void deleteRuta(Ruta ruta);
+    void delete(Ruta ruta);
 
     @Query("SELECT * FROM rutas WHERE id = :id")
-    Ruta getRuta(int id);
+    Ruta read(int id);
 
     @Query("SELECT * FROM rutas")
-    LiveData<List<Ruta>> getAllRutas();
+    LiveData<List<Ruta>> readAll();
 
     @Query("SELECT * FROM rutas WHERE dificultad = :dificultad")
-    LiveData<List<Ruta>> getRutasPorDificultad(float dificultad);
+    LiveData<List<Ruta>> readByDificulty(float dificultad);
 }
