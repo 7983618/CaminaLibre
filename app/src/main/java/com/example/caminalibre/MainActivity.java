@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Ruta> rutas = new ArrayList<>();
+//    private ArrayList<Ruta> rutas = new ArrayList<>();
     private ActivityResultLauncher<Intent> altaRutasLauncher;
     Button salir,acercade,altaRutasButton,vermisrutas,ayuda;
     @Override
@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        CreadorDB.ejecutarhilo.execute(() -> {
-            CreadorDB db = CreadorDB.getDatabase(this);
-            rutas.forEach(ruta -> db.getDAO().inserall(ruta));
-        });
-        rutas = inicializarDatos();
+//        CreadorDB.ejecutarhilo.execute(() -> {
+//            CreadorDB db = CreadorDB.getDatabase(this);
+//            rutas.forEach(ruta -> db.getDAO().inserall(ruta));
+//        });
+//        rutas = inicializarDatos();
         salir = findViewById(R.id.ActivadadPrincipalbtnSalir);
         salir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == RESULT_OK) {
-                            Intent intent = result.getData();
-                            if (intent != null) {
-                                Ruta ruta = (Ruta) intent.getSerializableExtra("ruta");
-                                rutas.add(ruta);
-
-                            }
-                        }
+//                        if (result.getResultCode() == RESULT_OK) {
+//                            Intent intent = result.getData();
+//                            if (intent != null) {
+//                                Ruta ruta = (Ruta) intent.getSerializableExtra("ruta");
+//                                rutas.add(ruta);
+//
+//                            }
+//                        }
                     }
                 }
         );
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityMostrarRutas.class);
-                intent.putExtra("rutas", rutas);
+//                intent.putExtra("rutas", rutas);
                 startActivity(intent);
             }
         });

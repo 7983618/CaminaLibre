@@ -1,5 +1,6 @@
 package com.example.caminalibre.Database.DAO;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -30,8 +31,8 @@ public interface DAORUTA {
     Ruta getRuta(int id);
 
     @Query("SELECT * FROM rutas")
-    List<Ruta> getAllRutas();
+    LiveData<List<Ruta>> getAllRutas();
 
     @Query("SELECT * FROM rutas WHERE dificultad = :dificultad")
-    List<Ruta> getRutasPorDificultad(float dificultad);
+    LiveData<List<Ruta>> getRutasPorDificultad(float dificultad);
 }

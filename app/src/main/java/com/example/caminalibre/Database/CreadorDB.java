@@ -2,6 +2,7 @@ package com.example.caminalibre.Database;
 
 
 
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.room.Database;
@@ -11,6 +12,7 @@ import androidx.room.RoomDatabase;
 import com.example.caminalibre.Database.DAO.DAORUTA;
 import com.example.caminalibre.modelo.Ruta;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,6 +22,7 @@ public abstract class CreadorDB extends RoomDatabase {
     private static CreadorDB INSTANCE;
 
     public static final ExecutorService ejecutarhilo =  Executors.newFixedThreadPool(4);
+
    public static CreadorDB getDatabase(Context context){
     if (INSTANCE == null){
         synchronized (CreadorDB.class) {
@@ -34,4 +37,20 @@ public abstract class CreadorDB extends RoomDatabase {
     }
     return INSTANCE;
    };
+
+   public void insertarRuta(Ruta ruta, Activity activity) {
+       CreadorDB.ejecutarhilo.execute(()->{
+           getDAO().inserall(ruta);
+           if (activity != null){
+               activity.finish();
+           }
+       });
+
+   }
+   public List<Ruta> selectRutas(){
+       CreadorDB.ejecutarhilo.execute(()->{
+           return getDAO().getAllRutas();
+       });
+
+   }
 }
