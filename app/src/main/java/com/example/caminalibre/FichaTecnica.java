@@ -15,12 +15,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.modelo.Ruta;
 
 public class FichaTecnica extends AppCompatActivity {
     Ruta ruta;
     Integer posicion;
-    boolean modificada = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Toast.makeText(this, "antes", Toast.LENGTH_SHORT);
@@ -85,20 +85,9 @@ public class FichaTecnica extends AppCompatActivity {
                     ruta.setFavorita(false);
                 }
                 Toast.makeText(FichaTecnica.this, String.valueOf(ruta.isFavorita()), Toast.LENGTH_SHORT).show();
-                modificada = true;
+                CreadorDB.getDatabase(FichaTecnica.this).actualizarRuta(ruta);
             }
         });
-    }
-
-    @Override
-    public void finish() {
-        if (modificada) {
-            Intent intent = new Intent();
-            intent.putExtra("ruta_devuelta", ruta);
-            intent.putExtra("posicion", posicion);
-            setResult(RESULT_OK, intent);
-        }
-        super.finish();
     }
 }
 

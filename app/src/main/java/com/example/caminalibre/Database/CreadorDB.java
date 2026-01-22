@@ -40,17 +40,26 @@ public abstract class CreadorDB extends RoomDatabase {
    };
 
    public void insertarRuta(Ruta ruta, Activity activity) {
-       CreadorDB.ejecutarhilo.execute(()->{
-           getDAO().create(ruta);
-           if (activity != null){
-               activity.finish();
+       ejecutarhilo.execute(new Runnable() {
+           @Override
+           public void run() {
+               getDAO().create(ruta);
+               if (activity != null){
+                   activity.runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           Toast.makeText(activity, "Guardado con éxito", Toast.LENGTH_SHORT).show();
+                           activity.finish();
+                       }
+                   });
 
+               }
            }
        });
    }
 
    public void insertarLista(List<Ruta> rutas) {
-       CreadorDB.ejecutarhilo.execute(new Runnable() {
+       ejecutarhilo.execute(new Runnable() {
            @Override
            public void run() {
                getDAO().createAll((ArrayList<Ruta>) rutas);
@@ -60,5 +69,13 @@ public abstract class CreadorDB extends RoomDatabase {
 
     public LiveData<List<Ruta>> getRutas() {
         return getDAO().readAll();
+    }
+    public void actualizarRuta(Ruta ruta) {
+       ejecutarhilo.execute(new Runnable() {
+           @Override
+           public void run() {
+               getDAO().update(ruta);
+           }
+       });
     }
 }

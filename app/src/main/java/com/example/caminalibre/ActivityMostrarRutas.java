@@ -33,7 +33,6 @@ public class ActivityMostrarRutas extends AppCompatActivity {
     Spinner spinner;
     RecyclerView recyclerView;
     ArrayList<Ruta> rutas = new ArrayList<>();
-
     AdapterReclyerView adapter;
 
 
@@ -55,30 +54,9 @@ public class ActivityMostrarRutas extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
-                    public void onActivityResult(ActivityResult result) {
-//                        if (result.getResultCode() == RESULT_OK) {
-//                            Intent intent = result.getData();
-//                            if (intent != null) {
-//                                Ruta ruta = (Ruta) intent.getSerializableExtra("ruta_devuelta");
-//                                Integer posicion = (Integer) intent.getSerializableExtra("posicion");
-//                                adapter.rutas.set(posicion.intValue(), ruta);
-//                                adapter.notifyItemChanged(posicion);
-//
-//                                for (int i = 0; i < rutas.size(); i++) {
-//                                    if (rutas.get(i).getNombreRuta().equals(ruta.getNombreRuta())) {
-//                                        rutas.set(i, ruta);
-//                                        break;
-//                                    }
-//                                }
-//                            }
-//                        }
-                    }
+                    public void onActivityResult(ActivityResult result) {}
                 }
         );
-
-
-//        Intent intent = getIntent();
-//        rutas = (ArrayList<Ruta>) intent.getSerializableExtra("rutas");
 
         if (CreadorDB.getDatabase(this).getRutas().getValue() == null) {
             inicializarDatos();
@@ -109,7 +87,7 @@ public class ActivityMostrarRutas extends AppCompatActivity {
         spinner.setAdapter(adapterspinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { //IMPLEMENTAR OTROS SELECTS
                 String dificultad = spinner.getSelectedItem().toString();
                 ArrayList<Ruta> tareasfiltro = new ArrayList<>(rutas.
                         stream().
@@ -122,9 +100,7 @@ public class ActivityMostrarRutas extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
     private void inicializarDatos() {

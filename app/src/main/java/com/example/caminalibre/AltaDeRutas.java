@@ -29,17 +29,20 @@ public class AltaDeRutas extends AppCompatActivity {
                 Toast.makeText(AltaDeRutas.this, "No hay nombre de ruta", Toast.LENGTH_LONG).show();
                 return;
             }
+
             String localizacion = ((EditText) findViewById(R.id.AltasRutasLocalizacionEditText)).getText().toString();
             if (localizacion.isBlank()) {
                 Toast.makeText(AltaDeRutas.this, "No hay localización de ruta", Toast.LENGTH_LONG).show();
                 return;
             }
+
             RadioGroup group = findViewById(R.id.AltasRutasTipoRadioGroup);
             int checkedId = group.getCheckedRadioButtonId();
             if(checkedId == -1){
                 Toast.makeText(AltaDeRutas.this, "No hay tipo de ruta", Toast.LENGTH_LONG).show();
                 return;
             }
+
             RadioButton radioButton = findViewById(checkedId);
             Tipo tipo = Tipo.valueOf(radioButton.getText().toString());
 
@@ -54,16 +57,19 @@ public class AltaDeRutas extends AppCompatActivity {
                 Toast.makeText(AltaDeRutas.this, "Error en la distancia", Toast.LENGTH_LONG).show();
                 return;
             }
+
             String descripcion = ((EditText) findViewById(R.id.AltaRutasDescripcionEditText)).getText().toString();
             if (descripcion.isBlank()){
                 Toast.makeText(AltaDeRutas.this, "No hay descripcion de ruta", Toast.LENGTH_LONG).show();
                 return;
             }
+
             String notas = ((EditText) findViewById(R.id.AltaRutasNotasEditText)).getText().toString();
             if (notas.isBlank()){
                 Toast.makeText(AltaDeRutas.this, "No hay notas de ruta", Toast.LENGTH_LONG).show();
                 return;
             }
+
             Switch aSwitch = findViewById(R.id.switch1);
             boolean favorita = aSwitch.isChecked();
 
@@ -95,35 +101,6 @@ public class AltaDeRutas extends AppCompatActivity {
 
             Ruta ruta = new Ruta(nombreRuta, localizacion, tipo, dificultad, distancia, descripcion, notas, favorita);
             CreadorDB.getDatabase(AltaDeRutas.this).insertarRuta(ruta, AltaDeRutas.this);
-
-
-            // Requisito entrega: Usar hilos para llamadas al DAORUTA
-//            CreadorDB.ejecutarhilo.execute(()->{
-//                CreadorDB db = CreadorDB.getDatabase(AltaDeRutas.this);
-//                // Guardamos en la base de datos
-//                db.getDAO().inserall(ruta);
-////                Toast.makeText(AltaDeRutas.this, "Ruta guardada en la base de datos", Toast.LENGTH_LONG).show();
-//                // Volvemos al hilo principal para el Toast y cerrar la pantalla
-////                runOnUiThread(new Runnable() {
-////                    @Override
-////                    public void run() {
-////
-////
-//////                        Intent intent = new Intent();
-//////                        intent.putExtra("ruta", ruta);
-//////                        setResult(RESULT_OK, intent);
-////
-////                    }
-////                });
-//            });
-//            AltaDeRutas.this.finish();
-
-
-
-
-
-
-
         }
     };
 

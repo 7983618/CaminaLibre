@@ -59,6 +59,16 @@
                         android:layout_weight="1"
                         android:button="@drawable/favorite"
                         app:buttonTint="@null" /> <!--para que se vea el color original-->
+                    <ImageButton
+                        android:id="@+id/FichaTecnicaBorrarButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:src="@drawable/favorite"
+                        android:background="@android:color/transparent"
+                        app:buttonTint="@null"
+                        android:layout_gravity="center"/> <!--para que se vea el color original-->
+
 
 
                 </LinearLayout>
