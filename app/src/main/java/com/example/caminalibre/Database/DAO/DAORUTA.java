@@ -33,6 +33,4 @@ public interface DAORUTA {
     @Query("SELECT * FROM rutas")
     LiveData<List<Ruta>> readAll();
 
-    @Query("SELECT * FROM rutas WHERE dificultad = :dificultad")
-    LiveData<List<Ruta>> readByDificulty(float dificultad);
 }

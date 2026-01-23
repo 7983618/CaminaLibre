@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 public class ActivityMostrarRutas extends AppCompatActivity {
     Spinner spinner;
     RecyclerView recyclerView;
-    ArrayList<Ruta> rutas = new ArrayList<>();
+    List<Ruta> rutas = new ArrayList<>();
     AdapterReclyerView adapter;
 
 
@@ -66,11 +66,12 @@ public class ActivityMostrarRutas extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new AdapterReclyerView(rutas, this, launcher);
         recyclerView.setAdapter(adapter);
+
         CreadorDB.getDatabase(this).getRutas().observe(this, new Observer<List<Ruta>>() {
             @Override
             public void onChanged(List<Ruta> rutas) {
-                adapter.setRutas(rutas);
-                ActivityMostrarRutas.this.rutas = (ArrayList<Ruta>) rutas;
+                ActivityMostrarRutas.this.rutas = rutas;
+                filtrarRuta();
             }
         });
 
@@ -88,20 +89,22 @@ public class ActivityMostrarRutas extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { //IMPLEMENTAR OTROS SELECTS
-                String dificultad = spinner.getSelectedItem().toString();
-                ArrayList<Ruta> tareasfiltro = new ArrayList<>(rutas.
-                        stream().
-                        filter(r -> dificultad.equals("Todas") ||
-                                (dificultad.equals("Facil") && r.getDificultad() < 2)
-                                || (dificultad.equals("Media") && r.getDificultad() >= 2 && r.getDificultad() < 4)
-                                || (dificultad.equals("Dificil") && r.getDificultad() >= 4)).collect(Collectors.toList()));
-
-               adapter.setRutas(tareasfiltro);
+                filtrarRuta();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
+    }
+    public void filtrarRuta(){
+        String dificultad = spinner.getSelectedItem().toString();
+        ArrayList<Ruta> tareasfiltro = new ArrayList<>(rutas.stream().
+                filter(r -> dificultad.equals("Todas") ||
+                        (dificultad.equals("Facil") && r.getDificultad() < 2)
+                        || (dificultad.equals("Media") && r.getDificultad() >= 2 && r.getDificultad() < 4)
+                        || (dificultad.equals("Dificil") && r.getDificultad() >= 4)).collect(Collectors.toList()));
+
+        adapter.setRutas(tareasfiltro);
     }
     private void inicializarDatos() {
         rutas = new ArrayList<>();

@@ -27,7 +27,7 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
     private static final String codigoestrellellena = "\u2605";
     private static final String codigostrellanula = "\u2606";
 
-    public AdapterReclyerView(ArrayList<Ruta> rutas, Context context, ActivityResultLauncher<Intent> launcher) {
+    public AdapterReclyerView(List<Ruta> rutas, Context context, ActivityResultLauncher<Intent> launcher) {
         this.rutas = rutas;
         this.context = context;
         this.launcher = launcher;
