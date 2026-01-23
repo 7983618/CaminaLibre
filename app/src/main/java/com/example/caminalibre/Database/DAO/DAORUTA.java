@@ -32,5 +32,15 @@ public interface DAORUTA {
 
     @Query("SELECT * FROM rutas")
     LiveData<List<Ruta>> readAll();
+    @Query("SELECT * FROM rutas")
+    List<Ruta> readAllSync();
+
+
+    @Query("SELECT * FROM rutas WHERE " +
+            "(:filtro = 'Todas') OR " +
+            "(:filtro = 'Facil' AND dificultad <= 1.5) OR " +
+            "(:filtro = 'Media' AND dificultad > 1.5 AND dificultad <= 3.5) OR " +
+            "(:filtro = 'Dificil' AND dificultad > 3.5)")
+    LiveData<List<Ruta>> readFiltradas(String filtro);
 
 }

@@ -11,7 +11,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.caminalibre.Database.DAO.DAOPuntosDeInteres;
 import com.example.caminalibre.Database.DAO.DAORUTA;
+import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
 
 import java.util.ArrayList;
@@ -19,9 +21,11 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Ruta.class}, version = 1)
+@Database(entities = {Ruta.class, PuntoInteres.class}, version = 2)
 public abstract class CreadorDB extends RoomDatabase {
     public abstract DAORUTA getDAO();
+    public abstract DAOPuntosDeInteres getPuntosDAO();
+
     private static CreadorDB INSTANCE;
 
     public static final ExecutorService ejecutarhilo =  Executors.newFixedThreadPool(4);
@@ -69,6 +73,9 @@ public abstract class CreadorDB extends RoomDatabase {
 
     public LiveData<List<Ruta>> getRutas() {
         return getDAO().readAll();
+    }
+    public LiveData<List<Ruta>> getRutasFiltradas(String filtro) {
+        return getDAO().readFiltradas(filtro);
     }
     public void actualizarRuta(Ruta ruta) {
        ejecutarhilo.execute(new Runnable() {

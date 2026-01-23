@@ -1,24 +1,24 @@
-package com.example.caminalibre;
+package com.example.caminalibre.adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caminalibre.R;
+import com.example.caminalibre.activities.FichaTecnica;
 import com.example.caminalibre.modelo.Ruta;
+import com.example.caminalibre.viewholders.RutasViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.ViewHolder> {
+public class AdapterReclyerView extends RecyclerView.Adapter<RutasViewHolder> {
 
     List<Ruta> rutas;
     Context context;
@@ -37,29 +37,15 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RutasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ruta, parent, false);
-        return new ViewHolder(view);
+        return new RutasViewHolder(view);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nombreRuta;
-        TextView distancia;
-        TextView localizacion;
-        TextView estrellas;
-        ImageView tipo;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            nombreRuta = itemView.findViewById(R.id.itemRutaNombre);
-            distancia = itemView.findViewById(R.id.itemRutaDistancia);
-            localizacion = itemView.findViewById(R.id.itemRutaLocalizacion);
-            tipo = itemView.findViewById(R.id.itemRutaTipo);
-            estrellas = itemView.findViewById(R.id.itemRutaEstrellas);
-        }
-    }
+
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterReclyerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RutasViewHolder holder, int position) {
         Ruta ruta = rutas.get(position);
         holder.nombreRuta.setText(ruta.getNombreRuta());
         holder.distancia.setText(ruta.getDistancia() + " km");
@@ -76,8 +62,10 @@ public class AdapterReclyerView extends RecyclerView.Adapter<AdapterReclyerView.
                 // intent a la nueva actividad detalle
                 Intent intent = new Intent(context, FichaTecnica.class);
                 intent.putExtra("ruta", rutas.get(valor));
-                intent.putExtra("posicion", Integer.valueOf(valor));
-                launcher.launch(intent);
+                //intent.putExtra("posicion", Integer.valueOf(valor));
+                //launcher.launch(intent);
+                context.startActivity(intent);
+
             }
         });
     }

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FichaTecnica">
+    tools:context=".activities.FichaTecnica">
 
 
     <ScrollView
@@ -292,11 +292,39 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="4"
                         android:text="@string/FichaTecnica0" />
+
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.2" />
                 </LinearLayout>
+<!--                SOLO MODIFICADO ESTO PARA INCLUIR RECYCLER VIEW EN LA 3 ENTREGA RESTO IGUAL QUE LOS ANTERIORES-->
+                <LinearLayout
+                    style="@style/FichaTecnicaFila"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16sp"
+                    android:orientation="vertical"
+                    android:paddingTop="16dp">
+
+                    <TextView
+                        style="@style/AppTextViewTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Puntos de Interés"
+                        android:textColor="@color/red"
+                        android:textAllCaps="true"
+                        android:layout_marginBottom="16sp"
+                        android:textSize="32sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewPuntosInteres"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        tools:listitem="@layout/item_punto_interes" />
+                </LinearLayout>
+<!--                 SOLO MODIFICADO ESTO PARA INCLUIR RECYCLER VIEW EN LA 3 ENTREGA RESTO IGUAL QUE LOS ANTERIORES-->
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

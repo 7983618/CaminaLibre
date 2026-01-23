@@ -1,4 +1,4 @@
-package com.example.caminalibre;
+package com.example.caminalibre.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,13 +16,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caminalibre.adapters.AdapterPuntos;
 import com.example.caminalibre.Database.CreadorDB;
+import com.example.caminalibre.R;
 import com.example.caminalibre.modelo.Ruta;
+
+import java.util.ArrayList;
 
 public class FichaTecnica extends AppCompatActivity {
     Ruta ruta;
     Integer posicion;
+
+    RecyclerView recyclerView;
+    AdapterPuntos adapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Toast.makeText(this, "antes", Toast.LENGTH_SHORT);
@@ -34,9 +45,9 @@ public class FichaTecnica extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        ruta = (Ruta) getIntent().getSerializableExtra("ruta");
-        posicion = (Integer) getIntent().getSerializableExtra("posicion");
+        ejecutarrecyclerview();
+        //ruta = (Ruta) getIntent().getSerializableExtra("ruta");
+        //posicion = (Integer) getIntent().getSerializableExtra("posicion");
 
         Toast.makeText(this, "despues", Toast.LENGTH_SHORT);
         TextView titulo = (TextView) findViewById(R.id.FichaTecnicaTitulo);
@@ -98,6 +109,28 @@ public class FichaTecnica extends AppCompatActivity {
                 CreadorDB.getDatabase(FichaTecnica.this).borrarRuta(ruta, FichaTecnica.this);
             }
         });
+    }
+
+    private void ejecutarrecyclerview() {
+        recyclerView = findViewById(R.id.recyclerViewPuntosInteres);
+        ruta = (Ruta) getIntent().getSerializableExtra("ruta");
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new AdapterPuntos(new ArrayList<>(), this);
+        recyclerView.setAdapter(adapter);
+
+        if (ruta !=null){
+            long id = ruta.getId();
+            CreadorDB.getDatabase(this).getPuntosDAO().getPuntosDeInteres(id)
+                    .observe(this,puntos->{
+                        adapter.setLista(puntos);
+                    });
+        }else{
+            Toast.makeText(this, "Ruta no encontrada", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 }
 

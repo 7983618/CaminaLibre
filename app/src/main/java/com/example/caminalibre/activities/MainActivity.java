@@ -1,11 +1,10 @@
-package com.example.caminalibre;
+package com.example.caminalibre.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -16,98 +15,134 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caminalibre.Database.CreadorDB;
+import com.example.caminalibre.R;
+import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.modelo.Tipo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class ActivityMostrarRutas extends AppCompatActivity {
-    Spinner spinner;
-    RecyclerView recyclerView;
-    List<Ruta> rutas = new ArrayList<>();
-    AdapterReclyerView adapter;
+public class MainActivity extends AppCompatActivity {
 
-
-    public ActivityResultLauncher<Intent> launcher;
-
-
+//    private ArrayList<Ruta> rutas = new ArrayList<>();
+    private ActivityResultLauncher<Intent> altaRutasLauncher;
+    Button salir,acercade,altaRutasButton,vermisrutas,ayuda;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_mostrar_tareas);
+        setContentView(R.layout.activity_main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //insertarpuntosprueba();
 
-        launcher = registerForActivityResult(
+//        CreadorDB.ejecutarhilo.execute(() -> {
+//            CreadorDB db = CreadorDB.getDatabase(this);
+//            rutas.forEach(ruta -> db.getDAO().inserall(ruta));
+//        });
+//        rutas = inicializarDatos();
+        salir = findViewById(R.id.ActivadadPrincipalbtnSalir);
+        salir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //System.exit(0); // mata el proceso de golpe
+                finishAffinity(); // cierra la app correctamente
+            }
+        });
+
+        acercade = findViewById(R.id.ActivadadPrincipalbtnAcercaDe);
+
+        acercade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AcercaDeActivity.class);
+                startActivity(intent);
+            }
+        });
+        altaRutasLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
-                    public void onActivityResult(ActivityResult result) {}
+                    public void onActivityResult(ActivityResult result) {
+//                        if (result.getResultCode() == RESULT_OK) {
+//                            Intent intent = result.getData();
+//                            if (intent != null) {
+//                                Ruta ruta = (Ruta) intent.getSerializableExtra("ruta");
+//                                rutas.add(ruta);
+//
+//                            }
+//                        }
+                    }
                 }
         );
-
-        if (CreadorDB.getDatabase(this).getRutas().getValue() == null) {
-            inicializarDatos();
-        }
-
-        recyclerView = findViewById(R.id.recyclerViewRutas);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AdapterReclyerView(rutas, this, launcher);
-        recyclerView.setAdapter(adapter);
-
-        CreadorDB.getDatabase(this).getRutas().observe(this, new Observer<List<Ruta>>() {
+        altaRutasButton = findViewById(R.id.ActivadadPrincipalbtnAñadirRuta);
+        altaRutasButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(List<Ruta> rutas) {
-                ActivityMostrarRutas.this.rutas = rutas;
-                filtrarRuta();
+            public void onClick(View v) {
+                altaRutasLauncher.launch(new Intent(MainActivity.this, AltaDeRutas.class));
+            }
+
+        });
+
+        vermisrutas = findViewById(R.id.ActivadadPrincipalbtnVerMisRutas);
+        vermisrutas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityMostrarRutas.class);
+//                intent.putExtra("rutas", rutas);
+                startActivity(intent);
+            }
+        });
+        ayuda = findViewById(R.id.ActivadadPrincipalbtnAyuda);
+
+        ayuda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://www.senderismo.net/consejos";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
             }
         });
 
-
-
-        spinner = findViewById(R.id.spinnerFiltroDificultad);
-        ArrayList<String> opciones = new ArrayList<>();
-        opciones.add("Todas");
-        opciones.add("Facil");
-        opciones.add("Media");
-        opciones.add("Dificil");
-        ArrayAdapter<String> adapterspinner = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
-
-        spinner.setAdapter(adapterspinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { //IMPLEMENTAR OTROS SELECTS
-                filtrarRuta();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
     }
-    public void filtrarRuta(){
-        String dificultad = spinner.getSelectedItem().toString();
-        ArrayList<Ruta> tareasfiltro = new ArrayList<>(rutas.stream().
-                filter(r -> dificultad.equals("Todas") ||
-                        (dificultad.equals("Facil") && r.getDificultad() < 2)
-                        || (dificultad.equals("Media") && r.getDificultad() >= 2 && r.getDificultad() < 4)
-                        || (dificultad.equals("Dificil") && r.getDificultad() >= 4)).collect(Collectors.toList()));
 
-        adapter.setRutas(tareasfiltro);
+    private void insertarpuntosprueba() {
+            CreadorDB.ejecutarhilo.execute(() -> {
+                // 1. Obtener todas las rutas que ya están en la BD
+                // Nota: Usamos una consulta directa al DAO fuera de LiveData para este proceso masivo
+                List<Ruta> todasLasRutas = CreadorDB.getDatabase(this).getDAO().readAllSync();
+
+                List<PuntoInteres> puntosNuevos = new ArrayList<>();
+
+                // 2. Por cada ruta, crear 5 puntos de interés
+                for (Ruta r : todasLasRutas) {
+                    long idRuta = r.getId();
+                    for (int i = 1; i <= 5; i++) {
+                        puntosNuevos.add(new PuntoInteres(
+                                "Punto " + i + " de " + r.getNombreRuta(), // Nombre
+                                r.getLatitud() + (i * 0.001),             // Latitud simulada
+                                r.getLongitud() + (i * 0.001),            // Longitud simulada
+                                "foto_demo_" + i,                         // Foto demo
+                                idRuta                                     // ID de la ruta vinculada
+                        ));
+                    }
+                }
+
+                // 3. Insertar todos los puntos de golpe en la base de datos
+                CreadorDB.getDatabase(this).getPuntosDAO().insertAll(puntosNuevos);
+            });
+
     }
-    private void inicializarDatos() {
-        rutas = new ArrayList<>();
+
+    private static ArrayList<Ruta> inicializarDatos() {
+        ArrayList<Ruta> rutas = new ArrayList<>();
         // --- RUTAS CIRCULARES --- y longitud y latitud
         rutas.add(new Ruta("Anillo de Picos + Latitud y Longitud", "Asturias", Tipo.Circular, 5.0f, 115.0, "Travesía mítica por los Picos de Europa.", "Requiere equipo de alta montaña.", false, 86.34, 13.67));
         rutas.add(new Ruta("Laguna Negra", "Soria", Tipo.Circular, 2.0f, 4.5, "Paseo sencillo rodeando la laguna glacial.", "Muy concurrido en festivos.", true, 41.99, -2.84));
@@ -167,7 +202,6 @@ public class ActivityMostrarRutas extends AppCompatActivity {
         rutas.add(new Ruta("Ancares (Cuiña)", "Lugo", Tipo.Lineal, 3.0f, 10.0, "Montañas indómitas entre Galicia y León.", "Zona de osos y urogallos.", false, 42.8500, -6.8333));
         rutas.add(new Ruta("Sierra de Urbasa", "Navarra", Tipo.Circular, 2.0f, 9.0, "Hayedo encantado y nacedero del Urederra.", "Aguas de color azul turquesa.", true, 42.8333, -2.1500));
         rutas.add(new Ruta("Valle de Ordesa (Cola de Caballo)", "Huesca", Tipo.Lineal, 3.0f, 17.5, "Clásica ascensión por el fondo del valle.", "Impresionantes paredes de piedra.", true, 42.6667, -0.0500));
-        CreadorDB.getDatabase(this).insertarLista(rutas);
+        return rutas;
     }
-
 }
