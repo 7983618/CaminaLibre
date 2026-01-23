@@ -2,8 +2,10 @@ package com.example.caminalibre;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,6 +88,14 @@ public class FichaTecnica extends AppCompatActivity {
                 }
                 Toast.makeText(FichaTecnica.this, String.valueOf(ruta.isFavorita()), Toast.LENGTH_SHORT).show();
                 CreadorDB.getDatabase(FichaTecnica.this).actualizarRuta(ruta);
+            }
+        });
+
+        ImageButton borrar = (ImageButton) findViewById(R.id.FichaTecnicaBorrarButton);
+        borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreadorDB.getDatabase(FichaTecnica.this).borrarRuta(ruta, FichaTecnica.this);
             }
         });
     }

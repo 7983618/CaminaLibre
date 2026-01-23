@@ -78,4 +78,20 @@ public abstract class CreadorDB extends RoomDatabase {
            }
        });
     }
+    public void borrarRuta(Ruta ruta, Activity activity) {
+       ejecutarhilo.execute(new Runnable() {
+           @Override
+           public void run() {
+               getDAO().delete(ruta);
+               if (activity != null) {
+                   activity.runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           activity.finish();
+                       }
+                   });
+               }
+           }
+       });
+    }
 }
