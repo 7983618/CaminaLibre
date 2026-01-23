@@ -1,6 +1,5 @@
-package com.example.caminalibre;
+package com.example.caminalibre.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.caminalibre.Database.CreadorDB;
+import com.example.caminalibre.R;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.modelo.Tipo;
 

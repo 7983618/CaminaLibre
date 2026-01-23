@@ -20,16 +20,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CaminaLibre">
         <activity
-            android:name=".FichaTecnica"
+            android:name=".activities.FichaTecnica"
             android:exported="false" />
         <activity
-            android:name=".ActivityMostrarRutas"
+            android:name=".activities.ActivityMostrarRutas"
             android:exported="false" />
         <activity
-            android:name=".AltaDeRutas"
+            android:name=".activities.AltaDeRutas"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AcercaDeActivity" />
+        <activity android:name=".activities.AcercaDeActivity" />
     </application>
 
 </manifest>
