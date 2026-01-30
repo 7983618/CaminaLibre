@@ -30,4 +30,6 @@
     <string name="FichaTecnica0" translatable="false">0</string>
     <string name="FichaTecnicaMinutos">minutes</string>
     <string name="FichaTecnica0Minutos">0 minutes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

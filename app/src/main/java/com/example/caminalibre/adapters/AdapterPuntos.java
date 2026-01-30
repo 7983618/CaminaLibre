@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.caminalibre.viewholders.PuntoViewHolder;
 
@@ -39,7 +40,40 @@ public class AdapterPuntos extends RecyclerView.Adapter<PuntoViewHolder> {
         
         String coordenadas = "Lat: " + punto.getLatitud() + " | Lon: " + punto.getLongitud();
         holder.coordenadas.setText(coordenadas);
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Has pulsado el punto de interes ", Toast.LENGTH_SHORT).show();
+                int valor = holder.getBindingAdapterPosition();
+                PuntoInteres punto = puntosInteres.get(valor);
+                double latitud = punto.getLatitud();
+                double longitud = punto.getLongitud();
+
+                // 2. Crear el URI (la 'q' permite poner un marcador con nombre)
+                String uri = "geo:" + latitud + "," + longitud + "?q=" + latitud + "," + longitud + "(" + punto.getNombre() + ")";
+                android.content.Intent mapIntent = new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(uri));
+
+                // 3. Intentar abrir siempre con la App de Google Maps
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+                // 4. Verificar si hay una aplicación que pueda manejar el intent y lanzarla
+                if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(mapIntent);
+                } else {
+                    // Si no tiene Google Maps, intentamos abrirlo de forma genérica (navegador u otros mapas)
+                    android.content.Intent backupIntent = new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(uri));
+                    context.startActivity(backupIntent);
+                }
+
+            }
+        });
+
+
+
     }
+
 
     @Override
     public int getItemCount() {

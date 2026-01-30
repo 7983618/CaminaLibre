@@ -53,6 +53,16 @@ public class AdapterReclyerView extends RecyclerView.Adapter<RutasViewHolder> {
         holder.estrellas.setText(establecerestrellas(ruta.getDificultad()));
         holder.tipo.setImageResource(R.drawable.fotoapp);
 
+        holder.tipo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getBindingAdapterPosition();
+                String nombre = rutas.get(pos).getNombreRuta();
+
+                // realizar intent para abrir galeria o camara para poner foto
+                Toast.makeText(context, "Has pulsado sobre la imagen de la ruta: " + nombre, Toast.LENGTH_SHORT).show();
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
