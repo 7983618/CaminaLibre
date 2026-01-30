@@ -62,7 +62,18 @@
 
 
 
+    <!-- 2. Configuración de la Barra Superior -->
+    <style name="MiBarraEstilo" parent="Widget.AppCompat.ActionBar">
+        <item name="titleTextStyle">@style/MiEstiloTitulo</item>
+        <item name="background">@color/verde_montana</item>
+    </style>
 
+    <!-- 3. Configuración del Texto del Título -->
+    <style name="MiEstiloTitulo" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
 
 
