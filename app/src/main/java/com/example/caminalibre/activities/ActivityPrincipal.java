@@ -20,7 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.caminalibre.R;
+import com.example.caminalibre.fragmentos.FragmentAcercaDe;
 import com.example.caminalibre.fragmentos.FragmentDetalleRuta;
+import com.example.caminalibre.fragmentos.Fragment_anadir_Rutas;
 import com.example.caminalibre.fragmentos.Fragment_mostra_rutas;
 import com.example.caminalibre.modelo.Ruta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,6 +31,8 @@ import com.google.android.material.navigation.NavigationView;
 public class ActivityPrincipal extends AppCompatActivity {
 
     Fragment_mostra_rutas mostraRutas = new Fragment_mostra_rutas();
+    Fragment_anadir_Rutas anadirRutas = new Fragment_anadir_Rutas();
+    FragmentAcercaDe acercaDe = new FragmentAcercaDe();
 
     private DrawerLayout drawerLayout;
     private NavigationView nv_side;
@@ -41,7 +45,7 @@ public class ActivityPrincipal extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_drawerlayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
@@ -87,16 +91,16 @@ public class ActivityPrincipal extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.añadirruta) {
-//                loadFragment(añadirRuta);
+                loadFragment(anadirRutas, true);
                 return true;
             } else if (id == R.id.vermisrutas) {
-                loadFragment(mostraRutas);
+                loadFragment(mostraRutas, false);
                 return true;
             } else if (id == R.id.ayuda) {
                 ayuda();
                 return true;
             } else if (id == R.id.sobre) {
-//                loadFragment(sobre);
+                loadFragment(acercaDe, true);
                 return true;
             } else if (id == R.id.salir) {
                 finishAffinity();
@@ -107,13 +111,16 @@ public class ActivityPrincipal extends AppCompatActivity {
 
         // cargamos un framneto inicial
         if (savedInstanceState == null) {
-            loadFragment(mostraRutas);
+            loadFragment(mostraRutas,false);
         }
 
     }
-    public void loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment, boolean backStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
+        if (backStack) {
+            transaction.addToBackStack(null);
+        }
         transaction.commit();
     }
     @Override

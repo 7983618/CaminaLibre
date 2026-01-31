@@ -75,6 +75,8 @@ public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         // 1. Inicializar Vistas
         spinner = view.findViewById(R.id.spinnerFiltroDificultad);
         recyclerView = view.findViewById(R.id.recyclerViewRutas);
