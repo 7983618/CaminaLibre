@@ -41,12 +41,12 @@ public class ActivityPrincipal extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_drawerlayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
             return insets;
         });
 
         drawerLayout = findViewById(R.id.main_drawerlayout);
-        nv_side = findViewById(R.id.nav_view);
+//        nv_side = findViewById(R.id.nav_view);
         toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -55,31 +55,32 @@ public class ActivityPrincipal extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-        nv_side.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id = menuItem.getItemId();
-                if (id == R.id.snv_logout) {
-                    finishAffinity();
-                } else if (id == R.id.snv_home) {
-//                    loadFragment(fir);
-                }
-                // Añadir más casos según el menú side_tabs.xml si es necesario
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
+//        nv_side.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                int id = menuItem.getItemId();
+//                if (id == R.id.snv_logout) {
+//                    finishAffinity();
+//                } else if (id == R.id.snv_home) {
+////                    loadFragment(fir);
+//                }
+//                // Añadir más casos según el menú side_tabs.xml si es necesario
+//                drawerLayout.closeDrawers();
+//                return true;
+//            }
+//        });
 
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (drawerLayout.isDrawerOpen(nv_side)) {
-                    drawerLayout.closeDrawers();
-                } else {
-                    finishAffinity();
-                }
-            }
-        });
+        //ESTO ERA PARA EL MENÚ PERO ESTÁ MATANDO LA PILA DE FRAGMENTOS
+//        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                if (drawerLayout.isDrawerOpen(nv_side)) {
+//                    drawerLayout.closeDrawers();
+//                } else {
+//                    finishAffinity();
+//                }
+//            }
+//        });
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -143,22 +144,15 @@ public class ActivityPrincipal extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void cargarfragmentodetalleruta(Ruta ruta) {
+    public void cargarFragmentoDetalleRuta(Ruta ruta) {
         FragmentDetalleRuta rutaFragment = new FragmentDetalleRuta();
-
-        // 2. Le pasamos los datos
         Bundle bundle = new Bundle();
         bundle.putSerializable("ruta", ruta);
         rutaFragment.setArguments(bundle);
 
-        // 3. HACEMOS EL REEMPLAZO (Aquí es donde cambia la vista)
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_container, rutaFragment)
-                .addToBackStack(null)
-                .commit();
-    };
-
-
-
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, rutaFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

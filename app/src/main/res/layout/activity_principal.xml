@@ -13,24 +13,34 @@
         android:layout_height="match_parent">
 
 
-        <FrameLayout
-            android:id="@+id/frame_container"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:layout_above="@id/bottom_navigation"
-            />
+            android:orientation="vertical">
+            <FrameLayout
+                android:id="@+id/frame_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fitsSystemWindows="true"
+                />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            style="@style/BottonNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_nav_menu" />
-
-
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:background="@color/standar_background"
+                app:itemTextColor="@color/standar_interact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottom_nav_menu"
+                app:itemIconTint="@color/standar_interact"
+                app:itemRippleColor="#206200EE"
+                app:elevation="0dp"
+                android:elevation="0dp"
+                android:stateListAnimator="@null"
+                android:outlineProvider="none"
+                />
+        </LinearLayout>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

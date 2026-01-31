@@ -2,24 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/añadirruta"
-        android:title="Añadir ruta"
+        android:title="@string/BottomItemNueva"
+        android:icon="@drawable/add_ico"
         />
     <item
         android:id="@+id/vermisrutas"
-        android:title="ver mis rutas"
+        android:title="@string/BottomItemRutas"
+        android:icon="@drawable/map_ico"
+        android:iconTint="@color/standar_interact"
         />
 
     <item
         android:id="@+id/ayuda"
-        android:title="ayuda"
+        android:title="@string/BottomItemAyuda"
+        android:icon="@drawable/book_ico"
         />
     <item
         android:id="@+id/sobre"
-        android:title="sobre"
+        android:title="@string/BottomItemAcercaDe"
+        android:icon="@drawable/about_ico"
         />
     <item
         android:id="@+id/salir"
-        android:title="salir"
+        android:title="@string/BottomItemSalir"
+        android:icon="@drawable/exit_ico"
         />
 
 

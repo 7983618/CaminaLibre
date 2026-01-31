@@ -43,33 +43,11 @@ public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListen
     private List<Ruta> rutas = new ArrayList<>();
     private AdapterReclyerView adapter;
     private ActivityResultLauncher<Intent> launcher;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Fragment_mostra_rutas() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_RecyclerView.
-     */
-    // TODO: Rename and change types and number of parameters
+    public Fragment_mostra_rutas() {}
     public static Fragment_mostra_rutas newInstance(String param1, String param2) {
         Fragment_mostra_rutas fragment = new Fragment_mostra_rutas();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        /*DATOS*/
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,8 +56,7 @@ public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            /*DATOS*/
         }
         launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -152,7 +129,6 @@ public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListen
 
         adapter.setRutas(new ArrayList<>(rutasFiltradas));
     }
-
     private void inicializarDatos() {
 
         rutas = new ArrayList<>();
@@ -218,14 +194,11 @@ public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListen
         rutas.add(new Ruta("Valle de Ordesa (Cola de Caballo)", "Huesca", Tipo.Lineal, 3.0f, 17.5, "Clásica ascensión por el fondo del valle.", "Impresionantes paredes de piedra.", true, 42.6667, -0.0500));
         CreadorDB.getDatabase(getContext()).insertarLista(rutas);
     }
-
-
-
     @Override
     public void onRutaClick(int posicion) {
         Ruta ruta = rutas.get(posicion);
         if(getActivity() instanceof ActivityPrincipal){
-            ((ActivityPrincipal) getActivity()).cargarfragmentodetalleruta(ruta);
+            ((ActivityPrincipal) getActivity()).cargarFragmentoDetalleRuta(ruta);
         }
 
     }
