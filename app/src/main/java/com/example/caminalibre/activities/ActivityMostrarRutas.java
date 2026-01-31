@@ -65,7 +65,8 @@ public class ActivityMostrarRutas extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerViewRutas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AdapterReclyerView(rutas, this, launcher);
+
+        adapter = new AdapterReclyerView(rutas, this, launcher,null);
         recyclerView.setAdapter(adapter);
 
         CreadorDB.getDatabase(this).getRutas().observe(this, new Observer<List<Ruta>>() {

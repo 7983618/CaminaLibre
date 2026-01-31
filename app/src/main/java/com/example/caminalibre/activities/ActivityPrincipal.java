@@ -20,7 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.caminalibre.R;
+import com.example.caminalibre.fragmentos.FragmentDetalleRuta;
 import com.example.caminalibre.fragmentos.Fragment_mostra_rutas;
+import com.example.caminalibre.modelo.Ruta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -87,7 +89,7 @@ public class ActivityPrincipal extends AppCompatActivity {
 //                loadFragment(añadirRuta);
                 return true;
             } else if (id == R.id.vermisrutas) {
-//                loadFragment(vermisrutas);
+                loadFragment(mostraRutas);
                 return true;
             } else if (id == R.id.ayuda) {
                 ayuda();
@@ -141,7 +143,20 @@ public class ActivityPrincipal extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void cargarfragmentodetalleruta(Ruta ruta) {
+        FragmentDetalleRuta rutaFragment = new FragmentDetalleRuta();
 
+        // 2. Le pasamos los datos
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("ruta", ruta);
+        rutaFragment.setArguments(bundle);
+
+        // 3. HACEMOS EL REEMPLAZO (Aquí es donde cambia la vista)
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_container, rutaFragment)
+                .addToBackStack(null)
+                .commit();
+    };
 
 
 

@@ -21,7 +21,9 @@ import android.widget.Spinner;
 
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
+import com.example.caminalibre.activities.ActivityPrincipal;
 import com.example.caminalibre.adapters.AdapterReclyerView;
+import com.example.caminalibre.interfaces.OnRutaClickListener;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.modelo.Tipo;
 
@@ -34,7 +36,7 @@ import java.util.stream.Collectors;
  * Use the {@link Fragment_mostra_rutas#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_mostra_rutas extends Fragment {
+public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListener {
 
     private Spinner spinner;
     private RecyclerView recyclerView;
@@ -102,7 +104,7 @@ public class Fragment_mostra_rutas extends Fragment {
 
         // 2. Configurar RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AdapterReclyerView(rutas, getContext(), launcher);
+        adapter = new AdapterReclyerView(rutas, getContext(), launcher,this);
         recyclerView.setAdapter(adapter);
 
         // 3. Inicializar datos si la DB está vacía
@@ -215,5 +217,16 @@ public class Fragment_mostra_rutas extends Fragment {
         rutas.add(new Ruta("Sierra de Urbasa", "Navarra", Tipo.Circular, 2.0f, 9.0, "Hayedo encantado y nacedero del Urederra.", "Aguas de color azul turquesa.", true, 42.8333, -2.1500));
         rutas.add(new Ruta("Valle de Ordesa (Cola de Caballo)", "Huesca", Tipo.Lineal, 3.0f, 17.5, "Clásica ascensión por el fondo del valle.", "Impresionantes paredes de piedra.", true, 42.6667, -0.0500));
         CreadorDB.getDatabase(getContext()).insertarLista(rutas);
+    }
+
+
+
+    @Override
+    public void onRutaClick(int posicion) {
+        Ruta ruta = rutas.get(posicion);
+        if(getActivity() instanceof ActivityPrincipal){
+            ((ActivityPrincipal) getActivity()).cargarfragmentodetalleruta(ruta);
+        }
+
     }
 }
