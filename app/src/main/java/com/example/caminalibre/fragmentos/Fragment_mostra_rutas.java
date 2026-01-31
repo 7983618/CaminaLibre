@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
  */
 public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListener {
 
+    private String textsearch = "";
     private Spinner spinner;
     private RecyclerView recyclerView;
     private List<Ruta> rutas = new ArrayList<>();
@@ -229,4 +230,37 @@ public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListen
         }
 
     }
+
+    public void filtrarRuta(String texto){
+        this.textsearch = texto;
+
+        // Obtenemos la dificultad actual del Spinner
+        String dificultad = (spinner != null) ? spinner.getSelectedItem().toString() : "Todas";
+
+        if (rutas == null) return;
+
+        List<Ruta> filtradas = rutas.stream()
+                .filter(r -> {
+                    // Filtro 1: El nombre coincide con lo que escribimos (Estilo Google)
+                    boolean coincideNombre = r.getNombreRuta().toLowerCase()
+                            .contains(textsearch.toLowerCase());
+
+                    // Filtro 2: La dificultad coincide con el Spinner
+                    boolean coincideDificultad = dificultad.equals("Todas") ||
+                            (dificultad.equals("Facil") && r.getDificultad() < 2) ||
+                            (dificultad.equals("Media") && r.getDificultad() >= 2 && r.getDificultad() < 4) ||
+                            (dificultad.equals("Dificil") && r.getDificultad() >= 4);
+
+                    return coincideNombre && coincideDificultad;
+                })
+                .collect(Collectors.toList());
+
+        // Actualizamos el RecyclerView a través del adaptador
+        if (adapter != null) {
+            adapter.setRutas(new ArrayList<>(filtradas));
+        }
+
+
+    }
+
 }

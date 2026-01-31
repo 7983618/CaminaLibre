@@ -4,7 +4,9 @@
     <item
         android:id="@+id/action_search"
         android:title="Buscar"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.widget.SearchView"
+        />
     <item
         android:id="@+id/action_settings"
         android:title="Ajustes"
