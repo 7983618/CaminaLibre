@@ -7,12 +7,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar$InspectionCompanion;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -35,10 +37,16 @@ public class ActivityPrincipal extends AppCompatActivity {
     Fragment_anadir_Rutas anadirRutas = new Fragment_anadir_Rutas();
     FragmentAcercaDe acercaDe = new FragmentAcercaDe();
 
-    private DrawerLayout drawerLayout;
-    private NavigationView nv_side;
-    private ActionBarDrawerToggle toggle;
 
+    androidx.appcompat.widget.Toolbar toolbar;
+
+//    private DrawerLayout drawerLayout;
+//    private NavigationView nv_side;
+//    private ActionBarDrawerToggle toggle;
+
+    public void cambiarNombreToolbar(String nombre) {
+        toolbar.setTitle(nombre);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,30 +58,30 @@ public class ActivityPrincipal extends AppCompatActivity {
             return insets;
         });
 
-        drawerLayout = findViewById(R.id.main_drawerlayout);
-        nv_side = findViewById(R.id.nav_view);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
+//        drawerLayout = findViewById(R.id.main_drawerlayout);
+//        nv_side = findViewById(R.id.nav_view);
+//        toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawerLayout.addDrawerListener(toggle);
+//        toggle.syncState();
+//        if (getSupportActionBar() != null) {
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setHomeButtonEnabled(true);
+//        }
 
-        nv_side.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id = menuItem.getItemId();
-                if (id == R.id.snv_logout) {
-                    finishAffinity();
-                } else if (id == R.id.snv_home) {
-//                    loadFragment(fir);
-                }
-                // Añadir más casos según el menú side_tabs.xml si es necesario
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
+//        nv_side.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                int id = menuItem.getItemId();
+//                if (id == R.id.snv_logout) {
+//                    finishAffinity();
+//                } else if (id == R.id.snv_home) {
+////                    loadFragment(fir);
+//                }
+//                // Añadir más casos según el menú side_tabs.xml si es necesario
+//                drawerLayout.closeDrawers();
+//                return true;
+//            }
+//        });
 
         //ESTO ERA PARA EL MENÚ PERO ESTÁ MATANDO LA PILA DE FRAGMENTOS
 //        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -87,6 +95,9 @@ public class ActivityPrincipal extends AppCompatActivity {
 //            }
 //        });
 
+        toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.app_name));
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -126,14 +137,11 @@ public class ActivityPrincipal extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        // Añade aquí el manejo de tus nuevos botones
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            Toast.makeText(this, "Ajustes seleccionados", Toast.LENGTH_SHORT).show();
-            return true;
+        if (id == R.id.anadirrutaToolbar) {
+            loadFragment(anadirRutas, true);
+        } else if (id == R.id.action_settings) {
+            Toast.makeText(this, "Se ha pulsado ajustes", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -13,11 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
+import com.example.caminalibre.activities.ActivityPrincipal;
+import com.example.caminalibre.activities.FichaTecnica;
 import com.example.caminalibre.adapters.AdapterPuntos;
 import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
@@ -59,6 +62,8 @@ public class FragmentDetalleRuta extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        ((ActivityPrincipal) getActivity()).cambiarNombreToolbar(ruta.getNombreRuta());
+
         super.onViewCreated(view, savedInstanceState);
         TextView titulo = view.findViewById(R.id.FichaTecnicaTitulo);
         TextView distancia = view.findViewById(R.id.FichaTecnicaDistancia);
@@ -90,6 +95,14 @@ public class FragmentDetalleRuta extends Fragment {
 
             ejecutarReciclerView(view);
         }
+        ImageButton borrar = (ImageButton) getActivity().findViewById(R.id.FichaTecnicaBorrarButton);
+        borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreadorDB.getDatabase(getContext()).borrarRuta(ruta, null);
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
     }
     private void ejecutarReciclerView(View view) {
@@ -106,4 +119,5 @@ public class FragmentDetalleRuta extends Fragment {
             }
         });
     }
+
 }

@@ -12,7 +12,7 @@
         android:title="Ajustes"
         app:showAsAction="never" />
     <item
-        android:id="@+id/opcion3añadirrutaToolbar"
+        android:id="@+id/anadirrutaToolbar"
         android:title="Añadir ruta"
         />
 </menu>

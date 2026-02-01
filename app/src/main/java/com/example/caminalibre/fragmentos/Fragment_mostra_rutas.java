@@ -238,4 +238,9 @@ public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListen
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((ActivityPrincipal) getActivity()).cambiarNombreToolbar(getString(R.string.app_name));
+    }
 }
