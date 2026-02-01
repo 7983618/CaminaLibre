@@ -1,28 +1,29 @@
-package com.example.caminalibre.activities;
+package com.example.caminalibre.fragmentos;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
-import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.caminalibre.adapters.AdapterReclyerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
+import com.example.caminalibre.activities.ActivityPrincipal;
+import com.example.caminalibre.adapters.AdapterReclyerView;
+import com.example.caminalibre.interfaces.OnRutaClickListener;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.modelo.Tipo;
 
@@ -30,86 +31,110 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ActivityMostrarRutas extends AppCompatActivity {
-    Spinner spinner;
-    RecyclerView recyclerView;
-    List<Ruta> rutas = new ArrayList<>();
-    AdapterReclyerView adapter;
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link Fragment_mostra_rutas#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListener {
 
-
-    public ActivityResultLauncher<Intent> launcher;
-
+    private Spinner spinner;
+    private RecyclerView recyclerView;
+    private List<Ruta> rutas = new ArrayList<>();
+    private AdapterReclyerView adapter;
+    private ActivityResultLauncher<Intent> launcher;
+    public Fragment_mostra_rutas() {}
+    public static Fragment_mostra_rutas newInstance(String param1, String param2) {
+        Fragment_mostra_rutas fragment = new Fragment_mostra_rutas();
+        Bundle args = new Bundle();
+        /*DATOS*/
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_mostrar_rutas);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
+        if (getArguments() != null) {
+            /*DATOS*/
+        }
         launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {}
-                }
+                result -> {}
         );
+    }
 
-        if (CreadorDB.getDatabase(this).getRutas().getValue() == null) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment__mostrar_rutas, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+
+        // 1. Inicializar Vistas
+        spinner = view.findViewById(R.id.spinnerFiltroDificultad);
+        recyclerView = view.findViewById(R.id.recyclerViewRutas);
+
+        // 2. Configurar RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new AdapterReclyerView(rutas, getContext(), launcher,this);
+        recyclerView.setAdapter(adapter);
+
+        // 3. Inicializar datos si la DB está vacía
+        if (CreadorDB.getDatabase(getContext()).getRutas().getValue() == null) {
             inicializarDatos();
         }
 
-        recyclerView = findViewById(R.id.recyclerViewRutas);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        adapter = new AdapterReclyerView(rutas, this, launcher,null);
-        recyclerView.setAdapter(adapter);
-
-        CreadorDB.getDatabase(this).getRutas().observe(this, new Observer<List<Ruta>>() {
+        // 4. Observar cambios en la base de datos
+        CreadorDB.getDatabase(getContext()).getRutas().observe(getViewLifecycleOwner(), new Observer<List<Ruta>>() {
             @Override
-            public void onChanged(List<Ruta> rutas) {
-                ActivityMostrarRutas.this.rutas = rutas;
+            public void onChanged(List<Ruta> nuevasRutas) {
+                rutas = nuevasRutas;
                 filtrarRuta();
             }
         });
 
-
-
-        spinner = findViewById(R.id.spinnerFiltroDificultad);
+        // 5. Configurar Spinner
         ArrayList<String> opciones = new ArrayList<>();
         opciones.add("Todas");
         opciones.add("Facil");
         opciones.add("Media");
         opciones.add("Dificil");
-        ArrayAdapter<String> adapterspinner = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, opciones);
-
+        ArrayAdapter<String> adapterspinner = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, opciones);
         spinner.setAdapter(adapterspinner);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { //IMPLEMENTAR OTROS SELECTS
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 filtrarRuta();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
-    public void filtrarRuta(){
-        String dificultad = spinner.getSelectedItem().toString();
-        ArrayList<Ruta> tareasfiltro = new ArrayList<>(rutas.stream().
-                filter(r -> dificultad.equals("Todas") ||
-                        (dificultad.equals("Facil") && r.getDificultad() < 2)
-                        || (dificultad.equals("Media") && r.getDificultad() >= 2 && r.getDificultad() < 4)
-                        || (dificultad.equals("Dificil") && r.getDificultad() >= 4)).collect(Collectors.toList()));
+    public void filtrarRuta() {
+        if (spinner == null || adapter == null) return;
 
-        adapter.setRutas(tareasfiltro);
+        String dificultad = spinner.getSelectedItem().toString();
+        List<Ruta> rutasFiltradas = rutas.stream()
+                .filter(r -> dificultad.equals("Todas") ||
+                        (dificultad.equals("Facil") && r.getDificultad() < 2) ||
+                        (dificultad.equals("Media") && r.getDificultad() >= 2 && r.getDificultad() < 4) ||
+                        (dificultad.equals("Dificil") && r.getDificultad() >= 4))
+                .collect(Collectors.toList());
+
+        adapter.setRutas(new ArrayList<>(rutasFiltradas));
     }
     private void inicializarDatos() {
+
         rutas = new ArrayList<>();
+        rutas.add(new Ruta("Anillo de Picos", "Asturias", Tipo.Circular, 5.0f, 115.0, "...", "...", false, 43.2, -4.8));
         // --- RUTAS CIRCULARES --- y longitud y latitud
         rutas.add(new Ruta("Anillo de Picos + Latitud y Longitud", "Asturias", Tipo.Circular, 5.0f, 115.0, "Travesía mítica por los Picos de Europa.", "Requiere equipo de alta montaña.", false, 86.34, 13.67));
         rutas.add(new Ruta("Laguna Negra", "Soria", Tipo.Circular, 2.0f, 4.5, "Paseo sencillo rodeando la laguna glacial.", "Muy concurrido en festivos.", true, 41.99, -2.84));
@@ -169,7 +194,14 @@ public class ActivityMostrarRutas extends AppCompatActivity {
         rutas.add(new Ruta("Ancares (Cuiña)", "Lugo", Tipo.Lineal, 3.0f, 10.0, "Montañas indómitas entre Galicia y León.", "Zona de osos y urogallos.", false, 42.8500, -6.8333));
         rutas.add(new Ruta("Sierra de Urbasa", "Navarra", Tipo.Circular, 2.0f, 9.0, "Hayedo encantado y nacedero del Urederra.", "Aguas de color azul turquesa.", true, 42.8333, -2.1500));
         rutas.add(new Ruta("Valle de Ordesa (Cola de Caballo)", "Huesca", Tipo.Lineal, 3.0f, 17.5, "Clásica ascensión por el fondo del valle.", "Impresionantes paredes de piedra.", true, 42.6667, -0.0500));
-        CreadorDB.getDatabase(this).insertarLista(rutas);
+        CreadorDB.getDatabase(getContext()).insertarLista(rutas);
     }
+    @Override
+    public void onRutaClick(int posicion) {
+        Ruta ruta = rutas.get(posicion);
+        if(getActivity() instanceof ActivityPrincipal){
+            ((ActivityPrincipal) getActivity()).cargarFragmentoDetalleRuta(ruta);
+        }
 
+    }
 }

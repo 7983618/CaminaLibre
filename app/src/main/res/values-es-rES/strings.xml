@@ -29,4 +29,10 @@
     <string name="AltaRutasLongitud">Longitud:</string>
     <string name="FichaTecnicaMinutos">minutos</string>
     <string name="FichaTecnica0Minutos">0 minutos</string>
+
+    <string name="BottomItemNueva">Nueva</string>
+    <string name="BottomItemRutas">Rutas</string>
+    <string name="BottomItemAyuda">Ayuda</string>
+    <string name="BottomItemAcercaDe">Acerca de</string>
+    <string name="BottomItemSalir">Salir</string>
 </resources>

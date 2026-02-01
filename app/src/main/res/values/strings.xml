@@ -30,4 +30,14 @@
     <string name="FichaTecnica0" translatable="false">0</string>
     <string name="FichaTecnicaMinutos">minutes</string>
     <string name="FichaTecnica0Minutos">0 minutes</string>
+
+    <string name="BottomItemNueva">New</string>
+    <string name="BottomItemRutas">Routes</string>
+    <string name="BottomItemAyuda">Help</string>
+    <string name="BottomItemAcercaDe">About</string>
+    <string name="BottomItemSalir">Exit</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_open">Open\n</string>
+    <string name="navigation_drawer_close">Close</string>
 </resources>

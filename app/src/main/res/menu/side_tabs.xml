@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:title="Main"
+        >
+        <menu>
+            <group
+                android:checkableBehavior="single"
+                >
+            <item
+                android:id="@+id/snv_home"
+                android:title="Home"/>
+
+
+            <item
+                android:id="@+id/snv_updates"
+                android:title="Updates"/>
+
+            <item
+                android:id="@+id/snv_sent"
+                android:title="Sent"/>
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:title="Personal"
+        >
+        <menu>
+            <group
+                android:checkableBehavior="single"
+                >
+
+            <item
+                android:id="@+id/snv_promotions"
+                android:title="Promotions"/>
+            <item
+                android:id="@+id/snv_Drafts"
+                android:title="drafts"/>
+            <item
+                android:id="@+id/snv_profile"
+                android:title="Profile"/>
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:title="Others"
+        >
+        <menu>
+            <group
+                android:checkableBehavior="single"
+                >
+            <item
+                android:id="@+id/snv_spam"
+                android:title="Spam"/>
+            <item
+                android:id="@+id/snv_trash"
+                android:title="Trash"/>
+
+            <item
+                android:id="@+id/snv_settings"
+                android:title="Settings"/>
+            <item
+                android:id="@+id/snv_logout"
+                android:title="Logout"
+                android:icon="@drawable/ic_action_logout"
+                />
+
+            </group>
+        </menu>
+    </item>
+
+
+
+
+
+
+
+
+</menu>
