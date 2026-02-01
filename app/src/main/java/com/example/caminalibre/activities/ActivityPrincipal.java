@@ -51,7 +51,7 @@ public class ActivityPrincipal extends AppCompatActivity {
         });
 
         drawerLayout = findViewById(R.id.main_drawerlayout);
-//        nv_side = findViewById(R.id.nav_view);
+        nv_side = findViewById(R.id.nav_view);
         toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -60,20 +60,20 @@ public class ActivityPrincipal extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-//        nv_side.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                int id = menuItem.getItemId();
-//                if (id == R.id.snv_logout) {
-//                    finishAffinity();
-//                } else if (id == R.id.snv_home) {
-////                    loadFragment(fir);
-//                }
-//                // Añadir más casos según el menú side_tabs.xml si es necesario
-//                drawerLayout.closeDrawers();
-//                return true;
-//            }
-//        });
+        nv_side.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                if (id == R.id.snv_logout) {
+                    finishAffinity();
+                } else if (id == R.id.snv_home) {
+//                    loadFragment(fir);
+                }
+                // Añadir más casos según el menú side_tabs.xml si es necesario
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
 
         //ESTO ERA PARA EL MENÚ PERO ESTÁ MATANDO LA PILA DE FRAGMENTOS
 //        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
