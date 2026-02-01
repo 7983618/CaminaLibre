@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -133,15 +134,33 @@ public class ActivityPrincipal extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Toast.makeText(this, "Ajustes seleccionados", Toast.LENGTH_SHORT).show();
             return true;
-        } else if (id == R.id.action_search) {
-            Toast.makeText(this, "Buscando...", Toast.LENGTH_SHORT).show();
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        if (searchItem != null) {
+            SearchView searchView = (SearchView) searchItem.getActionView();
+            // evento de búsqueda
+            if (searchView != null) {
+                searchView.setQueryHint("Escribe el nombre de la ruta...");                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        if (mostraRutas !=null && mostraRutas.isAdded()){
+                            mostraRutas.filtrarRuta(newText);
+                        }
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false; // No necesitamos acción al pulsar Enter
+                    }
+                });
+            }
+        }
         return true;
     }
     private void ayuda() {
