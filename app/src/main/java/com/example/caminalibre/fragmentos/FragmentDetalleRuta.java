@@ -74,8 +74,16 @@ public class FragmentDetalleRuta extends Fragment {
         TextView latitud = view.findViewById(R.id.FichaTecnicaLatitud);
         TextView longitud = view.findViewById(R.id.FichaTecnicaLongitud);
         CheckBox favorite = view.findViewById(R.id.FichaTecnicaFavoriaCheckBox);
+        android.widget.ImageView imagenRuta = view.findViewById(R.id.FichaTecnicaImagen);
 
         if (ruta != null) {
+            // Cargar imagen
+            if (ruta.getFoto() != null && !ruta.getFoto().isEmpty()) {
+                imagenRuta.setImageURI(android.net.Uri.fromFile(new java.io.File(ruta.getFoto())));
+            } else {
+                imagenRuta.setImageResource(R.drawable.fotoapp);
+            }
+
             titulo.setText(ruta.getNombreRuta());
             distancia.setText(String.valueOf(ruta.getDistancia()));
             dificultad.setText(String.valueOf(ruta.getDificultad()));

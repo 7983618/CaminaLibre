@@ -29,9 +29,11 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/fotoapp" />
+                    android:id="@+id/FichaTecnicaImagen"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/fotoapp" />
             </LinearLayout>
 
             <LinearLayout
