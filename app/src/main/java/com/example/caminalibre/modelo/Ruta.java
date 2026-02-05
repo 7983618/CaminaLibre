@@ -35,6 +35,15 @@ public class Ruta implements Serializable {
     @ColumnInfo(name = "longitud")
     private double longitud;
 
+    @ColumnInfo(name = "foto")
+    private String foto;
+    public String getFoto() {
+        return foto;
+    }
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
 
     public long getId() {
         return id;

@@ -57,6 +57,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:gravity="center">
+                        <ImageButton
+                            android:id="@+id/btnAudio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@android:drawable/ic_lock_silent_mode_off"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            app:tint="@color/standar_interact" />
+                        <Space
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"/>
                         <CheckBox
                             android:id="@+id/FichaTecnicaFavoriaCheckBox"
                             android:layout_width="wrap_content"

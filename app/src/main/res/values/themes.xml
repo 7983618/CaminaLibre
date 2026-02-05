@@ -8,8 +8,8 @@
         <item name="colorOnPrimaryContainer">@color/white</item>
         <!-- Aplicar el estilo de la barra superior si existe -->
         <item name="actionBarStyle">@style/MiBarraEstilo</item>
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme.CaminaLibre" parent="Base.Theme.CaminaLibre" />

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Ruta.class, PuntoInteres.class}, version = 2)
+@Database(entities = {Ruta.class, PuntoInteres.class}, version = 3)
 public abstract class CreadorDB extends RoomDatabase {
     public abstract DAORUTA getDAO();
     public abstract DAOPuntosDeInteres getPuntosDAO();

@@ -54,7 +54,12 @@ public class AdapterReclyerView extends RecyclerView.Adapter<RutasViewHolder> {
         holder.distancia.setText(ruta.getDistancia() + " km");
         holder.localizacion.setText(ruta.getLocalizacion());
         holder.estrellas.setText(establecerestrellas(ruta.getDificultad()));
-        holder.tipo.setImageResource(R.drawable.fotoapp);
+
+        if (ruta.getFoto() != null && !ruta.getFoto().isEmpty()) {
+            holder.tipo.setImageURI(android.net.Uri.fromFile(new java.io.File(ruta.getFoto())));
+        } else {
+            holder.tipo.setImageResource(R.drawable.fotoapp);
+        }
 
 //        holder.tipo.setOnClickListener(new View.OnClickListener() {
 //            @Override

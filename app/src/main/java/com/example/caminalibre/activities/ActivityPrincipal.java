@@ -7,18 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar$InspectionCompanion;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -29,7 +24,6 @@ import com.example.caminalibre.fragmentos.Fragment_anadir_Rutas;
 import com.example.caminalibre.fragmentos.Fragment_mostra_rutas;
 import com.example.caminalibre.modelo.Ruta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 public class ActivityPrincipal extends AppCompatActivity {
 
@@ -121,7 +115,7 @@ public class ActivityPrincipal extends AppCompatActivity {
             return false;
         });
 
-        // cargamos un framneto inicial
+        // cargamos un fragmento inicial
         if (savedInstanceState == null) {
             loadFragment(mostraRutas,false);
         }
@@ -151,7 +145,6 @@ public class ActivityPrincipal extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.action_search);
         if (searchItem != null) {
             SearchView searchView = (SearchView) searchItem.getActionView();
-            // evento de búsqueda
             if (searchView != null) {
                 searchView.setQueryHint("Escribe el nombre de la ruta...");                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
@@ -164,7 +157,7 @@ public class ActivityPrincipal extends AppCompatActivity {
 
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        return false; // No necesitamos acción al pulsar Enter
+                        return false; // Evento al pulsar enter
                     }
                 });
             }

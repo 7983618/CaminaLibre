@@ -15,6 +15,8 @@ import java.util.List;
 @Dao
 public interface DAORUTA {
 
+    @Query("UPDATE rutas SET foto = :rutaFoto WHERE id = :id")
+    void updateFoto(long id, String rutaFoto);
     @Insert
     void createAll(ArrayList<Ruta> rutas);
 
@@ -34,6 +36,9 @@ public interface DAORUTA {
     LiveData<List<Ruta>> readAll();
     @Query("SELECT * FROM rutas")
     List<Ruta> readAllSync();
+
+    @Query("UPDATE rutas SET foto = :rutaFoto WHERE id = :id")
+    void actualizarFoto(long id, String rutaFoto);
 
 
     @Query("SELECT * FROM rutas WHERE " +

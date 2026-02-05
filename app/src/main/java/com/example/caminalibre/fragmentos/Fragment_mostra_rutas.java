@@ -1,8 +1,12 @@
 package com.example.caminalibre.fragmentos;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -12,12 +16,15 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
@@ -27,6 +34,9 @@ import com.example.caminalibre.interfaces.OnRutaClickListener;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.modelo.Tipo;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +48,35 @@ import java.util.stream.Collectors;
  */
 public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListener {
 
+    private long idRutaSeleccionada;
+    private ActivityResultLauncher<Intent> camaraLauncher = super.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult o) {
+            if (o.getResultCode() == Activity.RESULT_OK && o.getData() != null) {
+
+                Bitmap fotoBitmap = (Bitmap) o.getData().getExtras().get("data");
+             CreadorDB.ejecutarhilo.execute(new Runnable() {
+                 @Override
+                 public void run() {
+                     try {
+                         String nombreArchivo = "ruta_foto_" + idRutaSeleccionada + ".jpg";
+                         File archivo = new File(requireContext().getFilesDir(), nombreArchivo);
+                         FileOutputStream fos = new FileOutputStream(archivo);
+                         fotoBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                         fos.close();
+                         String pathFinal = archivo.getAbsolutePath();
+
+                         CreadorDB.getDatabase(getContext()).getDAO().actualizarFoto(idRutaSeleccionada,pathFinal);
+
+                     }catch (IOException e) {
+                         e.printStackTrace();
+                     }
+                 }
+             });
+            }
+        }
+    });
+    private String nombreRutaSeleccionada;
     private String textsearch = "";
     private Spinner spinner;
     private RecyclerView recyclerView;
@@ -204,6 +243,15 @@ public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListen
             ((ActivityPrincipal) getActivity()).cargarFragmentoDetalleRuta(ruta);
         }
 
+    }
+
+    @Override
+    public void onFotoClick(int posicion) {
+        Toast.makeText(getContext(), "Abriendo cámara para ruta " + posicion, Toast.LENGTH_SHORT).show();
+        Ruta ruta = rutas.get(posicion);
+        this.idRutaSeleccionada = ruta.getId();
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        camaraLauncher.launch(intent);
     }
 
     public void filtrarRuta(String texto){

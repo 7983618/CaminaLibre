@@ -45,7 +45,7 @@ public class AdapterPuntos extends RecyclerView.Adapter<PuntoViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Has pulsado el punto de interes ", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Has pulsado el punto de interes ", Toast.LENGTH_SHORT).show();
                 int valor = holder.getBindingAdapterPosition();
                 PuntoInteres punto = puntosInteres.get(valor);
                 double latitud = punto.getLatitud();

@@ -3,6 +3,7 @@ package com.example.caminalibre.viewholders;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,29 +25,24 @@ public  class RutasViewHolder extends RecyclerView.ViewHolder {
         tipo = itemView.findViewById(R.id.itemRutaTipo);
         estrellas = itemView.findViewById(R.id.itemRutaEstrellas);
 
-//        holder.tipo.setOnClickListener(new View.OnClickListener() {
-//          @Override
-//            public void onClick(View v) {
-//                int pos = holder.getBindingAdapterPosition();
-//                String nombre = rutas.get(pos).getNombreRuta();
-//
-//                // realizar intent para abrir galeria o camara para poner foto
-//                Toast.makeText(context, "Has pulsado sobre la imagen de la ruta: " + nombre, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        tipo.setClickable(true);
+        tipo.setFocusable(true);
+        tipo.setOnClickListener(new View.OnClickListener() {
+          @Override
+            public void onClick(View v) {
+
+                if (listener !=null){
+                    int position = getBindingAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION){
+                        listener.onFotoClick(position);
+                    }
+                }
+            }
+        });
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // codigo anterior
-//                int valor = holder.getBindingAdapterPosition();
-//                Toast.makeText(v.getContext(), "Haz pulsado sobre la ruta: " + rutas.get(valor).getNombreRuta(), Toast.LENGTH_SHORT).show();
-//                Ruta ruta = rutas.get(valor);
-//                // intent a la nueva actividad detalle
-//                Intent intent = new Intent(context, FichaTecnica.class);
-//                intent.putExtra("ruta", rutas.get(valor));
-//                //intent.putExtra("posicion", Integer.valueOf(valor));
-//                //launcher.launch(intent);
-//                context.startActivity(intent);
                 if (listener !=null){
                     int position = getBindingAdapterPosition();
                     // posicion valida

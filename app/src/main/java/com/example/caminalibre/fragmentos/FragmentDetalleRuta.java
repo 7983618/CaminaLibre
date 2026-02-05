@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.media.MediaPlayer;
 
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
@@ -38,6 +39,7 @@ public class FragmentDetalleRuta extends Fragment {
     private Ruta ruta;
     private RecyclerView recyclerView;
     private AdapterPuntos adapter;
+    private MediaPlayer mediaPlayer;
     public FragmentDetalleRuta() {}
     public static FragmentDetalleRuta newInstance(String param1, String param2) {
         FragmentDetalleRuta fragment = new FragmentDetalleRuta();
@@ -93,6 +95,32 @@ public class FragmentDetalleRuta extends Fragment {
                 Toast.makeText(getContext(), "Favorito: " + isChecked, Toast.LENGTH_SHORT).show();
             });
 
+            // Configuración del Audio
+            ImageButton btnAudio = view.findViewById(R.id.btnAudio);
+            btnAudio.setOnClickListener(v -> {
+                if (mediaPlayer == null) {
+                    // Intenta cargar un audio genérico de la carpeta raw.
+                    // Si no existe, mostrará un error controlado.
+                    int resID = getResources().getIdentifier("audioguia", "raw", getContext().getPackageName());
+                    if (resID != 0) {
+                        mediaPlayer = MediaPlayer.create(getContext(), resID);
+                        mediaPlayer.start();
+                        btnAudio.setImageResource(android.R.drawable.ic_lock_silent_mode);
+                        Toast.makeText(getContext(), "Reproduciendo audioguía...", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "No se encontró el archivo de audio en res/raw/audioguia", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.pause();
+                        btnAudio.setImageResource(android.R.drawable.ic_lock_silent_mode_off);
+                    } else {
+                        mediaPlayer.start();
+                        btnAudio.setImageResource(android.R.drawable.ic_lock_silent_mode);
+                    }
+                }
+            });
+
             ejecutarReciclerView(view);
         }
         ImageButton borrar = (ImageButton) getActivity().findViewById(R.id.FichaTecnicaBorrarButton);
@@ -105,6 +133,15 @@ public class FragmentDetalleRuta extends Fragment {
         });
 
     }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
     private void ejecutarReciclerView(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewPuntosInteres);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
