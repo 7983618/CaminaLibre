@@ -151,14 +151,25 @@ public class FragmentDetalleRuta extends Fragment {
 
     }
     private void abrirCamara() {
-        File carpeta = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        try {
-            File archivoFoto = File.createTempFile(String.valueOf("ruta" +ruta.getId()), ".jpg", carpeta);
-            uriImagen = FileProvider.getUriForFile(getContext(), "com.example.caminalibre.fileprovider", archivoFoto);
-            launcherCamara.launch(uriImagen);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        // 1. Creamos la instancia del fragmento de la cámara pasando el ID de la ruta actual
+        FragmentCamara fragmentCamara = FragmentCamara.newInstance(ruta.getId());
+
+        // 2. Usamos el método de ActivityPrincipal para cargar el fragmento
+        if (getActivity() instanceof ActivityPrincipal) {
+            ((ActivityPrincipal) getActivity()).loadFragment(fragmentCamara, true);
         }
+
+
+        //metodo antiguo
+//        File carpeta = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        try {
+//            File archivoFoto = File.createTempFile(String.valueOf("ruta" +ruta.getId()), ".jpg", carpeta);
+//            uriImagen = FileProvider.getUriForFile(getContext(), "com.example.caminalibre.fileprovider", archivoFoto);
+//            launcherCamara.launch(uriImagen);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
     private void ejecutarReciclerView(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewPuntosInteres);
@@ -175,4 +186,24 @@ public class FragmentDetalleRuta extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // 1. Consultamos la base de datos para obtener la ruta actualizada con su nueva foto
+        CreadorDB.ejecutarhilo.execute(() -> {
+            // Buscamos la ruta por su ID (necesitas el método read en tu DAO)
+            Ruta rutaActualizada = CreadorDB.getDatabase(getContext()).getDAO().read(ruta.getId());
+
+            if (rutaActualizada != null && rutaActualizada.getRutaImagen() != null) {
+                // 2. Volvemos al hilo principal para actualizar la interfaz
+                requireActivity().runOnUiThread(() -> {
+                    ImageButton imageButton = getView().findViewById(R.id.FichaTecnicaImagenRutaImageButton);
+                    imageButton.setImageURI(Uri.parse(rutaActualizada.getRutaImagen()));
+
+                    // Actualizamos también nuestro objeto local para que esté sincronizado
+                    this.ruta = rutaActualizada;
+                });
+            }
+        });
+    }
 }
