@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.ToDoubleBiFunction;
-
+//
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentDetalleRuta#newInstance} factory method to
