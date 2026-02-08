@@ -19,8 +19,6 @@ import android.widget.Toast;
 
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
-import com.example.caminalibre.activities.ActivityPrincipal;
-import com.example.caminalibre.activities.AltaDeRutas;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.modelo.Tipo;
 
