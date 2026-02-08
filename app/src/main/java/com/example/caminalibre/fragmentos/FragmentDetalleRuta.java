@@ -3,6 +3,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import com.example.caminalibre.activities.FichaTecnica;
 import com.example.caminalibre.adapters.AdapterPuntos;
 import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
+import com.example.caminalibre.servicios.MusicService;
 
 import java.io.File;
 import java.io.IOException;
@@ -87,6 +89,22 @@ public class FragmentDetalleRuta extends Fragment {
         TextView longitud = view.findViewById(R.id.FichaTecnicaLongitud);
         CheckBox favorite = view.findViewById(R.id.FichaTecnicaFavoriaCheckBox);
         ImageButton imageButton = view.findViewById(R.id.FichaTecnicaImagenRutaImageButton);
+        CheckBox cbMusica = view.findViewById(R.id.FichaTecnicaMusicaCheckbox);
+        cbMusica.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // ENVIAR ORDEN DE PLAY AL SERVICIO
+                Intent playIntent = new Intent(getContext(), MusicService.class);
+                playIntent.setAction("PLAY");
+                requireContext().startService(playIntent); // llamada a onStartCommand() MusicaService.java
+                Toast.makeText(getContext(), "Reproduciendo audio...", Toast.LENGTH_SHORT).show();
+            } else {
+                // ENVIAR ORDEN DE STOP AL SERVICIO
+                Intent stopIntent = new Intent(getContext(), MusicService.class);
+                stopIntent.setAction("STOP");
+                requireContext().startService(stopIntent);
+            }
+        });
+
 
         launcherCamara = registerForActivityResult(new ActivityResultContracts.TakePicture(), new ActivityResultCallback<Boolean>() {
             @Override
@@ -205,5 +223,28 @@ public class FragmentDetalleRuta extends Fragment {
                 });
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // AQUÍ ESTÁ EL TRUCO:
+        // isRemoving() es true si el usuario pulsó ATRÁS o cambió de sección.
+        // getActivity().isFinishing() es true si la app se está cerrando del todo.
+        if (isRemoving() || (getActivity() != null && getActivity().isFinishing())) {
+            // ESCENARIO 1: El usuario CIERRA el detalle. Paramos música.
+            Intent stopIntent = new Intent(getContext(), MusicService.class);
+            stopIntent.setAction("STOP");
+            requireContext().startService(stopIntent);
+        } else {
+            // ESCENARIO 2: El usuario solo ha MINIMIZADO la app (botón Home).
+            // No enviamos STOP, por lo que la música SIGUE SONANDO como Spotify.
+        }
     }
 }
