@@ -45,4 +45,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     testImplementation("androidx.room:room-testing:2.6.1")
+
+    // Añade esto para garantizar el acceso a FileProvider y utilidades del sistema
+    implementation("androidx.core:core:1.12.0")
 }

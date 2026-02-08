@@ -30,10 +30,11 @@
 
                 <ImageButton
                     android:id="@+id/FichaTecnicaImagenRutaImageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/fotoapp"
-                    android:background="@color/standar_background"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
+                    android:src="@color/standar_interact"
+                    android:background="@color/standar_interact"/>
 
             </LinearLayout>
 
@@ -64,7 +65,7 @@
                             android:id="@+id/FichaTecnicaMusicaCheckbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/favorite"
+                            android:button="@drawable/sonido"
                             app:buttonTint="@color/standar_interact" /> <!--para que se vea el color original-->
                         <CheckBox
                             android:id="@+id/FichaTecnicaFavoriaCheckBox"

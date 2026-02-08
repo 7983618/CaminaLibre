@@ -24,6 +24,7 @@ public  class RutasViewHolder extends RecyclerView.ViewHolder {
         tipo = itemView.findViewById(R.id.itemRutaTipo);
         estrellas = itemView.findViewById(R.id.itemRutaEstrellas);
 
+
 //        holder.tipo.setOnClickListener(new View.OnClickListener() {
 //          @Override
 //            public void onClick(View v) {

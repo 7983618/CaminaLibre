@@ -1,7 +1,15 @@
 package com.example.caminalibre.fragmentos;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -9,6 +17,7 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +34,8 @@ import com.example.caminalibre.adapters.AdapterPuntos;
 import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.ToDoubleBiFunction;
@@ -38,6 +49,9 @@ public class FragmentDetalleRuta extends Fragment {
     private Ruta ruta;
     private RecyclerView recyclerView;
     private AdapterPuntos adapter;
+    private Uri uriImagen;
+    ActivityResultLauncher<Uri> launcherCamara;
+    ActivityResultLauncher<String> launcherPermisos;
     public FragmentDetalleRuta() {}
     public static FragmentDetalleRuta newInstance(String param1, String param2) {
         FragmentDetalleRuta fragment = new FragmentDetalleRuta();
@@ -72,8 +86,25 @@ public class FragmentDetalleRuta extends Fragment {
         TextView latitud = view.findViewById(R.id.FichaTecnicaLatitud);
         TextView longitud = view.findViewById(R.id.FichaTecnicaLongitud);
         CheckBox favorite = view.findViewById(R.id.FichaTecnicaFavoriaCheckBox);
+        ImageButton imageButton = view.findViewById(R.id.FichaTecnicaImagenRutaImageButton);
+
+        launcherCamara = registerForActivityResult(new ActivityResultContracts.TakePicture(), new ActivityResultCallback<Boolean>() {
+            @Override
+            public void onActivityResult(Boolean exitoTomandoFoto) {
+                imageButton.setImageURI(uriImagen);
+                ruta.setRutaImagen(uriImagen.toString());
+                CreadorDB.getDatabase(getContext()).actualizarRuta(ruta);
+            }
+        });
+        launcherPermisos = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
+            @Override
+            public void onActivityResult(Boolean o) {
+                abrirCamara();
+            }
+        });
 
         if (ruta != null) {
+
             titulo.setText(ruta.getNombreRuta());
             distancia.setText(String.valueOf(ruta.getDistancia()));
             dificultad.setText(String.valueOf(ruta.getDificultad()));
@@ -92,6 +123,20 @@ public class FragmentDetalleRuta extends Fragment {
                 CreadorDB.getDatabase(getContext()).actualizarRuta(ruta);
                 Toast.makeText(getContext(), "Favorito: " + isChecked, Toast.LENGTH_SHORT).show();
             });
+            if (ruta.getRutaImagen() != null) {
+                imageButton.setImageURI(Uri.parse(ruta.getRutaImagen()));
+            }
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int permitido = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
+                    if (permitido == PackageManager.PERMISSION_GRANTED) {
+                        abrirCamara();
+                    } else {
+                        launcherPermisos.launch(Manifest.permission.CAMERA);
+                    }
+                }
+            });
 
             ejecutarReciclerView(view);
         }
@@ -104,6 +149,16 @@ public class FragmentDetalleRuta extends Fragment {
             }
         });
 
+    }
+    private void abrirCamara() {
+        File carpeta = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        try {
+            File archivoFoto = File.createTempFile(String.valueOf("ruta" +ruta.getId()), ".jpg", carpeta);
+            uriImagen = FileProvider.getUriForFile(getContext(), "com.example.caminalibre.fileprovider", archivoFoto);
+            launcherCamara.launch(uriImagen);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     private void ejecutarReciclerView(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewPuntosInteres);

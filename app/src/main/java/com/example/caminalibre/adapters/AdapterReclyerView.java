@@ -2,6 +2,7 @@ package com.example.caminalibre.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,9 @@ public class AdapterReclyerView extends RecyclerView.Adapter<RutasViewHolder> {
         holder.distancia.setText(ruta.getDistancia() + " km");
         holder.localizacion.setText(ruta.getLocalizacion());
         holder.estrellas.setText(establecerestrellas(ruta.getDificultad()));
-        holder.tipo.setImageResource(R.drawable.fotoapp);
+        if (ruta.getRutaImagen() != null) {
+            holder.tipo.setImageURI(Uri.parse(ruta.getRutaImagen()));
+        }
 
 //        holder.tipo.setOnClickListener(new View.OnClickListener() {
 //            @Override
