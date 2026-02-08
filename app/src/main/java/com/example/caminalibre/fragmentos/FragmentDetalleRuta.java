@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
 import com.example.caminalibre.activities.ActivityPrincipal;
-import com.example.caminalibre.activities.FichaTecnica;
 import com.example.caminalibre.adapters.AdapterPuntos;
 import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
@@ -38,7 +37,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.ToDoubleBiFunction;
 //
 /**
  * A simple {@link Fragment} subclass.

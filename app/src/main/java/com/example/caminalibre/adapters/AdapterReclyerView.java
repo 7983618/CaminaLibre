@@ -6,14 +6,12 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caminalibre.R;
-import com.example.caminalibre.activities.FichaTecnica;
 import com.example.caminalibre.interfaces.OnRutaClickListener;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.viewholders.RutasViewHolder;
