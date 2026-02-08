@@ -124,6 +124,9 @@ public class FragmentCamara extends Fragment {
     private void tomarFoto() {
         if (imageCapture == null) return;
 
+        // 1. DESACTIVAR EL BOTÓN AQUÍ para evitar múltiples clics
+        View btn = getView().findViewById(R.id.image_capture_button);
+        if (btn != null) btn.setEnabled(false);
         // Crear el archivo de destino
         String nombre = "ruta_" + idRutaActual + "_" + System.currentTimeMillis() + ".jpg";
         File archivo = new File(requireContext().getFilesDir(), nombre);
@@ -135,20 +138,16 @@ public class FragmentCamara extends Fragment {
                     @Override
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                         String pathFinal = archivo.getAbsolutePath();
+                        CreadorDB.getDatabase(getContext()).actualizarRuta(idRutaActual, pathFinal);
+                        // 2. REGRESAR (esto ya lo tienes)
+                        getParentFragmentManager().popBackStack();
 
-                        // Guardar en la base de datos a través del DAO
-                        CreadorDB.ejecutarhilo.execute(() -> {
-                            CreadorDB.getDatabase(getContext()).getDAO().updateFoto(idRutaActual, pathFinal);
-
-                            requireActivity().runOnUiThread(() -> {
-                                Toast.makeText(getContext(), "Foto guardada con éxito", Toast.LENGTH_SHORT).show();
-                                getParentFragmentManager().popBackStack();
-                            });
-                        });
                     }
 
                     @Override
                     public void onError(@NonNull ImageCaptureException exception) {
+                        // 3. SI HAY ERROR, VOLVER A ACTIVAR EL BOTÓN para reintentar
+                        if (btn != null) btn.setEnabled(true);
                         exception.printStackTrace();
                         Toast.makeText(getContext(), "Error al guardar foto", Toast.LENGTH_SHORT).show();
                     }
