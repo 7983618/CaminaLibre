@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/añadirruta"
+        android:id="@+id/bottom_navigation_altas"
         android:title="@string/BottomItemNueva"
         android:icon="@drawable/add_ico"
         />
     <item
-        android:id="@+id/vermisrutas"
+        android:id="@+id/bottom_navigation_rutas"
         android:title="@string/BottomItemRutas"
         android:icon="@drawable/map_ico"
-        android:iconTint="@color/standar_interact"
         />
 
     <item
-        android:id="@+id/ayuda"
+        android:id="@+id/bottom_navigation_ayuda"
         android:title="@string/BottomItemAyuda"
         android:icon="@drawable/book_ico"
         />
     <item
-        android:id="@+id/sobre"
+        android:id="@+id/bottom_navigation_acerca_de"
         android:title="@string/BottomItemAcercaDe"
         android:icon="@drawable/about_ico"
         />
     <item
-        android:id="@+id/salir"
+        android:id="@+id/bottom_navigation_salir"
         android:title="@string/BottomItemSalir"
         android:icon="@drawable/exit_ico"
         />
