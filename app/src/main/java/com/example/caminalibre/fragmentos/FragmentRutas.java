@@ -84,7 +84,7 @@ public class FragmentRutas extends Fragment implements OnRutaClickListener {
 
         // 2. Configurar RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AdapterReclyerView(rutas, getContext(), launcher,this);
+        adapter = new AdapterReclyerView(rutas,this);
         recyclerView.setAdapter(adapter);
 
         // 3. Inicializar datos si la DB está vacía

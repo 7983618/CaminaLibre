@@ -186,7 +186,7 @@ public class FragmentDetalle extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewPuntosInteres);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new AdapterPuntos(new ArrayList<>(), getContext());
+        adapter = new AdapterPuntos(new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
         CreadorDB.getDatabase(getContext()).getPuntosDAO().getPuntosDeInteres(ruta.getId()).observe(getViewLifecycleOwner(), new Observer<List<PuntoInteres>>() {

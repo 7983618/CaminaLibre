@@ -21,17 +21,11 @@ import java.util.List;
 public class AdapterReclyerView extends RecyclerView.Adapter<RutasViewHolder> {
 
     List<Ruta> rutas;
-    Context context;
     private OnRutaClickListener mListener;
-    ActivityResultLauncher<Intent> launcher;
-    private static final String codigoestrellellena = "\u2605";
-    private static final String codigostrellanula = "\u2606";
 
 
-    public AdapterReclyerView(List<Ruta> rutas, Context context, ActivityResultLauncher<Intent> launcher,OnRutaClickListener listener) {
+    public AdapterReclyerView(List<Ruta> rutas,OnRutaClickListener listener) {
         this.rutas = rutas;
-        this.context = context;
-        this.launcher = launcher;
         this.mListener = listener;
     }
 
@@ -49,53 +43,11 @@ public class AdapterReclyerView extends RecyclerView.Adapter<RutasViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RutasViewHolder holder, int position) {
         Ruta ruta = rutas.get(position);
-        holder.nombreRuta.setText(ruta.getNombreRuta());
-        holder.distancia.setText(ruta.getDistancia() + " km");
-        holder.localizacion.setText(ruta.getLocalizacion());
-        holder.estrellas.setText(establecerestrellas(ruta.getDificultad()));
-        if (ruta.getRutaImagen() != null) {
-            holder.tipo.setImageURI(Uri.parse(ruta.getRutaImagen()));
-        }
+        holder.bind(ruta);
 
-//        holder.tipo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int pos = holder.getBindingAdapterPosition();
-//                String nombre = rutas.get(pos).getNombreRuta();
-//
-//                // realizar intent para abrir galeria o camara para poner foto
-//                Toast.makeText(context, "Has pulsado sobre la imagen de la ruta: " + nombre, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int valor = holder.getBindingAdapterPosition();
-//                Toast.makeText(v.getContext(), "Haz pulsado sobre la ruta: " + rutas.get(valor).getNombreRuta(), Toast.LENGTH_SHORT).show();
-//                Ruta ruta = rutas.get(valor);
-//                // intent a la nueva actividad detalle
-//                Intent intent = new Intent(context, FichaTecnica.class);
-//                intent.putExtra("ruta", rutas.get(valor));
-//                //intent.putExtra("posicion", Integer.valueOf(valor));
-//                //launcher.launch(intent);
-//                context.startActivity(intent);
-//
-//            }
-//        });
+
     }
 
-    private String establecerestrellas(float dificultad) {
-        String estrellas = "";
-        int redondeado = Math.round(dificultad);
-        for (int i = 0; i < 5; i++) {
-            if (redondeado>i){
-                estrellas+=codigoestrellellena;
-            }else {
-                estrellas+=codigostrellanula;
-            }
-        }
-        return estrellas;
-    }
 
     @Override
     public int getItemCount() {
