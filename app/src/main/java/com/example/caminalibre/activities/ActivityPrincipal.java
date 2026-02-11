@@ -39,7 +39,7 @@ import java.util.List;
 
 public class ActivityPrincipal extends AppCompatActivity {
 
-    FragmentRutas mostraRutas = new FragmentRutas();
+    FragmentRutas fragmentRutas = new FragmentRutas();
     FragmentAltas anadirRutas = new FragmentAltas();
     FragmentAcercaDe acercaDe = new FragmentAcercaDe();
 
@@ -135,7 +135,7 @@ public class ActivityPrincipal extends AppCompatActivity {
 
         // cargamos un framneto inicial
         if (savedInstanceState == null) {
-            loadFragment(mostraRutas,false);
+            loadFragment(fragmentRutas,false);
         }
 
     }
@@ -172,8 +172,8 @@ public class ActivityPrincipal extends AppCompatActivity {
                 searchView.setQueryHint("Escribe el nombre de la ruta...");                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        if (mostraRutas !=null && mostraRutas.isAdded()){
-                            mostraRutas.filtrarRuta(newText);
+                        if (fragmentRutas !=null && fragmentRutas.isAdded()){
+                            fragmentRutas.filtrarRuta(newText);
                         }
                         return true;
                     }

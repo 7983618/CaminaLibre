@@ -4,8 +4,6 @@
         <item name="android:textSize">@dimen/cuerpo_de_texto</item>
         <item name="android:textColor">@color/standar_text</item>
         <item name="android:textStyle">bold</item>
-<!--        <item name="android:layout_gravity">center_vertical</item>-->
-
     </style>
     <style name="AppTextViewTitle" parent="AppTextView">
         <item name="android:textSize">@dimen/cuerpo_de_titulo</item>
@@ -41,42 +39,21 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:layout_marginBottom">25dp</item>
-<!--        <item name="android:gravity">center_vertical</item>-->
     </style>
+
     <style name="FichaTecnicaTextView" parent="AppTextView">
         <item name="android:layout_gravity">top</item>
     </style>
     <style name="FichaTecnicaFila">
         <item name="android:layout_marginBottom">70dp</item>
-<!--        <item name="android:gravity">top</item>-->
     </style>
     <style name="FichaTecnicaLinearLayoutImageIco">
         <item name="android:layout_gravity">top</item>
     </style>
 
 
-    <style name="item_ruta_xml_wrantcontent">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-
-
-    <!-- 2. Configuración de la Barra Superior -->
-    <style name="MiBarraEstilo" parent="Widget.AppCompat.ActionBar">
-        <item name="titleTextStyle">@style/MiEstiloTitulo</item>
-        <item name="background">@color/verde_montana</item>
-    </style>
-
-    <!-- 3. Configuración del Texto del Título -->
-    <style name="MiEstiloTitulo" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textSize">22sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-
-
-
-
+<!--    <style name="item_ruta_xml_wrantcontent">-->
+<!--        <item name="android:layout_width">wrap_content</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--    </style>-->
 </resources>

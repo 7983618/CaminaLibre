@@ -41,8 +41,6 @@
                 app:menu="@menu/bottom_nav_menu"
                 app:itemIconTint="@color/standar_interact"
                 app:itemTextColor="@color/standar_interact"
-
-
                 />
         </LinearLayout>
     </RelativeLayout>
