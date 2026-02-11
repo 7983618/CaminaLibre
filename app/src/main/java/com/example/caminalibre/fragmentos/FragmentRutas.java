@@ -1,10 +1,6 @@
 package com.example.caminalibre.fragmentos;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,98 +21,72 @@ import com.example.caminalibre.activities.ActivityPrincipal;
 import com.example.caminalibre.adapters.AdapterReclyerView;
 import com.example.caminalibre.interfaces.OnRutaClickListener;
 import com.example.caminalibre.modelo.Ruta;
-import com.example.caminalibre.modelo.Tipo;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentRutas#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentRutas extends Fragment implements OnRutaClickListener {
-
-    private String textsearch = "";
-    private Spinner spinner;
-    private RecyclerView recyclerView;
     private List<Ruta> rutas = new ArrayList<>();
+    private RecyclerView recyclerView;
     private AdapterReclyerView adapter;
-    private ActivityResultLauncher<Intent> launcher;
+    private Spinner spinner;
+
     public FragmentRutas() {}
-    public static FragmentRutas newInstance(String param1, String param2) {
-        FragmentRutas fragment = new FragmentRutas();
-        Bundle args = new Bundle();
-        /*DATOS*/
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) { //INICIALIZAR DATOS
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            /*DATOS*/
-        }
-        launcher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {}
-        );
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { //INFLAR INTERFAZ
         return inflater.inflate(R.layout.fragment_rutas, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) { //LÓGICA
         super.onViewCreated(view, savedInstanceState);
 
-
-
-        // 1. Inicializar Vistas
+        // CONFIGURAR SPINNER
         spinner = view.findViewById(R.id.spinnerFiltroDificultad);
-        recyclerView = view.findViewById(R.id.recyclerViewRutas);
 
-        // 2. Configurar RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AdapterReclyerView(rutas,this);
-        recyclerView.setAdapter(adapter);
-
-        // 4. Observar cambios en la base de datos
-        CreadorDB.getDatabase(getContext()).getRutas().observe(getViewLifecycleOwner(), new Observer<List<Ruta>>() {
-            @Override
-            public void onChanged(List<Ruta> nuevasRutas) {
-                rutas = nuevasRutas;
-                filtrarRuta();
-            }
-        });
-
-        // 5. Configurar Spinner
-        ArrayList<String> opciones = new ArrayList<>();
+        ArrayList<String> opciones = new ArrayList<>(); // CARGAR OPCIONES
         opciones.add("Todas");
         opciones.add("Facil");
         opciones.add("Media");
         opciones.add("Dificil");
-        ArrayAdapter<String> adapterspinner = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, opciones);
-        spinner.setAdapter(adapterspinner);
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, opciones);
+        spinner.setAdapter(adapterSpinner);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { // SELECCION OPCION
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                filtrarRuta();
+                filtrarPorDificultad();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-    }
-    public void filtrarRuta() {
-        if (spinner == null || adapter == null) return;
 
+
+        // CONFIGURACIÓN RECICLERVIEW
+        recyclerView = view.findViewById(R.id.recyclerViewRutas);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new AdapterReclyerView(rutas,this);
+        recyclerView.setAdapter(adapter);
+
+        // OBSERVAR BASE DE DATOS POR SI CAMBIA Y TENEMOS QUE VOLVER A FILTRAR
+        CreadorDB.getDatabase(getContext()).getRutas().observe(getViewLifecycleOwner(), new Observer<List<Ruta>>() {
+            @Override
+            public void onChanged(List<Ruta> nuevasRutas) {
+                rutas = nuevasRutas;
+                filtrarPorDificultad();
+            }
+        });
+    }
+    //-----------------------------------------FILTROS-------------------------------------------------
+    public void filtrarPorDificultad() {
         String dificultad = spinner.getSelectedItem().toString();
         List<Ruta> rutasFiltradas = rutas.stream()
                 .filter(r -> dificultad.equals("Todas") ||
@@ -124,25 +94,11 @@ public class FragmentRutas extends Fragment implements OnRutaClickListener {
                         (dificultad.equals("Media") && r.getDificultad() >= 2 && r.getDificultad() < 4) ||
                         (dificultad.equals("Dificil") && r.getDificultad() >= 4))
                 .collect(Collectors.toList());
-
         adapter.setRutas(new ArrayList<>(rutasFiltradas));
     }
-    @Override
-    public void onRutaClick(int posicion) {
-        Ruta ruta = rutas.get(posicion);
-        if(getActivity() instanceof ActivityPrincipal){
-            ((ActivityPrincipal) getActivity()).cargarFragmentoDetalle(ruta);
-        }
-
-    }
-
-    public void filtrarRuta(String textoBuscar){
-        // Obtenemos la dificultad actual del Spinner
-        String dificultad = (spinner != null) ? spinner.getSelectedItem().toString() : "Todas";
-
-        if (rutas == null) return;
-
-        List<Ruta> filtradas = rutas.stream()
+    public void filtrarPorNombre(String textoBuscar) {
+        String dificultad = spinner.getSelectedItem().toString();
+        List<Ruta> rutasFiltradas = rutas.stream()
                 .filter(r -> {
                     // Filtro 1: El nombre coincide con lo que escribimos (Estilo Google)
                     boolean coincideNombre = r.getNombreRuta().toLowerCase()
@@ -157,15 +113,18 @@ public class FragmentRutas extends Fragment implements OnRutaClickListener {
                     return coincideNombre && coincideDificultad;
                 })
                 .collect(Collectors.toList());
-
-        // Actualizamos el RecyclerView a través del adaptador
-        if (adapter != null) {
-            adapter.setRutas(new ArrayList<>(filtradas));
+        adapter.setRutas(new ArrayList<>(rutasFiltradas));
+    }
+    //------------------------------CARGA DE FRAGMENTOS CON INTERFAZ----------------------------------------
+    @Override
+    public void onRutaClick(int posicion) {
+        Ruta ruta = rutas.get(posicion);
+        if(getActivity() instanceof ActivityPrincipal){
+            ((ActivityPrincipal) getActivity()).cargarFragmentoDetalle(ruta);
         }
 
-
     }
-
+    //-----------------------------------REESTABLECER EL NOMBRE---------------------------------------------
     @Override
     public void onResume() {
         super.onResume();

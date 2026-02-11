@@ -148,7 +148,7 @@ public class ActivityPrincipal extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) { //TECLA POR TECLA
                 if (fragmentRutas !=null && fragmentRutas.isAdded()){
-                    fragmentRutas.filtrarRuta(newText);
+                    fragmentRutas.filtrarPorNombre(newText);
                 }
                 return true;
             }

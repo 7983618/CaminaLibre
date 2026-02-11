@@ -74,8 +74,8 @@ public abstract class CreadorDB extends RoomDatabase {
     public LiveData<List<Ruta>> getRutas() {
         return getDAO().readAll();
     }
-    public LiveData<List<Ruta>> getRutasFiltradas(String filtro) {
-        return getDAO().readFiltradas(filtro);
+    public Ruta getRuta(long id) {
+       return getDAO().read(id);
     }
     public void actualizarRuta(Ruta ruta) {
        ejecutarhilo.execute(new Runnable() {

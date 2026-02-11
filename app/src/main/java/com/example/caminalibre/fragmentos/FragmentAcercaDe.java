@@ -16,22 +16,10 @@ import android.widget.Button;
 import com.example.caminalibre.R;
 public class FragmentAcercaDe extends Fragment {
     public FragmentAcercaDe() {}
-    public static FragmentAcercaDe newInstance(String param1, String param2) {
-        FragmentAcercaDe fragment = new FragmentAcercaDe();
-        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) { //INICIALIZAR DATOS
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override

@@ -34,30 +34,17 @@ import com.example.caminalibre.servicios.MusicService;
 
 import java.util.ArrayList;
 import java.util.List;
-//
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentDetalle#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class FragmentDetalle extends Fragment {
     private Ruta ruta;
     private RecyclerView recyclerView;
     private AdapterPuntos adapter;
-    private Uri uriImagen;
-    ActivityResultLauncher<Uri> launcherCamara;
-    ActivityResultLauncher<String> launcherPermisos;
+    private ActivityResultLauncher<String> launcherPermisos;
+
     public FragmentDetalle() {}
-    public static FragmentDetalle newInstance(String param1, String param2) {
-        FragmentDetalle fragment = new FragmentDetalle();
-        Bundle args = new Bundle();
-        /*DATOS*/
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) { //INICIALIZAR DATOS
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             ruta = (Ruta) getArguments().getSerializable("ruta");
@@ -65,25 +52,47 @@ public class FragmentDetalle extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_detalle, container, false); //IMPORTANTE EL FALSE PARA QUE NO SE AÑADA 2 VECES
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { //INFLAR INTERFAZ
+        return inflater.inflate(R.layout.fragment_detalle, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) { //LÓGICA
+        super.onViewCreated(view, savedInstanceState);
+        //CAMBIAR TITULO
         ((ActivityPrincipal) getActivity()).cambiarNombreToolbar(ruta.getNombreRuta());
 
-        super.onViewCreated(view, savedInstanceState);
+        //OBTENER ELEMENTOS
         TextView titulo = view.findViewById(R.id.FichaTecnicaTitulo);
         TextView distancia = view.findViewById(R.id.FichaTecnicaDistancia);
         TextView dificultad = view.findViewById(R.id.FichaTecnicaDificultad);
         TextView tiempoEstimado = view.findViewById(R.id.FichaTecnicaTiempoEstimado);
         TextView latitud = view.findViewById(R.id.FichaTecnicaLatitud);
         TextView longitud = view.findViewById(R.id.FichaTecnicaLongitud);
-        CheckBox favorite = view.findViewById(R.id.FichaTecnicaFavoriaCheckBox);
-        ImageButton imageButton = view.findViewById(R.id.FichaTecnicaImagenRutaImageButton);
-        CheckBox cbMusica = view.findViewById(R.id.FichaTecnicaMusicaCheckbox);
-        cbMusica.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+        //CONFIGURACION FAVORITA
+        CheckBox favorita = view.findViewById(R.id.FichaTecnicaFavoriaCheckBox);
+
+        favorita.setChecked(ruta.isFavorita());
+        favorita.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            ruta.setFavorita(isChecked);
+            CreadorDB.getDatabase(getContext()).actualizarRuta(ruta);
+            Toast.makeText(getContext(), "Favorito: " + isChecked, Toast.LENGTH_SHORT).show();
+        });
+
+        //CONFIGURACIÓN BORRADO
+        ImageButton borrar = getActivity().findViewById(R.id.FichaTecnicaBorrarButton);
+        borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreadorDB.getDatabase(getContext()).borrarRuta(ruta, null);
+                getParentFragmentManager().popBackStack();
+            }
+        });
+
+        //CONFIGURACIÓN MÚSICA
+        CheckBox musica = view.findViewById(R.id.FichaTecnicaMusicaCheckbox);
+        musica.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 // ENVIAR ORDEN DE PLAY AL SERVICIO
                 Intent playIntent = new Intent(getContext(), MusicService.class);
@@ -98,15 +107,20 @@ public class FragmentDetalle extends Fragment {
             }
         });
 
-
-        launcherCamara = registerForActivityResult(new ActivityResultContracts.TakePicture(), new ActivityResultCallback<Boolean>() {
+        //CONFIGURACIÓN CAMARA/PERMISOS
+        ImageButton imageButton = view.findViewById(R.id.FichaTecnicaImagenRutaImageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onActivityResult(Boolean exitoTomandoFoto) {
-                imageButton.setImageURI(uriImagen);
-                ruta.setRutaImagen(uriImagen.toString());
-                CreadorDB.getDatabase(getContext()).actualizarRuta(ruta);
+            public void onClick(View v) {
+                int permitido = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
+                if (permitido == PackageManager.PERMISSION_GRANTED) {
+                    abrirCamara();
+                } else {
+                    launcherPermisos.launch(Manifest.permission.CAMERA);
+                }
             }
         });
+
         launcherPermisos = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
             @Override
             public void onActivityResult(Boolean o) {
@@ -114,55 +128,28 @@ public class FragmentDetalle extends Fragment {
             }
         });
 
-        if (ruta != null) {
+        //ESCRIBIR DATOS
+        titulo.setText(ruta.getNombreRuta());
+        distancia.setText(String.valueOf(ruta.getDistancia()));
+        dificultad.setText(String.valueOf(ruta.getDificultad()));
+        latitud.setText(String.valueOf(ruta.getLatitud()));
+        longitud.setText(String.valueOf(ruta.getLongitud()));
 
-            titulo.setText(ruta.getNombreRuta());
-            distancia.setText(String.valueOf(ruta.getDistancia()));
-            dificultad.setText(String.valueOf(ruta.getDificultad()));
-            latitud.setText(String.valueOf(ruta.getLatitud()));
-            longitud.setText(String.valueOf(ruta.getLongitud()));
-
-            int tiempo = (ruta.getDificultad() >= 4) ?
-                    (int) Math.round(ruta.getDistancia() / 3 * 60) :
-                    (int) Math.round(ruta.getDistancia() / 4 * 60);
-            tiempoEstimado.setText(tiempo + " " + getString(R.string.FichaTecnicaMinutos));
-
-            // Configuración de Favoritos
-            favorite.setChecked(ruta.isFavorita());
-            favorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                ruta.setFavorita(isChecked);
-                CreadorDB.getDatabase(getContext()).actualizarRuta(ruta);
-                Toast.makeText(getContext(), "Favorito: " + isChecked, Toast.LENGTH_SHORT).show();
-            });
-            if (ruta.getRutaImagen() != null) {
-                imageButton.setImageURI(Uri.parse(ruta.getRutaImagen()));
-            }
-            imageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int permitido = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
-                    if (permitido == PackageManager.PERMISSION_GRANTED) {
-                        abrirCamara();
-                    } else {
-                        launcherPermisos.launch(Manifest.permission.CAMERA);
-                    }
-                }
-            });
-
-            ejecutarReciclerView(view);
+        int tiempo = 0;
+        if (ruta.getDificultad() >= 4) {
+            tiempo = (int) Math.round(ruta.getDistancia() / 3 * 60);
+        } else {
+            tiempo = (int) Math.round(ruta.getDistancia() / 4 * 60);
         }
-        ImageButton borrar = (ImageButton) getActivity().findViewById(R.id.FichaTecnicaBorrarButton);
-        borrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreadorDB.getDatabase(getContext()).borrarRuta(ruta, null);
-                getParentFragmentManager().popBackStack();
-            }
-        });
+        tiempoEstimado.setText(tiempo + " " + getString(R.string.FichaTecnicaMinutos));
 
+        if (ruta.getRutaImagen() != null) {
+            imageButton.setImageURI(Uri.parse(ruta.getRutaImagen()));
+        }
+
+        ejecutarReciclerView(view);
     }
     private void abrirCamara() {
-
         // 1. Creamos la instancia del fragmento de la cámara pasando el ID de la ruta actual
         FragmentCamara fragmentCamara = FragmentCamara.newInstance(ruta.getId());
 
@@ -170,17 +157,6 @@ public class FragmentDetalle extends Fragment {
         if (getActivity() instanceof ActivityPrincipal) {
             ((ActivityPrincipal) getActivity()).loadFragment(fragmentCamara, true);
         }
-
-
-        //metodo antiguo
-//        File carpeta = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//        try {
-//            File archivoFoto = File.createTempFile(String.valueOf("ruta" +ruta.getId()), ".jpg", carpeta);
-//            uriImagen = FileProvider.getUriForFile(getContext(), "com.example.caminalibre.fileprovider", archivoFoto);
-//            launcherCamara.launch(uriImagen);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
     }
     private void ejecutarReciclerView(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewPuntosInteres);
@@ -198,29 +174,20 @@ public class FragmentDetalle extends Fragment {
     }
 
     @Override
-    public void onResume() {
+    public void onResume() { //RECARGA LA IMAGEN. (REMPLAZABLE POR LIVEDATA)
         super.onResume();
-        // 1. Consultamos la base de datos para obtener la ruta actualizada con su nueva foto
         CreadorDB.ejecutarhilo.execute(() -> {
-            // Buscamos la ruta por su ID (necesitas el método read en tu DAO)
             Ruta rutaActualizada = CreadorDB.getDatabase(getContext()).getDAO().read(ruta.getId());
 
             if (rutaActualizada != null && rutaActualizada.getRutaImagen() != null) {
-                // 2. Volvemos al hilo principal para actualizar la interfaz
                 requireActivity().runOnUiThread(() -> {
                     ImageButton imageButton = getView().findViewById(R.id.FichaTecnicaImagenRutaImageButton);
                     imageButton.setImageURI(Uri.parse(rutaActualizada.getRutaImagen()));
 
-                    // Actualizamos también nuestro objeto local para que esté sincronizado
                     this.ruta = rutaActualizada;
                 });
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -232,9 +199,9 @@ public class FragmentDetalle extends Fragment {
         // getActivity().isFinishing() es true si la app se está cerrando del todo.
         if (isRemoving() || (getActivity() != null && getActivity().isFinishing())) {
             // ESCENARIO 1: El usuario CIERRA el detalle. Paramos música.
-            Intent stopIntent = new Intent(getContext(), MusicService.class);
-            stopIntent.setAction("STOP");
-            requireContext().startService(stopIntent);
+            Intent closeIntent = new Intent(getContext(), MusicService.class);
+//            stopIntent.setAction("STOP");
+            requireContext().stopService(closeIntent);
         } else {
             // ESCENARIO 2: El usuario solo ha MINIMIZADO la app (botón Home).
             // No enviamos STOP, por lo que la música SIGUE SONANDO como Spotify.
