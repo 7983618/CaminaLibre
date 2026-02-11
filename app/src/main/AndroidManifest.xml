@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ico"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CaminaLibre">
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar">
         <activity
             android:name=".activities.ActivityPrincipal"
             android:exported="true" >

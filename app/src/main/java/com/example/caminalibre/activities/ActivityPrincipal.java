@@ -7,34 +7,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar$InspectionCompanion;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.caminalibre.R;
 import com.example.caminalibre.fragmentos.FragmentAcercaDe;
-import com.example.caminalibre.fragmentos.FragmentDetalleRuta;
-import com.example.caminalibre.fragmentos.Fragment_anadir_Rutas;
-import com.example.caminalibre.fragmentos.Fragment_mostra_rutas;
+import com.example.caminalibre.fragmentos.FragmentDetalle;
+import com.example.caminalibre.fragmentos.FragmentAltas;
+import com.example.caminalibre.fragmentos.FragmentRutas;
 import com.example.caminalibre.modelo.Ruta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 public class ActivityPrincipal extends AppCompatActivity {
 
-    Fragment_mostra_rutas mostraRutas = new Fragment_mostra_rutas();
-    Fragment_anadir_Rutas anadirRutas = new Fragment_anadir_Rutas();
+    FragmentRutas mostraRutas = new FragmentRutas();
+    FragmentAltas anadirRutas = new FragmentAltas();
     FragmentAcercaDe acercaDe = new FragmentAcercaDe();
 
 
@@ -179,7 +173,7 @@ public class ActivityPrincipal extends AppCompatActivity {
     }
 
     public void cargarFragmentoDetalleRuta(Ruta ruta) {
-        FragmentDetalleRuta rutaFragment = new FragmentDetalleRuta();
+        FragmentDetalle rutaFragment = new FragmentDetalle();
         Bundle bundle = new Bundle();
         bundle.putSerializable("ruta", ruta);
         rutaFragment.setArguments(bundle);

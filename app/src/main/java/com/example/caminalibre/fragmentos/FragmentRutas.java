@@ -33,10 +33,10 @@ import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_mostra_rutas#newInstance} factory method to
+ * Use the {@link FragmentRutas#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListener {
+public class FragmentRutas extends Fragment implements OnRutaClickListener {
 
     private String textsearch = "";
     private Spinner spinner;
@@ -44,9 +44,9 @@ public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListen
     private List<Ruta> rutas = new ArrayList<>();
     private AdapterReclyerView adapter;
     private ActivityResultLauncher<Intent> launcher;
-    public Fragment_mostra_rutas() {}
-    public static Fragment_mostra_rutas newInstance(String param1, String param2) {
-        Fragment_mostra_rutas fragment = new Fragment_mostra_rutas();
+    public FragmentRutas() {}
+    public static FragmentRutas newInstance(String param1, String param2) {
+        FragmentRutas fragment = new FragmentRutas();
         Bundle args = new Bundle();
         /*DATOS*/
         fragment.setArguments(args);
@@ -69,7 +69,7 @@ public class Fragment_mostra_rutas extends Fragment implements OnRutaClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__mostrar_rutas, container, false);
+        return inflater.inflate(R.layout.fragment_rutas, container, false);
     }
 
     @Override

@@ -40,19 +40,19 @@ import java.util.List;
 //
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentDetalleRuta#newInstance} factory method to
+ * Use the {@link FragmentDetalle#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentDetalleRuta extends Fragment {
+public class FragmentDetalle extends Fragment {
     private Ruta ruta;
     private RecyclerView recyclerView;
     private AdapterPuntos adapter;
     private Uri uriImagen;
     ActivityResultLauncher<Uri> launcherCamara;
     ActivityResultLauncher<String> launcherPermisos;
-    public FragmentDetalleRuta() {}
-    public static FragmentDetalleRuta newInstance(String param1, String param2) {
-        FragmentDetalleRuta fragment = new FragmentDetalleRuta();
+    public FragmentDetalle() {}
+    public static FragmentDetalle newInstance(String param1, String param2) {
+        FragmentDetalle fragment = new FragmentDetalle();
         Bundle args = new Bundle();
         /*DATOS*/
         fragment.setArguments(args);
@@ -69,7 +69,7 @@ public class FragmentDetalleRuta extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_detalle_ruta, container, false); //IMPORTANTE EL FALSE PARA QUE NO SE AÑADA 2 VECES
+        return inflater.inflate(R.layout.fragment_detalle, container, false); //IMPORTANTE EL FALSE PARA QUE NO SE AÑADA 2 VECES
     }
 
     @Override

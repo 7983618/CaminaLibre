@@ -22,11 +22,11 @@ import com.example.caminalibre.R;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.modelo.Tipo;
 
-public class Fragment_anadir_Rutas extends Fragment {
+public class FragmentAltas extends Fragment {
     Button guardarButton;
-    public Fragment_anadir_Rutas() {}
-    public static Fragment_anadir_Rutas newInstance(String param1, String param2) {
-        Fragment_anadir_Rutas fragment = new Fragment_anadir_Rutas();
+    public FragmentAltas() {}
+    public static FragmentAltas newInstance(String param1, String param2) {
+        FragmentAltas fragment = new FragmentAltas();
         Bundle args = new Bundle();
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);
@@ -47,7 +47,7 @@ public class Fragment_anadir_Rutas extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_anadir_rutas, container, false);
+        return inflater.inflate(R.layout.fragment_altas, container, false);
     }
 
     @Override
