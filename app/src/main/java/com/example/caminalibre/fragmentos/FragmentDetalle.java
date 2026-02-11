@@ -1,23 +1,10 @@
 package com.example.caminalibre.fragmentos;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,15 +13,25 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
 import com.example.caminalibre.activities.ActivityPrincipal;
 import com.example.caminalibre.adapters.AdapterPuntos;
 import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
+import com.example.caminalibre.servicios.MusicService;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 //
@@ -85,6 +82,22 @@ public class FragmentDetalle extends Fragment {
         TextView longitud = view.findViewById(R.id.FichaTecnicaLongitud);
         CheckBox favorite = view.findViewById(R.id.FichaTecnicaFavoriaCheckBox);
         ImageButton imageButton = view.findViewById(R.id.FichaTecnicaImagenRutaImageButton);
+        CheckBox cbMusica = view.findViewById(R.id.FichaTecnicaMusicaCheckbox);
+        cbMusica.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // ENVIAR ORDEN DE PLAY AL SERVICIO
+                Intent playIntent = new Intent(getContext(), MusicService.class);
+                playIntent.setAction("PLAY");
+                requireContext().startService(playIntent); // llamada a onStartCommand() MusicaService.java
+                Toast.makeText(getContext(), "Reproduciendo audio...", Toast.LENGTH_SHORT).show();
+            } else {
+                // ENVIAR ORDEN DE STOP AL SERVICIO
+                Intent stopIntent = new Intent(getContext(), MusicService.class);
+                stopIntent.setAction("STOP");
+                requireContext().startService(stopIntent);
+            }
+        });
+
 
         launcherCamara = registerForActivityResult(new ActivityResultContracts.TakePicture(), new ActivityResultCallback<Boolean>() {
             @Override
@@ -149,14 +162,25 @@ public class FragmentDetalle extends Fragment {
 
     }
     private void abrirCamara() {
-        File carpeta = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        try {
-            File archivoFoto = File.createTempFile(String.valueOf("ruta" +ruta.getId()), ".jpg", carpeta);
-            uriImagen = FileProvider.getUriForFile(getContext(), "com.example.caminalibre.fileprovider", archivoFoto);
-            launcherCamara.launch(uriImagen);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        // 1. Creamos la instancia del fragmento de la cámara pasando el ID de la ruta actual
+        FragmentCamara fragmentCamara = FragmentCamara.newInstance(ruta.getId());
+
+        // 2. Usamos el método de ActivityPrincipal para cargar el fragmento
+        if (getActivity() instanceof ActivityPrincipal) {
+            ((ActivityPrincipal) getActivity()).loadFragment(fragmentCamara, true);
         }
+
+
+        //metodo antiguo
+//        File carpeta = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        try {
+//            File archivoFoto = File.createTempFile(String.valueOf("ruta" +ruta.getId()), ".jpg", carpeta);
+//            uriImagen = FileProvider.getUriForFile(getContext(), "com.example.caminalibre.fileprovider", archivoFoto);
+//            launcherCamara.launch(uriImagen);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
     private void ejecutarReciclerView(View view) {
         recyclerView = view.findViewById(R.id.recyclerViewPuntosInteres);
@@ -173,4 +197,47 @@ public class FragmentDetalle extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // 1. Consultamos la base de datos para obtener la ruta actualizada con su nueva foto
+        CreadorDB.ejecutarhilo.execute(() -> {
+            // Buscamos la ruta por su ID (necesitas el método read en tu DAO)
+            Ruta rutaActualizada = CreadorDB.getDatabase(getContext()).getDAO().read(ruta.getId());
+
+            if (rutaActualizada != null && rutaActualizada.getRutaImagen() != null) {
+                // 2. Volvemos al hilo principal para actualizar la interfaz
+                requireActivity().runOnUiThread(() -> {
+                    ImageButton imageButton = getView().findViewById(R.id.FichaTecnicaImagenRutaImageButton);
+                    imageButton.setImageURI(Uri.parse(rutaActualizada.getRutaImagen()));
+
+                    // Actualizamos también nuestro objeto local para que esté sincronizado
+                    this.ruta = rutaActualizada;
+                });
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // AQUÍ ESTÁ EL TRUCO:
+        // isRemoving() es true si el usuario pulsó ATRÁS o cambió de sección.
+        // getActivity().isFinishing() es true si la app se está cerrando del todo.
+        if (isRemoving() || (getActivity() != null && getActivity().isFinishing())) {
+            // ESCENARIO 1: El usuario CIERRA el detalle. Paramos música.
+            Intent stopIntent = new Intent(getContext(), MusicService.class);
+            stopIntent.setAction("STOP");
+            requireContext().startService(stopIntent);
+        } else {
+            // ESCENARIO 2: El usuario solo ha MINIMIZADO la app (botón Home).
+            // No enviamos STOP, por lo que la música SIGUE SONANDO como Spotify.
+        }
+    }
 }

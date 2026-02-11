@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.CaminaLibre" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="actionBarStyle">@style/MiBarraEstilo</item>
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme.CaminaLibre" parent="Base.Theme.CaminaLibre" />

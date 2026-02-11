@@ -7,23 +7,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar$InspectionCompanion;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
 import com.example.caminalibre.fragmentos.FragmentAcercaDe;
 import com.example.caminalibre.fragmentos.FragmentDetalle;
 import com.example.caminalibre.fragmentos.FragmentAltas;
 import com.example.caminalibre.fragmentos.FragmentRutas;
+import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityPrincipal extends AppCompatActivity {
 
@@ -51,7 +63,7 @@ public class ActivityPrincipal extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+            //insertarpuntosprueba();
 //        drawerLayout = findViewById(R.id.main_drawerlayout);
 //        nv_side = findViewById(R.id.nav_view);
 //        toggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -100,7 +112,13 @@ public class ActivityPrincipal extends AppCompatActivity {
                 loadFragment(anadirRutas, true);
                 return true;
             } else if (id == R.id.vermisrutas) {
-                loadFragment(mostraRutas, false);
+                // 1. Miramos qué fragmento hay puesto ahora mismo
+                Fragment actual = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+
+                // 2. Solo cargamos "Mostrar Rutas" si NO es el que ya estamos viendo
+                if (!(actual instanceof FragmentRutas)) {
+                    loadFragment(new FragmentRutas(), false);
+                }
                 return true;
             } else if (id == R.id.ayuda) {
                 ayuda();
@@ -122,7 +140,11 @@ public class ActivityPrincipal extends AppCompatActivity {
 
     }
     public void loadFragment(Fragment fragment, boolean backStack) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentManager fm = getSupportFragmentManager();
+        if (!backStack) {
+            fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         if (backStack) {
             transaction.addToBackStack(null);
@@ -183,4 +205,32 @@ public class ActivityPrincipal extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    private void insertarpuntosprueba() {
+        CreadorDB.ejecutarhilo.execute(() -> {
+            // 1. Obtener todas las rutas que ya están en la BD
+            // Nota: Usamos una consulta directa al DAO fuera de LiveData para este proceso masivo
+            List<Ruta> todasLasRutas = CreadorDB.getDatabase(this).getDAO().readAllSync();
+
+            List<PuntoInteres> puntosNuevos = new ArrayList<>();
+
+            // 2. Por cada ruta, crear 5 puntos de interés
+            for (Ruta r : todasLasRutas) {
+                long idRuta = r.getId();
+                for (int i = 1; i <= 5; i++) {
+                    puntosNuevos.add(new PuntoInteres(
+                            "Punto " + i + " de " + r.getNombreRuta(), // Nombre
+                            r.getLatitud() + (i * 0.001),             // Latitud simulada
+                            r.getLongitud() + (i * 0.001),            // Longitud simulada
+                            "foto_demo_" + i,                         // Foto demo
+                            idRuta                                     // ID de la ruta vinculada
+                    ));
+                }
+            }
+
+            // 3. Insertar todos los puntos de golpe en la base de datos
+            CreadorDB.getDatabase(this).getPuntosDAO().insertAll(puntosNuevos);
+        });
+    }
+
 }

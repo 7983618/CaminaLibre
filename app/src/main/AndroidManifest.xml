@@ -41,6 +41,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/proveedor_de_rutas" />
         </provider>
+        <!-- Permisos de musica-->
+        <service
+            android:name=".servicios.MusicService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

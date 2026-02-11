@@ -18,6 +18,8 @@ public interface DAORUTA {
     @Insert
     void createAll(ArrayList<Ruta> rutas);
 
+    @Query("UPDATE rutas SET imagen = :rutaFoto WHERE id = :id")
+    void updateFoto(long id, String rutaFoto);
     @Update
     void update(Ruta ruta);
 
@@ -28,7 +30,7 @@ public interface DAORUTA {
     void delete(Ruta ruta);
 
     @Query("SELECT * FROM rutas WHERE id = :id")
-    Ruta read(int id);
+    Ruta read(long id);
 
     @Query("SELECT * FROM rutas")
     LiveData<List<Ruta>> readAll();

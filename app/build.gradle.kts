@@ -34,6 +34,23 @@ android {
 }
 
 dependencies {
+
+
+    // Librerías de CameraX (Versión estable)
+    val camerax_version = "1.3.4"
+
+    // Núcleo de CameraX y su implementación de camera2
+    implementation("androidx.camera:camera-core:${camerax_version}")
+    implementation("androidx.camera:camera-camera2:${camerax_version}")
+
+    // Librería para que CameraX sepa cuándo abrirse/cerrarse con el ciclo de vida del fragmento
+    implementation("androidx.camera:camera-lifecycle:${camerax_version}")
+
+    // Vista PreviewView para que el usuario pueda ver lo que enfoca la cámara
+    implementation("androidx.camera:camera-view:${camerax_version}")
+
+    ///------/*************      ///////
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
