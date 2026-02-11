@@ -23,9 +23,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
+import java.util.concurrent.Executor;
+
 
 public class FragmentCamara extends Fragment {
 
+    private static final String ARGUMENTO_ID_RUTA = "id_ruta_actual";
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
     private Preview preview;
@@ -39,7 +42,7 @@ public class FragmentCamara extends Fragment {
     public static FragmentCamara newInstance(long idRuta) {
         FragmentCamara fragment = new FragmentCamara();
         Bundle args = new Bundle();
-        args.putLong("idRuta", idRuta);
+        args.putLong(ARGUMENTO_ID_RUTA, idRuta);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,6 +79,7 @@ public class FragmentCamara extends Fragment {
          * ve preparándola". Es un proceso asíncrono (tarda un poco).
          * */
         cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
+        // cuando la camara responda
         cameraProviderFuture.addListener(() -> {
             try {
                 /**
@@ -88,10 +92,11 @@ public class FragmentCamara extends Fragment {
                 Toast.makeText(getContext(), "Error al iniciar cámara", Toast.LENGTH_SHORT).show();
             }
         }, ContextCompat.getMainExecutor(requireContext()));
+           // le dice al sitema ejecutate en el hilo principal en la interfaz de usuario
     }
 
     private void enlazarCasosDeUso() {
-        // 1. Configurar el Preview
+        // 1. Configurar el objeto Preview para transmisiones de imagenes en vivo
         preview = new Preview.Builder().build();
         /// Conectas ese objeto con el viewFinder del XML.
         ///Aquí es cuando empiezas a ver tu cara o el paisaje en la pantalla.
@@ -124,10 +129,10 @@ public class FragmentCamara extends Fragment {
     private void tomarFoto() {
         if (imageCapture == null) return;
 
-        // 1. DESACTIVAR EL BOTÓN AQUÍ para evitar múltiples clics
+        assert getView() != null;
         View btn = getView().findViewById(R.id.image_capture_button);
         if (btn != null) btn.setEnabled(false);
-        // Crear el archivo de destino
+
         String nombre = "ruta_" + idRutaActual + "_" + System.currentTimeMillis() + ".jpg";
         File archivo = new File(requireContext().getFilesDir(), nombre);
 
@@ -139,14 +144,13 @@ public class FragmentCamara extends Fragment {
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                         String pathFinal = archivo.getAbsolutePath();
                         CreadorDB.getDatabase(getContext()).actualizarRuta(idRutaActual, pathFinal);
-                        // 2. REGRESAR (esto ya lo tienes)
+
                         getParentFragmentManager().popBackStack();
 
                     }
 
                     @Override
                     public void onError(@NonNull ImageCaptureException exception) {
-                        // 3. SI HAY ERROR, VOLVER A ACTIVAR EL BOTÓN para reintentar
                         if (btn != null) btn.setEnabled(true);
                         exception.printStackTrace();
                         Toast.makeText(getContext(), "Error al guardar foto", Toast.LENGTH_SHORT).show();
