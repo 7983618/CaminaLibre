@@ -18,7 +18,7 @@ import android.widget.Spinner;
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
 import com.example.caminalibre.activities.ActivityPrincipal;
-import com.example.caminalibre.adapters.AdapterReclyerView;
+import com.example.caminalibre.adapters.AdapterRutas;
 import com.example.caminalibre.interfaces.OnRutaClickListener;
 import com.example.caminalibre.modelo.Ruta;
 
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class FragmentRutas extends Fragment implements OnRutaClickListener {
     private List<Ruta> rutas = new ArrayList<>();
     private RecyclerView recyclerView;
-    private AdapterReclyerView adapter;
+    private AdapterRutas adapter;
     private Spinner spinner;
 
     public FragmentRutas() {}
@@ -73,7 +73,7 @@ public class FragmentRutas extends Fragment implements OnRutaClickListener {
         recyclerView = view.findViewById(R.id.recyclerViewRutas);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AdapterReclyerView(rutas,this);
+        adapter = new AdapterRutas(rutas,this);
         recyclerView.setAdapter(adapter);
 
         // OBSERVAR BASE DE DATOS POR SI CAMBIA Y TENEMOS QUE VOLVER A FILTRAR

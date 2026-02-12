@@ -23,6 +23,10 @@ public class AdapterPuntos extends RecyclerView.Adapter<PuntoViewHolder> {
     public AdapterPuntos(List<PuntoInteres> puntosInteres) {
         this.puntosInteres = puntosInteres;
     }
+    public void setLista(List<PuntoInteres> nuevaLista) {
+        this.puntosInteres = nuevaLista;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -37,17 +41,8 @@ public class AdapterPuntos extends RecyclerView.Adapter<PuntoViewHolder> {
         holder.bind(punto);
     }
 
-
     @Override
     public int getItemCount() {
         return puntosInteres != null ? puntosInteres.size() : 0;
     }
-
-    // Método vital para que el LiveData de Room actualice la lista
-    public void setLista(List<PuntoInteres> nuevaLista) {
-        this.puntosInteres = nuevaLista;
-        notifyDataSetChanged();
-    }
-
-
 }

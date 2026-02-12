@@ -23,17 +23,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
-import java.util.Objects;
-import java.util.concurrent.Executor;
 
 
 public class FragmentCamara extends Fragment {
-
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
-    private Preview preview;
-    private ProcessCameraProvider cameraProvider;
-    private PreviewView viewFinder;
+    private PreviewView previewView;
     private long id;
 
     public FragmentCamara(long id) {
@@ -56,96 +50,57 @@ public class FragmentCamara extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewFinder = view.findViewById(R.id.viewFinder);
-        FloatingActionButton btnCapture = view.findViewById(R.id.image_capture_button);
-
-        btnCapture.setOnClickListener(v -> tomarFoto());
-
+        previewView = view.findViewById(R.id.camara_preview);
+        FloatingActionButton captureButton = view.findViewById(R.id.camara_capture_button);
         configurarCameraX();
+
+        captureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nombre = "ruta_" + id + "_" + System.currentTimeMillis() + ".jpg";
+                File archivo = new File(requireContext().getFilesDir(), nombre);
+
+                ImageCapture.OutputFileOptions outputOptions = new ImageCapture.OutputFileOptions.Builder(archivo).build();
+
+                imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(requireContext()),
+                        new ImageCapture.OnImageSavedCallback() {
+                            @Override
+                            public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                                String pathFinal = archivo.getAbsolutePath();
+                                CreadorDB.getDatabase(getContext()).actualizarRuta(id, pathFinal);
+                                getParentFragmentManager().popBackStack();
+                            }
+
+                            @Override
+                            public void onError(@NonNull ImageCaptureException exception) {
+                                Toast.makeText(getContext(), "Error al guardar foto", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+
+
     }
 
     private void configurarCameraX() {
-        /**
-         * Aquí le dices a Android: "Oye, voy a necesitar la cámara en algún momento,
-         * ve preparándola". Es un proceso asíncrono (tarda un poco).
-         * */
-        cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
-        // cuando la camara responda
+        ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
         cameraProviderFuture.addListener(() -> {
             try {
-                /**
-                 * Recogemos el objeto ProcessCameraProvider que nos ha devuelto CameraX
-                 * */
-                cameraProvider = cameraProviderFuture.get();
-                enlazarCasosDeUso();
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                Preview preview = new Preview.Builder().build();
+                preview.setSurfaceProvider(previewView.getSurfaceProvider());
+
+                imageCapture = new ImageCapture.Builder()
+                        .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                        .build();
+
+                CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
+
+                cameraProvider.bindToLifecycle(getViewLifecycleOwner(), cameraSelector, preview, imageCapture);
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getContext(), "Error al iniciar cámara", Toast.LENGTH_SHORT).show();
             }
         }, ContextCompat.getMainExecutor(requireContext()));
-           // le dice al sitema ejecutate en el hilo principal en la interfaz de usuario
-    }
-
-    private void enlazarCasosDeUso() {
-        // 1. Configurar el objeto Preview para transmisiones de imagenes en vivo
-        preview = new Preview.Builder().build();
-        /// Conectas ese objeto con el viewFinder del XML.
-        ///Aquí es cuando empiezas a ver tu cara o el paisaje en la pantalla.
-        preview.setSurfaceProvider(viewFinder.getSurfaceProvider());
-
-        // 2. Configurar la captura de imagen
-        imageCapture = new ImageCapture.Builder()
-                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY) // para tomar sin retardo
-                .build();
-
-        // 3. Seleccionar la cámara trasera
-        CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
-
-        try {
-            // 4. Vincular al ciclo de vida del Fragmento
-            // limpiamos los casos de uso anteriores
-            cameraProvider.unbindAll();
-
-            /***
-             *  La línea maestra. Aquí conectas todo (Vista Previa y Capturador)
-             *  al ciclo de vida del fragmento. La cámara se enciende ahora y se apagará
-             *  sola si sales del fragmento.
-             */
-            cameraProvider.bindToLifecycle(getViewLifecycleOwner(), cameraSelector, preview, imageCapture);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void tomarFoto() {
-        if (imageCapture == null) return;
-
-        assert getView() != null;
-        View btn = getView().findViewById(R.id.image_capture_button);
-        if (btn != null) btn.setEnabled(false);
-
-        String nombre = "ruta_" + id + "_" + System.currentTimeMillis() + ".jpg";
-        File archivo = new File(requireContext().getFilesDir(), nombre);
-
-        ImageCapture.OutputFileOptions outputOptions = new ImageCapture.OutputFileOptions.Builder(archivo).build();
-
-        imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(requireContext()),
-                new ImageCapture.OnImageSavedCallback() {
-                    @Override
-                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                        String pathFinal = archivo.getAbsolutePath();
-                        CreadorDB.getDatabase(getContext()).actualizarRuta(id, pathFinal);
-
-                        getParentFragmentManager().popBackStack();
-
-                    }
-
-                    @Override
-                    public void onError(@NonNull ImageCaptureException exception) {
-                        if (btn != null) btn.setEnabled(true);
-                        exception.printStackTrace();
-                        Toast.makeText(getContext(), "Error al guardar foto", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 }

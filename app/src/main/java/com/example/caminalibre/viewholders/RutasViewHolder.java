@@ -39,7 +39,7 @@ public  class RutasViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void bind(@NonNull Ruta ruta) {
+    public void bind(Ruta ruta) {
         nombreRuta.setText(ruta.getNombreRuta());
         distancia.setText(ruta.getDistancia() + " km");
         localizacion.setText(ruta.getLocalizacion());

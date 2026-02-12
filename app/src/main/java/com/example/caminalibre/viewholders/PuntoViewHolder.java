@@ -15,40 +15,28 @@ import com.example.caminalibre.R;
 import com.example.caminalibre.modelo.PuntoInteres;
 
 public  class PuntoViewHolder extends RecyclerView.ViewHolder {
-    private final TextView nombre;
-    private final TextView coordenadas;
-    private final ImageView foto;
-
+    private TextView nombre;
+    private TextView coordenadas;
+    private View viewActual;
     public PuntoViewHolder(@NonNull View itemView) {
         super(itemView);
         nombre = itemView.findViewById(R.id.itemPuntoNombre);
         coordenadas = itemView.findViewById(R.id.itemPuntoCoordenadas);
-        foto = itemView.findViewById(R.id.itemPuntoImagen);
+        viewActual = itemView;
     }
-
-
-    public void bind(@NonNull PuntoInteres punto) {
-        Context context = itemView.getContext();
-
+    public void bind(PuntoInteres punto) {
         nombre.setText(punto.getNombre());
-        String coordenadas1 = "Lat: " + punto.getLatitud() + " | Lon: " + punto.getLongitud();
-
-        coordenadas.setText(coordenadas1);
-        if (punto.getFoto() != null) {
-            foto.setImageURI(Uri.parse(punto.getFoto()));
-        }
-
-        // Lógica del click para abrir mapas movida aquí
+        coordenadas.setText("Lat: " + punto.getLatitud() + " | Lon: " + punto.getLongitud());
         itemView.setOnClickListener(v -> {
-            abrirMapa(context, punto);
+            abrirMapa(punto);
         });
+
     }
 
-    private void abrirMapa(Context context, PuntoInteres punto) {
+    private void abrirMapa(PuntoInteres punto) {
+        Context context = viewActual.getContext();
         Toast.makeText(context, "Abriendo ubicación: " + punto.getNombre(), Toast.LENGTH_SHORT).show();
-
         String uri = "geo:" + punto.getLatitud() + "," + punto.getLongitud() + "?q=" + punto.getLatitud() + "," + punto.getLongitud() + "(" + punto.getNombre() + ")";
-
 
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         mapIntent.setPackage("com.google.android.apps.maps");
