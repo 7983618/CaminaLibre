@@ -154,6 +154,7 @@ public class FragmentDetalle extends Fragment {
 
         ejecutarReciclerView(view);
     }
+    //-----------------------------------------CAMARA-------------------------------------------------
     private void abrirCamara() {
         // 1. Creamos la instancia del fragmento de la cámara pasando el ID de la ruta actual
         FragmentCamara fragmentCamara = new FragmentCamara(ruta.getId());
@@ -163,21 +164,6 @@ public class FragmentDetalle extends Fragment {
             ((ActivityPrincipal) getActivity()).loadFragment(fragmentCamara, true);
         }
     }
-    private void ejecutarReciclerView(View view) {
-        recyclerView = view.findViewById(R.id.recyclerViewPuntosInteres);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        adapter = new AdapterPuntos(new ArrayList<>());
-        recyclerView.setAdapter(adapter);
-
-        CreadorDB.getDatabase(getContext()).getPuntosDAO().getPuntosDeInteres(ruta.getId()).observe(getViewLifecycleOwner(), new Observer<List<PuntoInteres>>() {
-            @Override
-            public void onChanged(List<PuntoInteres> puntoInteres) {
-                adapter.setLista(puntoInteres);
-            }
-        });
-    }
-
     @Override
     public void onResume() { // REMPLAZAR POR LIVEDATA  EN EL FUTURO
         super.onResume();
@@ -194,7 +180,24 @@ public class FragmentDetalle extends Fragment {
             }
         });
     }
+    //-----------------------------------------RECICLERVIEW-------------------------------------------------
+    private void ejecutarReciclerView(View view) {
+        recyclerView = view.findViewById(R.id.recyclerViewPuntosInteres);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        adapter = new AdapterPuntos(new ArrayList<>());
+        recyclerView.setAdapter(adapter);
+
+        CreadorDB.getDatabase(getContext()).getPuntosInteres(ruta.getId()).observe(getViewLifecycleOwner(), new Observer<List<PuntoInteres>>() {
+            @Override
+            public void onChanged(List<PuntoInteres> puntoInteres) {
+                adapter.setLista(puntoInteres);
+            }
+        });
+    }
+
+
+    //-----------------------------------------AUDIO-------------------------------------------------
     @Override
     public void onStop() {
         super.onStop();

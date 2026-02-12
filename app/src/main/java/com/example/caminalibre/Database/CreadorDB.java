@@ -74,6 +74,9 @@ public abstract class CreadorDB extends RoomDatabase {
     public LiveData<List<Ruta>> getRutas() {
         return getDAO().readAll();
     }
+    public LiveData<List<PuntoInteres>> getPuntosInteres(long id) {
+        return getPuntosDAO().getPuntosDeInteres(id);
+    }
     public Ruta getRuta(long id) {
        return getDAO().read(id);
     }

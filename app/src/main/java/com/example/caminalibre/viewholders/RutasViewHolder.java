@@ -16,7 +16,6 @@ import com.example.caminalibre.modelo.Ruta;
 public  class RutasViewHolder extends RecyclerView.ViewHolder {
     private static final String ESTRELLA_LLENA = "\u2605"; // ★
     private static final String ESTRELLA_VACIA = "\u2606"; // ☆
-
     private final TextView nombreRuta;
     private final TextView distancia;
     private final TextView localizacion;
@@ -30,17 +29,11 @@ public  class RutasViewHolder extends RecyclerView.ViewHolder {
         tipo = itemView.findViewById(R.id.itemRutaTipo);
         estrellas = itemView.findViewById(R.id.itemRutaEstrellas);
 
-
         itemView.setOnClickListener(v -> {
-
             if (listener == null) return;
-
             int position = getBindingAdapterPosition();
-
             if (position == RecyclerView.NO_POSITION) return;
-
             listener.onRutaClick(position);
-
         });
 
 
@@ -54,9 +47,6 @@ public  class RutasViewHolder extends RecyclerView.ViewHolder {
 
         if (ruta.getRutaImagen() != null) {
             tipo.setImageURI(Uri.parse(ruta.getRutaImagen()));
-        } else {
-            // Imagen por defecto si no hay imagen de ruta
-            tipo.setImageResource(R.drawable.map_ico);
         }
     }
     private String generarEstrellas(float dificultad) {
