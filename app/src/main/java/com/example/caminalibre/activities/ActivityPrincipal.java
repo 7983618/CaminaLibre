@@ -51,8 +51,8 @@ public class ActivityPrincipal extends AppCompatActivity {
         });
 
         //DATOS
-//        inicializarRutas();
-//        inicializarPuntosInteres();
+        inicializarRutas();
+        inicializarPuntosInteres();
 
         //CONFIGURACIÓN INICIAL TOOLBAR
         toolbar = findViewById(R.id.toolbar);

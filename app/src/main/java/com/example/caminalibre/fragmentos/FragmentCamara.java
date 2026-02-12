@@ -28,31 +28,21 @@ import java.util.concurrent.Executor;
 
 public class FragmentCamara extends Fragment {
 
-    private static final String ARGUMENTO_ID_RUTA = "id_ruta_actual";
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
     private Preview preview;
     private ProcessCameraProvider cameraProvider;
     private PreviewView viewFinder;
-    private long idRutaActual;
+    private long id;
 
-    public FragmentCamara() {
-    }
+    public FragmentCamara(long id) {
+        this.id = id;
 
-    public static FragmentCamara newInstance(long idRuta) {
-        FragmentCamara fragment = new FragmentCamara();
-        Bundle args = new Bundle();
-        args.putLong(ARGUMENTO_ID_RUTA, idRuta);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            idRutaActual = getArguments().getLong("idRuta");
-        }
     }
 
     @Nullable
@@ -133,7 +123,7 @@ public class FragmentCamara extends Fragment {
         View btn = getView().findViewById(R.id.image_capture_button);
         if (btn != null) btn.setEnabled(false);
 
-        String nombre = "ruta_" + idRutaActual + "_" + System.currentTimeMillis() + ".jpg";
+        String nombre = "ruta_" + id + "_" + System.currentTimeMillis() + ".jpg";
         File archivo = new File(requireContext().getFilesDir(), nombre);
 
         ImageCapture.OutputFileOptions outputOptions = new ImageCapture.OutputFileOptions.Builder(archivo).build();
@@ -143,7 +133,7 @@ public class FragmentCamara extends Fragment {
                     @Override
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                         String pathFinal = archivo.getAbsolutePath();
-                        CreadorDB.getDatabase(getContext()).actualizarRuta(idRutaActual, pathFinal);
+                        CreadorDB.getDatabase(getContext()).actualizarRuta(id, pathFinal);
 
                         getParentFragmentManager().popBackStack();
 

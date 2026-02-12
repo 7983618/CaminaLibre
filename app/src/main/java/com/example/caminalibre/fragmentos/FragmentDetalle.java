@@ -151,7 +151,7 @@ public class FragmentDetalle extends Fragment {
     }
     private void abrirCamara() {
         // 1. Creamos la instancia del fragmento de la cámara pasando el ID de la ruta actual
-        FragmentCamara fragmentCamara = FragmentCamara.newInstance(ruta.getId());
+        FragmentCamara fragmentCamara = new FragmentCamara(ruta.getId());
 
         // 2. Usamos el método de ActivityPrincipal para cargar el fragmento
         if (getActivity() instanceof ActivityPrincipal) {
