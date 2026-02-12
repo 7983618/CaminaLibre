@@ -1,6 +1,7 @@
 package com.example.caminalibre.fragmentos;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -178,7 +179,7 @@ public class FragmentDetalle extends Fragment {
     }
 
     @Override
-    public void onResume() { //RECARGA LA IMAGEN. (REMPLAZABLE POR LIVEDATA)
+    public void onResume() { // REMPLAZAR POR LIVEDATA  EN EL FUTURO
         super.onResume();
         CreadorDB.ejecutarhilo.execute(() -> {
             Ruta rutaActualizada = CreadorDB.getDatabase(getContext()).getDAO().read(ruta.getId());
@@ -197,18 +198,17 @@ public class FragmentDetalle extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        boolean seEstaCerrando = isRemoving() || (getActivity() != null && getActivity().isFinishing());
+        if (seEstaCerrando) {
+            detenerServicioMusica();
+        }
+    }
 
-        // AQUÍ ESTÁ EL TRUCO:
-        // isRemoving() es true si el usuario pulsó ATRÁS o cambió de sección.
-        // getActivity().isFinishing() es true si la app se está cerrando del todo.
-        if (isRemoving() || (getActivity() != null && getActivity().isFinishing())) {
-            // ESCENARIO 1: El usuario CIERRA el detalle. Paramos música.
-            Intent closeIntent = new Intent(getContext(), MusicService.class);
-//            stopIntent.setAction("STOP");
-            requireContext().stopService(closeIntent);
-        } else {
-            // ESCENARIO 2: El usuario solo ha MINIMIZADO la app (botón Home).
-            // No enviamos STOP, por lo que la música SIGUE SONANDO como Spotify.
+    private void detenerServicioMusica() {
+        Context contexto = getContext();
+        if (contexto != null) {
+            Intent intent = new Intent(contexto, MusicService.class);
+            contexto.stopService(intent); // llama a onDestroy() MusicaService.java
         }
     }
 }
