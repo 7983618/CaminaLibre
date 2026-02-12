@@ -123,8 +123,12 @@ public class FragmentDetalle extends Fragment {
 
         launcherPermisos = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
             @Override
-            public void onActivityResult(Boolean o) {
-                abrirCamara();
+            public void onActivityResult(Boolean concedido) {
+                if (concedido) {
+                    abrirCamara();
+                }else{
+                    Toast.makeText(getContext(), "No se ha concedido el permiso de cámara", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
