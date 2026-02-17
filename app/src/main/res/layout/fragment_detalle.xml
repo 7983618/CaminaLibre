@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.FichaTecnica">
+    android:layout_height="match_parent">
 
 
     <ScrollView
@@ -16,12 +15,12 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/standar_background">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
+            android:background="?attr/colorSurface"
             android:orientation="vertical">
 
             <LinearLayout
@@ -33,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:scaleType="centerCrop"
-                    android:src="@color/standar_interact"
+                    android:src="?attr/colorSecondary"
                     android:background="@color/standar_interact"/>
 
             </LinearLayout>
@@ -66,25 +65,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:button="@drawable/sonido"
-                            app:buttonTint="@color/standar_interact" /> <!--para que se vea el color original-->
+                            app:buttonTint="?attr/colorSecondary" /> <!--para que se vea el color original-->
                         <CheckBox
                             android:id="@+id/FichaTecnicaFavoriaCheckBox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:button="@drawable/favorite"
-                            app:buttonTint="@color/standar_interact" /> <!--para que se vea el color original-->
-                        <Space
-                            android:layout_width="8dp"
-                            android:layout_height="match_parent"/>
-                        <ImageButton
+                            app:buttonTint="?attr/colorSecondary" /> <!--para que se vea el color original-->
+
+                        <Button
                             android:id="@+id/FichaTecnicaBorrarButton"
+                            style="@style/Widget.Material3.Button.IconButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-                            android:src="@drawable/trash_ico"
-                            android:background="@android:color/transparent"
-                            app:buttonTint="@color/standar_interact"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            app:icon="@drawable/trash_ico"
+                            app:iconTint="?attr/colorError"
+                            />
                     </LinearLayout>
 
 
@@ -108,7 +105,8 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/map_ico" />
+                            android:background="@drawable/map_ico"
+                            android:backgroundTint="?attr/colorOnSurfaceVariant"/>
                     </LinearLayout>
 
                     <TextView
@@ -151,7 +149,8 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/dificulty_ico" />
+                            android:background="@drawable/dificulty_ico"
+                            android:backgroundTint="?attr/colorOnSurfaceVariant"/>
                     </LinearLayout>
 
                     <TextView
@@ -194,7 +193,8 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/clock_ico" />
+                            android:background="@drawable/clock_ico"
+                            android:backgroundTint="?attr/colorOnSurfaceVariant"/>
                     </LinearLayout>
 
                     <TextView
@@ -239,7 +239,8 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/location_ico" />
+                            android:background="@drawable/location_ico"
+                            android:backgroundTint="?attr/colorOnSurfaceVariant"/>
                     </LinearLayout>
 
                     <TextView
@@ -282,7 +283,8 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/location_ico" />
+                            android:background="@drawable/location_ico"
+                            android:backgroundTint="?attr/colorOnSurfaceVariant"/>
                     </LinearLayout>
 
                     <TextView
@@ -313,7 +315,7 @@
                     style="@style/FichaTecnicaFila"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="16sp"
+                    android:paddingHorizontal="@dimen/margen_estandar"
                     android:orientation="vertical"
                     android:paddingTop="16dp">
 
@@ -321,11 +323,8 @@
                         style="@style/AppTextViewTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Puntos de Interés"
-                        android:textColor="@color/red"
-                        android:textAllCaps="true"
-                        android:layout_marginBottom="16sp"
-                        android:textSize="32sp" />
+                        android:text="@string/FichaTecnicaPuntosDeInteres"
+                        android:layout_marginBottom="16sp"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerViewPuntosInteres"

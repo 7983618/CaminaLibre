@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTextView">
+    <style name="AppTextView" parent="TextAppearance.Material3.BodyLarge">
         <item name="android:textSize">@dimen/cuerpo_de_texto</item>
-        <item name="android:textColor">@color/standar_text</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="AppTextViewTitle" parent="AppTextView">
-        <item name="android:textSize">@dimen/cuerpo_de_titulo</item>
+    <style name="AppTextViewTitle" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
+    </style>
+    <style name="AppTextMeta" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
     </style>
     <style name="AppEditText">
         <item name="android:textSize">@dimen/cuerpo_de_texto</item>
@@ -41,7 +45,7 @@
         <item name="android:layout_marginBottom">25dp</item>
     </style>
 
-    <style name="FichaTecnicaTextView" parent="AppTextView">
+    <style name="FichaTecnicaTextView" parent="AppTextMeta">
         <item name="android:layout_gravity">top</item>
     </style>
     <style name="FichaTecnicaFila">

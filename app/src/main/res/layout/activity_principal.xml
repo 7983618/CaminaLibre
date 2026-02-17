@@ -19,10 +19,20 @@
             android:layout_height="match_parent"
 
             android:orientation="vertical">
+<!--            <androidx.appcompat.widget.Toolbar-->
+<!--                android:id="@+id/toolbar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"/>-->
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:background="?attr/colorSurfaceContainer"
+                android:elevation="50dp"
+
+                app:titleTextColor="?attr/colorOnSurface"
+                app:titleTextAppearance="@style/AppTextViewTitle"
+                />
             <FrameLayout
                 android:id="@+id/frame_container"
                 android:layout_width="match_parent"
@@ -31,17 +41,25 @@
                 android:fitsSystemWindows="false"
                 />
 
+<!--            <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--                style="@style/Widget.MaterialComponents.BottomNavigationView"-->
+<!--                android:id="@+id/bottom_navigation"-->
+<!--                android:background="@color/standar_background"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:labelVisibilityMode="labeled"-->
+<!--                app:menu="@menu/bottom_nav_menu"-->
+<!--                app:itemIconTint="@color/standar_interact"-->
+<!--                app:itemTextColor="@color/standar_interact"-->
+<!--                />-->
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                style="@style/Widget.MaterialComponents.BottomNavigationView"
                 android:id="@+id/bottom_navigation"
-                android:background="@color/standar_background"
+                style="@style/Widget.Material3.BottomNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/colorSurfaceContainer"
                 app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_nav_menu"
-                app:itemIconTint="@color/standar_interact"
-                app:itemTextColor="@color/standar_interact"
-                />
+                app:menu="@menu/bottom_nav_menu" />
         </LinearLayout>
     </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

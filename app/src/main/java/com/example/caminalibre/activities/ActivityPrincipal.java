@@ -74,7 +74,7 @@ public class ActivityPrincipal extends AppCompatActivity {
                 return true;
             } else if (id == R.id.bottom_navigation_ayuda) {
                 ayuda();
-                return true;
+                return false;
             } else if (id == R.id.bottom_navigation_acerca_de) {
                 loadFragment(fragmentAcercaDe, true);
                 return true;
@@ -83,6 +83,16 @@ public class ActivityPrincipal extends AppCompatActivity {
                 return true;
             }
             return false;
+        });
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            Fragment fragmentActual = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+            if (fragmentActual instanceof FragmentRutas) {
+                bottomNavigationView.getMenu().findItem(R.id.bottom_navigation_rutas).setChecked(true);
+            } else if (fragmentActual instanceof FragmentAltas) {
+                bottomNavigationView.getMenu().findItem(R.id.bottom_navigation_altas).setChecked(true);
+            } else if (fragmentActual instanceof FragmentAcercaDe) {
+                bottomNavigationView.getMenu().findItem(R.id.bottom_navigation_acerca_de).setChecked(true);
+            }
         });
 
         // CARGAR FRAGMENTO INICIAL
@@ -238,7 +248,7 @@ public class ActivityPrincipal extends AppCompatActivity {
                 long idRuta = r.getId();
                 for (int i = 1; i <= 5; i++) {
                     puntosNuevos.add(new PuntoInteres(
-                            "Punto " + i + " de " + r.getNombreRuta(), // Nombre
+                            r.getNombreRuta(),                        // Nombre
                             r.getLatitud() + (i * 0.001),             // Latitud simulada
                             r.getLongitud() + (i * 0.001),            // Longitud simulada
                             "foto_demo_" + i,                         // Foto demo

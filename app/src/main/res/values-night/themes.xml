@@ -1,4 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Base.Theme.CaminaLibre" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorPrimary">#8CD699</item>
+        <item name="colorOnPrimary">#003914</item>
+        <item name="colorPrimaryContainer">#005321</item>
+        <item name="colorOnPrimaryContainer">#A7F3B3</item>
+
+        <item name="colorSecondary">#B6CCB8</item>
+        <item name="colorOnSecondary">#223526</item>
+        <item name="colorSecondaryContainer">#334B36</item>
+        <item name="colorOnSecondaryContainer">#EAE4D5</item>
+
+        <item name="android:colorBackground">#111411</item>
+        <item name="colorSurface">#111411</item>
+        <item name="colorOnSurface">#E2E3DD</item>
+        <item name="colorSurfaceContainer">#1E211E</item>
+        <item name="colorSurfaceVariant">#424940</item>
+        <item name="colorOnSurfaceVariant">#C2C8BD</item>
+        <item name="colorError">#FFB4AB</item>
+        <item name="colorOnError">#690005</item>
+
     </style>
+
+    <style name="Theme.CaminaLibre" parent="Base.Theme.CaminaLibre" />
 </resources>

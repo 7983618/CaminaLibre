@@ -5,17 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activities.ActivityMostrarRutas">
+    android:orientation="vertical">
 
     <Spinner
         android:id="@+id/spinnerFiltroDificultad"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewRutas"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface"/>
 
 </LinearLayout>

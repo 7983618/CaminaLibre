@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.AltaDeRutas">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,185 +16,278 @@
 
 
         <LinearLayout
-            android:background="@color/standar_background"
+            android:background="?attr/colorSurface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout style="@style/AltasRutasFila">
-                <TextView
-                    style="@style/AltaRutasTextView"
-                    android:text="@string/AltaRutasNombre" />
-
-                <EditText
-                    style="@style/AltaRutasEditText"
-                    android:id="@+id/AltaRutasNombreEditText"
-                    android:inputType="text"
-                    android:text=""
-                    />
-            </LinearLayout>
-            <LinearLayout style="@style/AltasRutasFila">
-                <TextView
-                    style="@style/AltaRutasTextView"
-                    android:text="@string/AltaRutasLocalizacion" />
-
-                <EditText
-                    style="@style/AltaRutasEditText"
-                    android:id="@+id/AltasRutasLocalizacionEditText"
-                    android:inputType="text"
-                    android:text=""
-                    />
-            </LinearLayout>
-            <LinearLayout style="@style/AltasRutasFila">
-                <TextView
-                    style="@style/AltaRutasTextView"
-                    android:text="@string/AltaRutasTipoRuta" />
-
-                <RadioGroup
-                    android:id="@+id/AltasRutasTipoRadioGroup"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    >
-                    <RadioButton android:id="@+id/AstaRutasTipoCircularRadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/AltaRutasTipoCircular"
-                        android:textColor="@color/white"
-                        />
-                    <RadioButton android:id="@+id/AstaRutasTipoLinealRadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/AltaRutasTipoLineal"
-                        android:textColor="@color/white"
-                        />
-                </RadioGroup>
-            </LinearLayout>
-            <LinearLayout style="@style/AltasRutasFila">
-                <TextView
-                    style="@style/AltaRutasTextView"
-                    android:text="@string/AltaRutasDificultad" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    >
-
-                    <RatingBar
-                        android:id="@+id/ratingBar3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:isIndicator="false"
-                        />
-                </LinearLayout>
-
-                <!--                <EditText-->
-                <!--                    style="@style/AltaRutasEditText"-->
-                <!--                    android:id="@+id/AltaRutasNombreEditText"-->
-                <!--                    android:inputType="text"-->
-                <!--                    android:text=""-->
-                <!--                    />-->
-            </LinearLayout>
-            <LinearLayout style="@style/AltasRutasFila">
-                <TextView
-                    style="@style/AltaRutasTextView"
-                    android:text="@string/AltaRutasDistancia" />
-
-                <EditText
-                    style="@style/AltaRutasEditText"
-                    android:id="@+id/AltaRutasDistanciaEditText"
-                    android:inputType="numberDecimal"
-                    android:text=""
-                    />
-            </LinearLayout>
-            <LinearLayout style="@style/AltasRutasFila">
-                <TextView
-                    style="@style/AltaRutasTextView"
-                    android:text="@string/AltaRutasDescripcion" />
-
-                <EditText
-                    style="@style/AltaRutasEditText"
-                    android:id="@+id/AltaRutasDescripcionEditText"
-                    android:inputType="text"
-                    android:text=""
-                    />
-            </LinearLayout>
-            <LinearLayout style="@style/AltasRutasFila">
-                <TextView
-                    style="@style/AltaRutasTextView"
-                    android:text="@string/AltaRutasNotas" />
-
-                <EditText
-                    style="@style/AltaRutasEditText"
-                    android:id="@+id/AltaRutasNotasEditText"
-                    android:inputType="text"
-                    android:text=""
-                    />
-            </LinearLayout>
-            <LinearLayout style="@style/AltasRutasFila">
-                <TextView
-                    style="@style/AltaRutasTextView"
-                    android:text="@string/AltaRutasFavorita" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:gravity="end"
-                    >
-
-                    <Switch
-                        android:id="@+id/switch1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Switch" />
-                </LinearLayout>
-
-                <!--                <EditText-->
-                <!--                    style="@style/AltaRutasEditText"-->
-                <!--                    android:id="@+id/AltaRutasNombreEditText"-->
-                <!--                    android:inputType="text"-->
-                <!--                    android:text=""-->
-                <!--                    />-->
-            </LinearLayout>
-            <LinearLayout style="@style/AltasRutasFila">
-                <TextView
-                    style="@style/AltaRutasTextView"
-                    android:text="@string/AltaRutasLatitud" />
-
-                <EditText
-                    style="@style/AltaRutasEditText"
-                    android:id="@+id/AltaRutasLatitudEditText"
-                    android:inputType="numberDecimal|numberSigned"
-                    android:text=""
-                    />
-            </LinearLayout>
-            <LinearLayout style="@style/AltasRutasFila">
-                <TextView
-                    style="@style/AltaRutasTextView"
-                    android:text="@string/AltaRutasLongitud" />
-
-                <EditText
-                    style="@style/AltaRutasEditText"
-                    android:id="@+id/AltaRutasLongitudEditText"
-                    android:inputType="numberDecimal|numberSigned"
-                    android:text=""
-                    />
-            </LinearLayout>
-
-            <Button
-                style="@style/AppButton"
-                android:id="@+id/AltaRutasGuardarButton"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNombre"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/AltaRutasTextoBoton" />
+                android:layout_marginBottom="@dimen/margen_estandar"
+                android:hint="@string/AltaRutasNombre">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/AltaRutasNombreEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutLocalizacion"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margen_estandar"
+                android:hint="@string/AltaRutasLocalizacion"
+                app:startIconDrawable="@drawable/location_ico"
+
+                app:startIconTint="?attr/colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/AltasRutasLocalizacionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+<!--            <LinearLayout style="@style/AltasRutasFila">-->
+<!--                <TextView-->
+<!--                    style="@style/AltaRutasTextView"-->
+<!--                    android:text="@string/AltaRutasTipoRuta" />-->
+
+<!--                <RadioGroup-->
+<!--                    android:id="@+id/AltasRutasTipoRadioGroup"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="2"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:gravity="center"-->
+<!--                    >-->
+<!--                    <RadioButton android:id="@+id/AstaRutasTipoCircularRadioButton"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/AltaRutasTipoCircular"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        />-->
+<!--                    <RadioButton android:id="@+id/AstaRutasTipoLinealRadioButton"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/AltaRutasTipoLineal"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        />-->
+<!--                </RadioGroup>-->
+<!--            </LinearLayout>-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/AltaRutasTipoRuta"
+                android:gravity="center"
+                style="@style/AppTextMeta" />
+            <RadioGroup
+            android:id="@+id/AltasRutasTipoRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/margen_estandar">
+
+            <RadioButton
+                android:id="@+id/AstaRutasTipoCircularRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/AltaRutasTipoCircular"
+                android:textColor="?attr/colorOnSurface" />
+
+            <RadioButton
+                android:id="@+id/AstaRutasTipoLinealRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AltaRutasTipoLineal"
+                android:textColor="?attr/colorOnSurface" />
+        </RadioGroup>
+<!--            <LinearLayout style="@style/AltasRutasFila">-->
+<!--                <TextView-->
+<!--                    style="@style/AltaRutasTextView"-->
+<!--                    android:text="@string/AltaRutasDificultad" />-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="2"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:gravity="center"-->
+<!--                    >-->
+
+<!--                    <RatingBar-->
+<!--                        android:id="@+id/ratingBar3"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:numStars="5"-->
+<!--                        android:isIndicator="false"-->
+<!--                        />-->
+<!--                </LinearLayout>-->
+
+<!--                &lt;!&ndash;                <EditText&ndash;&gt;-->
+<!--                &lt;!&ndash;                    style="@style/AltaRutasEditText"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:id="@+id/AltaRutasNombreEditText"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:inputType="text"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:text=""&ndash;&gt;-->
+<!--                &lt;!&ndash;                    />&ndash;&gt;-->
+<!--            </LinearLayout>-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/AltaRutasDificultad"
+                android:gravity="center"
+                style="@style/AppTextMeta" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+                <RatingBar
+                    android:id="@+id/ratingBar3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="1"
+                    android:progressTint="?attr/colorPrimary" />
+            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutDistancia"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margen_estandar"
+                android:hint="@string/AltaRutasDistancia"
+                app:suffixText="km">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/AltaRutasDistanciaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutDescripcion"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margen_estandar"
+                android:hint="@string/AltaRutasDescripcion">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/AltaRutasDescripcionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:gravity="top|start" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNotas"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margen_estandar"
+                android:hint="@string/AltaRutasNotas">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/AltaRutasNotasEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:gravity="top|start" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+<!--            <LinearLayout style="@style/AltasRutasFila">-->
+<!--                <TextView-->
+<!--                    style="@style/AltaRutasTextView"-->
+<!--                    android:text="@string/AltaRutasFavorita" />-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="2"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:gravity="end"-->
+<!--                    >-->
+
+<!--                    <Switch-->
+<!--                        android:id="@+id/switch1"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Switch" />-->
+<!--                </LinearLayout>-->
+
+<!--                &lt;!&ndash;                <EditText&ndash;&gt;-->
+<!--                &lt;!&ndash;                    style="@style/AltaRutasEditText"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:id="@+id/AltaRutasNombreEditText"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:inputType="text"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:text=""&ndash;&gt;-->
+<!--                &lt;!&ndash;                    />&ndash;&gt;-->
+<!--            </LinearLayout>-->
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margen_estandar"
+                android:text="@string/AltaRutasFavorita"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="16sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutLatitud"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margen_estandar"
+                android:hint="@string/AltaRutasLatitud"
+                app:suffixText="°">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/AltaRutasLatitudEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal|numberSigned" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutLongitud"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margen_estandar"
+                android:hint="@string/AltaRutasLongitud"
+                app:suffixText="°">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/AltaRutasLongitudEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal|numberSigned" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/AltaRutasGuardarButton"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margen_estandar"
+                android:layout_marginBottom="@dimen/margen_estandar"
+                android:text="@string/AltaRutasTextoBoton"
+                app:icon="@android:drawable/ic_menu_save"
+                app:iconGravity="textStart"
+                />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

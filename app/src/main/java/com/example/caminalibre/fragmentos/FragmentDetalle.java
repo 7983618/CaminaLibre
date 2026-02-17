@@ -32,6 +32,7 @@ import com.example.caminalibre.adapters.AdapterPuntos;
 import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.servicios.MusicService;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class FragmentDetalle extends Fragment {
         });
 
         //CONFIGURACIÓN BORRADO
-        ImageButton borrar = getActivity().findViewById(R.id.FichaTecnicaBorrarButton);
+        MaterialButton borrar = getActivity().findViewById(R.id.FichaTecnicaBorrarButton);
         borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

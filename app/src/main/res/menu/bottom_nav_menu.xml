@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/bottom_navigation_altas"
-        android:title="@string/BottomItemNueva"
-        android:icon="@drawable/add_ico"
-        />
-    <item
         android:id="@+id/bottom_navigation_rutas"
         android:title="@string/BottomItemRutas"
         android:icon="@drawable/map_ico"
         />
-
+    <item
+        android:id="@+id/bottom_navigation_altas"
+        android:title="@string/BottomItemNueva"
+        android:icon="@drawable/add_ico"
+        />
     <item
         android:id="@+id/bottom_navigation_ayuda"
         android:title="@string/BottomItemAyuda"

@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="24dp"
     android:gravity="center_horizontal"
-    android:background="@color/black">
+    android:background="?attr/colorSurface">
     <Space
         android:layout_width="wrap_content"
         android:layout_height="20dp"/>
@@ -47,9 +48,11 @@
 
     <Button
         android:id="@+id/btnSoporte"
-        style="@style/AppButton"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ActidadeAcercaDeBtnContactarConSoporte" />
+        android:text="@string/ActidadeAcercaDeBtnContactarConSoporte"
+        app:icon="@android:drawable/ic_dialog_email"
+        />
 
 </LinearLayout>
