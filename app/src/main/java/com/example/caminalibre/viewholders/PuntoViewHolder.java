@@ -23,17 +23,20 @@ public  class PuntoViewHolder extends RecyclerView.ViewHolder {
     private TextView coordenadas;
     private Button borrar;
     private View viewActual;
+    private ImageView imageView;
     public PuntoViewHolder(@NonNull View itemView) {
         super(itemView);
         nombre = itemView.findViewById(R.id.itemPuntoNombre);
         coordenadas = itemView.findViewById(R.id.itemPuntoCoordenadas);
         borrar = itemView.findViewById(R.id.itemPuntoBorrar);
+        imageView = itemView.findViewById(R.id.itemPuntoImagen);
         viewActual = itemView;
+
     }
     public void bind(PuntoInteres punto) {
         nombre.setText(punto.getNombre());
         coordenadas.setText("Lat: " + punto.getLatitud() + " | Lon: " + punto.getLongitud());
-        itemView.setOnClickListener(v -> {
+        imageView.setOnClickListener(v -> {
             abrirMapa(punto);
         });
         borrar.setOnClickListener(new View.OnClickListener() {
