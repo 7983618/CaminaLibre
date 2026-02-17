@@ -11,17 +11,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
 import com.example.caminalibre.modelo.PuntoInteres;
+import com.google.android.material.snackbar.Snackbar;
 
 public  class PuntoViewHolder extends RecyclerView.ViewHolder {
     private TextView nombre;
     private TextView coordenadas;
+    private ImageView borrar;
     private View viewActual;
     public PuntoViewHolder(@NonNull View itemView) {
         super(itemView);
         nombre = itemView.findViewById(R.id.itemPuntoNombre);
         coordenadas = itemView.findViewById(R.id.itemPuntoCoordenadas);
+        borrar = itemView.findViewById(R.id.itemPuntoBorrar);
         viewActual = itemView;
     }
     public void bind(PuntoInteres punto) {
@@ -29,6 +33,25 @@ public  class PuntoViewHolder extends RecyclerView.ViewHolder {
         coordenadas.setText("Lat: " + punto.getLatitud() + " | Lon: " + punto.getLongitud());
         itemView.setOnClickListener(v -> {
             abrirMapa(punto);
+        });
+        borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Opción moderna: Borrado directo con opción de deshacer (Undo)
+                CreadorDB db = CreadorDB.getDatabase(viewActual.getContext());
+
+                db.borrarPuntoInteres(punto);
+
+                Snackbar.make(viewActual, "Punto eliminado "+punto.getNombre(), Snackbar.LENGTH_LONG)
+                        .setAction("DESHACER", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View undoView) {
+                                // Si pulsa deshacer, lo volvemos a insertar
+                                db.insertarPuntoInteres(punto, null);
+                            }
+                        })
+                        .show();
+            }
         });
 
     }

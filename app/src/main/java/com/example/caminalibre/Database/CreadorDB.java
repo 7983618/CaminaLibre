@@ -117,7 +117,8 @@ public abstract class CreadorDB extends RoomDatabase {
         ejecutarhilo.execute(new Runnable() {
             @Override
             public void run() {
-                getPuntosDAO().insert(punto);
+                long id = getPuntosDAO().insert(punto);
+                punto.setId(id);
                 if (activity != null){
                     activity.runOnUiThread(new Runnable() {
                         @Override
@@ -130,5 +131,13 @@ public abstract class CreadorDB extends RoomDatabase {
         });
     }
 
+    public void borrarPuntoInteres(PuntoInteres punto) {
+        ejecutarhilo.execute(new Runnable() {
+            @Override
+            public void run() {
+                getPuntosDAO().delete(punto);
+            }
+        });
+    }
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface DAOPuntosDeInteres {
     @Insert
-    void insert(PuntoInteres puntoInteres);
+    long insert(PuntoInteres puntoInteres);
 
     @Insert
     void insertAll(List<PuntoInteres> puntosInteres);
