@@ -4,17 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="?attr/colorSurface"
     android:padding="24dp">
 
     <TextView
         android:id="@+id/titulopunto"
+        style="@style/AppTextViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Añadir Punto de Interés"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        android:textAlignment="center"/>
+        android:layout_marginBottom="16dp"/>
 
     <!-- CÍRCULO PARA LA FOTO (Previsualización) -->
     <com.google.android.material.card.MaterialCardView
@@ -29,7 +28,8 @@
             android:id="@+id/imgPuntoPreview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/fotoapp"
+            android:src="@drawable/location_ico"
+            app:tint="?attr/colorPrimary"
             android:scaleType="centerCrop"
             android:background="?attr/selectableItemBackgroundBorderless" />
     </com.google.android.material.card.MaterialCardView>
@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:hint="Nombre del punto"
         app:startIconDrawable="@drawable/location_ico"
+        app:startIconTint="?attr/colorSecondary"
         android:layout_marginBottom="12dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -87,9 +88,9 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/botonguardapunto"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Guardar Punto"
-        app:cornerRadius="8dp" />
+        android:layout_height="wrap_content"
+        android:text="Guardar Punto"/>
 
 </LinearLayout>

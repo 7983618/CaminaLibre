@@ -68,14 +68,16 @@
                     android:text="Lat: 0.0 | Lon: 0.0"/>
             </LinearLayout>
         </LinearLayout>
+        <Button
+            android:id="@+id/itemPuntoBorrar"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:icon="@drawable/trash_ico"
+            app:iconTint="?attr/colorError"
+            />
 
-    <ImageButton
-        android:id="@+id/itemPuntoBorrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
 
-        android:src="@drawable/trash_ico"
-        android:background="@android:color/transparent"
-        app:buttonTint="@color/standar_interact"
-        android:layout_gravity="center"/>
-</LinearLayout>

@@ -85,7 +85,7 @@ public class FragmentDetalle extends Fragment {
         });
 
         //CONFIGURACIÓN BORRADO
-        ImageButton borrar = getActivity().findViewById(R.id.FichaTecnicaBorrarButton);
+        MaterialButton borrar = getActivity().findViewById(R.id.FichaTecnicaBorrarButton);
         borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

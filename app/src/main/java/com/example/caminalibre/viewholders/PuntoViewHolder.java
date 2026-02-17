@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
 import com.example.caminalibre.modelo.PuntoInteres;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public  class PuntoViewHolder extends RecyclerView.ViewHolder {
     private TextView nombre;
     private TextView coordenadas;
-    private ImageView borrar;
+    private Button borrar;
     private View viewActual;
     public PuntoViewHolder(@NonNull View itemView) {
         super(itemView);
