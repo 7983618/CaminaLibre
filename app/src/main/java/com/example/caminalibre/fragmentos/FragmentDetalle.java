@@ -25,6 +25,7 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.caminalibre.BotonFlotanteInsertarPuntoRuta;
 import com.example.caminalibre.Database.CreadorDB;
 import com.example.caminalibre.R;
 import com.example.caminalibre.activities.ActivityPrincipal;
@@ -32,6 +33,7 @@ import com.example.caminalibre.adapters.AdapterPuntos;
 import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.servicios.MusicService;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,6 +155,18 @@ public class FragmentDetalle extends Fragment {
         }
 
         ejecutarReciclerView(view);
+
+        FloatingActionButton botonFlotanteInsertarPunto = view.findViewById(R.id.botonFlotanteInsertarPunto);
+        botonFlotanteInsertarPunto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BotonFlotanteInsertarPuntoRuta botonFlotanteInsertarPuntoRuta = new BotonFlotanteInsertarPuntoRuta(ruta);
+                botonFlotanteInsertarPuntoRuta.show(getParentFragmentManager(), "AltaPunto");
+
+            }
+        });
+
+
     }
     //-----------------------------------------CAMARA-------------------------------------------------
     private void abrirCamara() {

@@ -338,4 +338,14 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/botonFlotanteInsertarPunto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/add_ico"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:backgroundTint="@color/standar_interact"
+        android:contentDescription="Añadir punto de interés" />
 </androidx.constraintlayout.widget.ConstraintLayout>

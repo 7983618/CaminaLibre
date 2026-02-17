@@ -112,4 +112,23 @@ public abstract class CreadorDB extends RoomDatabase {
            }
        });
     }
+
+    public void insertarPuntoInteres(PuntoInteres punto,Activity activity){
+        ejecutarhilo.execute(new Runnable() {
+            @Override
+            public void run() {
+                getPuntosDAO().insert(punto);
+                if (activity != null){
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(activity, "Punto de interes Guardado con éxito en la ruta actual ", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
 }
