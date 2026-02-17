@@ -1,5 +1,6 @@
 package com.example.caminalibre;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -15,9 +17,9 @@ import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 
-
-public class BotonFlotanteInsertarPuntoRuta extends  BottomSheetDialogFragment {
+public class BotonFlotanteInsertarPuntoRuta extends BottomSheetDialogFragment {
 
 
     private Ruta ruta;
@@ -49,7 +51,7 @@ public class BotonFlotanteInsertarPuntoRuta extends  BottomSheetDialogFragment {
 
     }
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextView titulo = view.findViewById(R.id.titulopunto);
         titulo.setText("Añadir Punto de Interés para la Ruta "+ruta.getNombreRuta());
@@ -72,19 +74,36 @@ public class BotonFlotanteInsertarPuntoRuta extends  BottomSheetDialogFragment {
                 String nombre = editNombre.getText().toString();
 
                 PuntoInteres puntoInteres = new PuntoInteres(nombre, latitud, longitud, null, ruta.getId());
-                CreadorDB.getDatabase(getContext()).insertarPuntoInteres(puntoInteres,getActivity());
+
+
+                View principal = getActivity().findViewById(R.id.main);
+
+                CreadorDB.getDatabase(getContext()).insertarPuntoInteres(puntoInteres, null);
+
                 dismiss();
 
-//                Snackbar.make(view, "Punto guardado", Snackbar.LENGTH_LONG)
-//                        .setAction("DESHACER", new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                // Lógica para deshacer si quieres
-//                                Toast.makeText(getContext(), "Deshacer", Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        .show();
+                if (principal != null) {
+                    Snackbar.make(principal, "Punto guardado", Snackbar.LENGTH_LONG)
+                            .setAction("DESHACER", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    CreadorDB.getDatabase(getContext()).borrarPuntoInteres(puntoInteres);
+                                }
+                            })
+                            .show();
+                }
 
+
+//                // 2. Usamos un Handler para esperar 2 segundos SIN bloquear la app
+//                new android.os.Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // Este código se ejecutará después de 2000ms (2 segundos)
+//                        if (isAdded()) { // Comprobamos que el fragmento sigue activo
+//                            dismiss();
+//                        }
+//                    }
+//                }, 2000);
             }
         });
 
