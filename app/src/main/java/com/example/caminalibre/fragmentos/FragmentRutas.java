@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +21,9 @@ import com.example.caminalibre.R;
 import com.example.caminalibre.activities.ActivityPrincipal;
 import com.example.caminalibre.adapters.AdapterRutas;
 import com.example.caminalibre.interfaces.OnRutaClickListener;
+import com.example.caminalibre.modelo.PuntoInteres;
 import com.example.caminalibre.modelo.Ruta;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +87,56 @@ public class FragmentRutas extends Fragment implements OnRutaClickListener {
                 filtrarPorDificultad();
             }
         });
+
+
+
+
+        // 1. Definimos la lógica del Swipe
+        ItemTouchHelper.SimpleCallback itemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false; // No usamos movimiento arriba/abajo
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                int position = viewHolder.getBindingAdapterPosition();
+                Ruta ruta = adapter.getrutas().get(position);
+
+                CreadorDB db = CreadorDB.getDatabase(getContext());
+
+                CreadorDB.ejecutarhilo.execute(() -> {
+                    List<PuntoInteres> puntosABorrar = db.getPuntosDAO().getPuntosDeInteresSync(ruta.getId());
+
+                    db.borrarRuta(ruta, null);
+
+                    getActivity().runOnUiThread(() -> {
+                        Snackbar.make(recyclerView, "Ruta eliminada", Snackbar.LENGTH_LONG)
+                                .setAction("DESHACER", v -> {
+                                    db.insertarRuta(ruta, null);
+                                    if (puntosABorrar != null && !puntosABorrar.isEmpty()) {
+                                        db.insertarPuntos(puntosABorrar);
+                                    }
+                                })
+                                .show();
+                    });
+                });
+            }
+        };
+
+
+        new ItemTouchHelper(itemTouchCallback).attachToRecyclerView(recyclerView);
+
+
+
+
+
+
+
+
+
+
     }
     //-----------------------------------------FILTROS-------------------------------------------------
     public void filtrarPorDificultad() {

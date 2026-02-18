@@ -43,4 +43,9 @@ public class AdapterRutas extends RecyclerView.Adapter<RutasViewHolder> {
     public int getItemCount() {
         return rutas.size();
     }
+
+
+    public List<Ruta> getrutas(){
+        return rutas;
+    }
 }

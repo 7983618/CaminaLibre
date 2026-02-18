@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +36,7 @@ import com.example.caminalibre.modelo.Ruta;
 import com.example.caminalibre.servicios.MusicService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,6 +168,45 @@ public class FragmentDetalle extends Fragment {
 
             }
         });
+
+
+        // 1. Definimos la lógica del Swipe
+        ItemTouchHelper.SimpleCallback itemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false; // No usamos movimiento arriba/abajo
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                int position = viewHolder.getBindingAdapterPosition();
+                PuntoInteres punto = adapter.getPuntosInteres().get(position);
+
+                // Borramos de la DB
+                CreadorDB db = CreadorDB.getDatabase(getContext());
+                db.borrarPuntoInteres(punto);
+
+                Snackbar.make(recyclerView, "Punto eliminado", Snackbar.LENGTH_LONG)
+                        .setAction("DESHACER", v -> {
+                            // Si pulsa deshacer, lo re-insertamos
+                            db.insertarPuntoInteres(punto, null);
+                        })
+                        .show();
+            }
+        };
+
+        // 2. Lo conectamos al RecyclerView
+        new ItemTouchHelper(itemTouchCallback).attachToRecyclerView(recyclerView);
+
+
+
+
+
+
+
+
+
 
 
     }

@@ -26,4 +26,7 @@ public interface DAOPuntosDeInteres {
 
     @Query("SELECT * FROM puntos_interes WHERE ruta_id = :id")
     LiveData<List<PuntoInteres>> getPuntosDeInteres(long id);
+
+    @Query("SELECT * FROM puntos_interes WHERE ruta_id = :id")
+    List<PuntoInteres> getPuntosDeInteresSync(long id);
 }

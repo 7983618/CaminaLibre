@@ -45,4 +45,9 @@ public class AdapterPuntos extends RecyclerView.Adapter<PuntoViewHolder> {
     public int getItemCount() {
         return puntosInteres != null ? puntosInteres.size() : 0;
     }
+
+
+    public List<PuntoInteres> getPuntosInteres(){
+        return puntosInteres;
+    }
 }

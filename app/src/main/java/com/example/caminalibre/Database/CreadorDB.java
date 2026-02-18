@@ -113,6 +113,7 @@ public abstract class CreadorDB extends RoomDatabase {
        });
     }
 
+
     public void insertarPuntoInteres(PuntoInteres punto,Activity activity){
         ejecutarhilo.execute(new Runnable() {
             @Override
@@ -140,4 +141,12 @@ public abstract class CreadorDB extends RoomDatabase {
         });
     }
 
+    public void insertarPuntos(List<PuntoInteres> puntosABorrar) {
+       ejecutarhilo.execute(new Runnable() {
+           @Override
+           public void run() {
+               getPuntosDAO().insertAll(puntosABorrar);
+           }
+       });
+    }
 }
